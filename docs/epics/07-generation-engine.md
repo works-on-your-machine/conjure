@@ -138,11 +138,11 @@ After all VisionGenerationJobs complete, a callback or check sets the conjuring 
 - `app/views/visions/_vision.html.erb` (partial for a single vision thumbnail — needed for the broadcast target)
 
 **Acceptance criteria:**
-- [ ] When a vision completes generation, a Turbo Stream append is broadcast
-- [ ] When conjuring status changes, a Turbo Stream replace is broadcast
-- [ ] Broadcasts target a channel scoped to the project (e.g., `project_#{id}_visions`)
-- [ ] The vision partial renders a thumbnail image with basic metadata
-- [ ] No N+1 queries in the broadcast rendering
+- [x] When a vision completes generation, a Turbo Stream append is broadcast
+- [x] When conjuring status changes, a Turbo Stream replace is broadcast
+- [x] Broadcasts target a channel scoped to the project (e.g., `project_#{id}_visions`)
+- [x] The vision partial renders a thumbnail image with basic metadata
+- [x] No N+1 queries in the broadcast rendering
 
 **Dependencies:** Story 7.3
 
