@@ -15,6 +15,21 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system("bundle check") || system!("bundle install")
 
+  puts "\n== Generating encryption keys =="
+  key_file = File.join(APP_ROOT, "config", "active_record_encryption.key")
+  unless File.exist?(key_file)
+    require "securerandom"
+    keys = {
+      "primary_key" => SecureRandom.hex(16),
+      "deterministic_key" => SecureRandom.hex(16),
+      "key_derivation_salt" => SecureRandom.hex(16)
+    }
+    File.write(key_file, keys.to_yaml)
+    puts "   Generated config/active_record_encryption.key"
+  else
+    puts "   Already exists, skipping"
+  end
+
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
