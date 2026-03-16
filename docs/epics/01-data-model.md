@@ -99,13 +99,13 @@ Create all database tables, Active Record models, and associations so that every
 - Updated `app/models/slide.rb` (has_many :visions)
 
 **Acceptance criteria:**
-- [ ] Conjuring has columns: project_id (references, not null), grimoire_text (text, not null), variations_count (integer, not null), status (integer, default 0)
-- [ ] Conjuring has enum: `status { pending: 0, generating: 1, complete: 2, failed: 3 }`
-- [ ] Vision has columns: slide_id (references, not null), conjuring_id (references, not null), position (integer), slide_text (text), prompt (text), refinement (text, nullable), selected (boolean, default false)
-- [ ] Vision `has_one_attached :image`
-- [ ] `project.visions` returns visions through conjurings
-- [ ] Dependent destroy chains work (project → conjurings → visions)
-- [ ] Tests pass
+- [x] Conjuring has columns: project_id (references, not null), grimoire_text (text, not null), variations_count (integer, not null), status (integer, default 0)
+- [x] Conjuring has enum: `status { pending: 0, generating: 1, complete: 2, failed: 3 }`
+- [x] Vision has columns: slide_id (references, not null), conjuring_id (references, not null), position (integer), slide_text (text), prompt (text), refinement (text, nullable), selected (boolean, default false)
+- [x] Vision `has_one_attached :image`
+- [x] `project.visions` returns visions through conjurings
+- [x] Dependent destroy chains work (project → conjurings → visions)
+- [x] Tests pass
 
 **Dependencies:** Stories 1.1, 1.2
 
