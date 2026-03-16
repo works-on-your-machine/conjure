@@ -1,0 +1,9 @@
+<%# Shared card component — dark surface with subtle border and hover state
+   Yields content block or accepts content local %>
+<div class="bg-surface rounded-[10px] border border-conjure-border p-4 transition-all hover:border-conjure-border-hover">
+  <% if local_assigns[:content] %>
+    <%= content %>
+  <% else %>
+    <%= yield %>
+  <% end %>
+</div>

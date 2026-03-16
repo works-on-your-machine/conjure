@@ -1,0 +1,11 @@
+<%# Dark-themed textarea — matches React prototype TextArea
+   Accepts: name, value, placeholder, rows (optional, default 4), extra_class (optional) %>
+<%
+  rows ||= 4
+  extra_class ||= ""
+%>
+<textarea
+  name="<%= name %>"
+  placeholder="<%= placeholder %>"
+  rows="<%= rows %>"
+  class="w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none box-border focus:border-conjure-border-hover <%= extra_class %>"><%= value %></textarea>

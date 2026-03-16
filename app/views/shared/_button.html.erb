@@ -1,0 +1,27 @@
+<%# Shared button component
+   Variants: "gold", "default", "ghost", "danger"
+   Accepts: text, variant, disabled (optional), type (optional), class (optional) %>
+<%
+  variant ||= "default"
+  disabled ||= false
+  type ||= "button"
+  extra_class ||= ""
+
+  base_classes = "font-body text-[13px] border-none rounded-md cursor-pointer transition-all disabled:opacity-40 disabled:cursor-default"
+
+  variant_classes = case variant
+  when "gold"
+    "bg-gold text-plum-deep px-5 py-2 font-medium shadow-[0_4px_20px_var(--color-gold-glow-strong)]"
+  when "ghost"
+    "bg-transparent text-conjure-text-muted px-3 py-2"
+  when "danger"
+    "bg-transparent text-danger px-4 py-2 border border-danger/30"
+  else # default
+    "bg-surface text-conjure-text-muted px-4 py-2 border border-conjure-border"
+  end
+%>
+<button type="<%= type %>"
+  class="<%= base_classes %> <%= variant_classes %> <%= extra_class %>"
+  <%= "disabled" if disabled %>>
+  <%= text %>
+</button>

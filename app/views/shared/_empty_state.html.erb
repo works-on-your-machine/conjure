@@ -1,0 +1,12 @@
+<%# Empty state component — dashed border with icon, title, and description
+   Accepts: title, description, and optional block for CTAs %>
+<div class="text-center py-20 px-10 border border-dashed border-conjure-border rounded-xl">
+  <div class="text-5xl mb-4">✦</div>
+  <h2 class="font-display text-2xl text-gold-light m-0 mb-2"><%= title %></h2>
+  <p class="text-[13px] text-conjure-text-muted max-w-[400px] mx-auto mb-6"><%= description %></p>
+  <% if block_given? %>
+    <div class="flex gap-3 justify-center">
+      <%= yield %>
+    </div>
+  <% end %>
+</div>

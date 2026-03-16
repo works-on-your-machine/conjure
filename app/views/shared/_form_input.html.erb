@@ -1,0 +1,10 @@
+<%# Dark-themed text input — matches React prototype Input
+   Accepts: name, value, placeholder, extra_class (optional) %>
+<%
+  extra_class ||= ""
+%>
+<input type="text"
+  name="<%= name %>"
+  value="<%= value %>"
+  placeholder="<%= placeholder %>"
+  class="w-full bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none box-border focus:border-conjure-border-hover <%= extra_class %>" />

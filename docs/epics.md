@@ -14,7 +14,7 @@ Get the data model, visual identity, and application shell in place so all featu
 | Epic | Status | Depends On | File |
 |------|--------|------------|------|
 | Data Model & Associations | Done | Nothing | [docs/epics/01-data-model.md](epics/01-data-model.md) |
-| Visual Identity & Application Layout | In Progress | Nothing | [docs/epics/02-visual-identity.md](epics/02-visual-identity.md) |
+| Visual Identity & Application Layout | Done | Nothing | [docs/epics/02-visual-identity.md](epics/02-visual-identity.md) |
 
 ## Phase 2: Content Management
 Build the screens where users manage settings, grimoires, projects, and slides — everything needed before generation.

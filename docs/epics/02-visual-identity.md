@@ -97,11 +97,11 @@ Establish the Conjure visual identity (dark plum/gold palette, typography, compo
 - Form input styling via Tailwind (may be in a shared partial or application CSS)
 
 **Acceptance criteria:**
-- [ ] Gold gradient button renders with warm glow shadow, supports "Conjure" and "Re-conjure" text variants
-- [ ] Card component has dark background, subtle border, hover state
-- [ ] Gold glow selection state (border + shadow + ✦) can be applied to any element
-- [ ] Form inputs are styled for dark background (light text, subtle borders)
-- [ ] Empty state partial accepts title and description content
+- [x] Gold gradient button renders with warm glow shadow, supports "Conjure" and "Re-conjure" text variants
+- [x] Card component has dark background, subtle border, hover state
+- [x] Gold glow selection state (border + shadow + ✦) can be applied to any element
+- [x] Form inputs are styled for dark background (light text, subtle borders)
+- [x] Empty state partial accepts title and description content
 
 **Dependencies:** Story 2.1
 
