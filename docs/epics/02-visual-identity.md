@@ -66,11 +66,11 @@ Establish the Conjure visual identity (dark plum/gold palette, typography, compo
 - `app/helpers/application_helper.rb` with any layout helper methods
 
 **Acceptance criteria:**
-- [ ] All pages render with deep plum background and gold accented header
-- [ ] Header shows "Conjure" wordmark in Cormorant Garamond and nav links
-- [ ] Project layout shows four-section sidebar with section links
-- [ ] Sidebar highlights the active section
-- [ ] "Back to Workshop" link in sidebar returns to root
+- [x] All pages render with deep plum background and gold accented header
+- [x] Header shows "Conjure" wordmark in Cormorant Garamond and nav links
+- [x] Project layout shows four-section sidebar with section links
+- [x] Sidebar highlights the active section
+- [x] "Back to Workshop" link in sidebar returns to root
 
 **Dependencies:** Story 2.1
 

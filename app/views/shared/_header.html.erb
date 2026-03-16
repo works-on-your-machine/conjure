@@ -1,0 +1,14 @@
+<header class="flex items-center justify-between px-10 py-5">
+  <div>
+    <%= link_to root_path, class: "no-underline" do %>
+      <h1 class="font-display text-3xl font-semibold text-gold m-0">Conjure</h1>
+    <% end %>
+    <p class="text-xs text-conjure-text-dim mt-1">Your workshop</p>
+  </div>
+  <nav class="flex items-center gap-2.5">
+    <%= link_to "◈ Grimoire library", grimoires_path,
+      class: "text-conjure-text-muted text-sm px-4 py-2 rounded-md border border-conjure-border bg-surface hover:border-conjure-border-hover transition-all no-underline" %>
+    <%= link_to "Settings", settings_path,
+      class: "text-conjure-text-muted text-sm px-4 py-2 rounded-md border border-conjure-border bg-surface hover:border-conjure-border-hover transition-all no-underline" %>
+  </nav>
+</header>

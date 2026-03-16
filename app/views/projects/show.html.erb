@@ -1,0 +1,12 @@
+<div class="flex h-screen">
+  <%= render "shared/sidebar" %>
+
+  <main class="flex-1 overflow-auto">
+    <%# Section content will be filled by feature epics %>
+    <div class="p-8">
+      <div class="text-conjure-text-muted text-sm">
+        Project workspace — <%= params[:section]&.capitalize || "Grimoire" %> section
+      </div>
+    </div>
+  </main>
+</div>
