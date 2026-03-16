@@ -7,7 +7,11 @@ class VisionsController < ApplicationController
 
   def update
     @vision.update!(vision_params)
-    redirect_to project_path(@project, section: "visions")
+    respond_to do |format|
+      format.html { redirect_to project_path(@project, section: "visions") }
+      format.json { head :ok }
+      format.turbo_stream { head :ok }
+    end
   end
 
   def destroy

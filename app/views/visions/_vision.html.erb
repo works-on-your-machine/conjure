@@ -1,7 +1,11 @@
 <%# Single vision thumbnail — used in wall grid and as Turbo Stream broadcast target %>
 <div id="vision_<%= vision.id %>"
      class="relative aspect-video rounded-md overflow-hidden cursor-pointer transition-all
-            <%= vision.selected? ? 'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]' : 'border border-white/5' %>">
+            <%= vision.selected? ? 'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]' : 'border border-white/5' %>"
+     data-controller="vision-selection"
+     data-vision-selection-url-value="<%= project_vision_path(vision.conjuring.project, vision) %>"
+     data-vision-selection-selected-value="<%= vision.selected? %>"
+     data-action="click->vision-selection#toggle">
   <% if vision.image.attached? %>
     <%= image_tag vision.image, class: "w-full h-full object-cover" %>
   <% else %>
@@ -11,7 +15,8 @@
   <% end %>
 
   <% if vision.selected? %>
-    <div class="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gold flex items-center justify-center text-[11px] text-plum-deep font-semibold">
+    <div class="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gold flex items-center justify-center text-[11px] text-plum-deep font-semibold"
+         data-vision-selection-target="badge">
       ✦
     </div>
   <% end %>

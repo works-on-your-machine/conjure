@@ -78,12 +78,12 @@ Build the Visions section — the core product experience. A wall of all generat
 - Updated vision thumbnail partial with selection state
 
 **Acceptance criteria:**
-- [ ] Clicking a vision thumbnail toggles the gold glow on/off
-- [ ] Gold glow: warm gold border, shadow, and ✦ symbol overlay
-- [ ] Toggle persists to the database (vision.selected = true/false)
-- [ ] Multiple visions per slide can be selected (but typically one per slide for final cut)
-- [ ] Selection count is displayed (e.g., "6/8 slides have a selected vision")
-- [ ] Tests pass
+- [x] Clicking a vision thumbnail toggles the gold glow on/off
+- [x] Gold glow: warm gold border, shadow, and ✦ symbol overlay
+- [x] Toggle persists to the database (vision.selected = true/false)
+- [x] Multiple visions per slide can be selected (but typically one per slide for final cut)
+- [x] Selection count is displayed (e.g., "6/8 slides have a selected vision")
+- [x] Tests pass
 
 **Dependencies:** Story 8.1
 
