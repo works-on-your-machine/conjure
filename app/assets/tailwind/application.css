@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+@theme {
+  /* Conjure color palette — from React prototype C object */
+  --color-plum: #1e1a2e;
+  --color-plum-deep: #161323;
+  --color-surface: #2d2540;
+  --color-surface-light: #3a3255;
+
+  --color-gold: #c4935a;
+  --color-gold-light: #e8d5b5;
+  --color-gold-dim: #a38050;
+  --color-gold-glow: rgba(196, 147, 90, 0.15);
+  --color-gold-glow-strong: rgba(196, 147, 90, 0.3);
+
+  --color-parchment: #e8d5b5;
+  --color-muted: #7b6b8a;
+
+  --color-conjure-text: #e8e0d4;
+  --color-conjure-text-muted: #9a8e80;
+  --color-conjure-text-dim: #6a6058;
+
+  --color-conjure-border: rgba(196, 147, 90, 0.12);
+  --color-conjure-border-hover: rgba(196, 147, 90, 0.25);
+
+  --color-danger: #c0392b;
+
+  /* Typography — Cormorant Garamond for display, DM Sans for body */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+}
+
+/* Set default font and background */
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-plum);
+  color: var(--color-conjure-text);
+}

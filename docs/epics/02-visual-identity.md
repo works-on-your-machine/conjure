@@ -42,10 +42,10 @@ Establish the Conjure visual identity (dark plum/gold palette, typography, compo
 - A test page or partial demonstrating the palette and typography renders correctly
 
 **Acceptance criteria:**
-- [ ] Tailwind classes like `bg-plum`, `text-gold`, `font-display`, `font-body` work in templates
-- [ ] Cormorant Garamond loads for headings, DM Sans for body text
-- [ ] Background defaults to the deep plum/charcoal
-- [ ] `bin/rails tailwindcss:build` completes without errors
+- [x] Tailwind classes like `bg-plum`, `text-gold`, `font-display`, `font-body` work in templates
+- [x] Cormorant Garamond loads for headings, DM Sans for body text
+- [x] Background defaults to the deep plum/charcoal
+- [x] `bin/rails tailwindcss:build` completes without errors
 
 **Dependencies:** None
 
