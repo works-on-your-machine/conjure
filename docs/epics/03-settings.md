@@ -41,12 +41,12 @@ Give users a settings screen to manage their BYOK API keys (Nano Banana 2, LLM) 
 - `test/controllers/settings_controller_test.rb`
 
 **Acceptance criteria:**
-- [ ] GET /settings renders the settings form with current values
-- [ ] API keys display masked when present, empty field when not set
-- [ ] PATCH /settings updates API keys and defaults, redirects back with flash notice
-- [ ] Submitting an empty API key field does not overwrite an existing key
-- [ ] Default variations and aspect ratio are editable
-- [ ] Tests pass
+- [x] GET /settings renders the settings form with current values
+- [x] API keys display masked when present, empty field when not set
+- [x] PATCH /settings updates API keys and defaults, redirects back with flash notice
+- [x] Submitting an empty API key field does not overwrite an existing key
+- [x] Default variations and aspect ratio are editable
+- [x] Tests pass
 
 **Dependencies:** None (within this epic; depends on Epic 1 for Setting model)
 

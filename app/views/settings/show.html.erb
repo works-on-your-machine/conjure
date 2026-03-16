@@ -1,0 +1,57 @@
+<%= render "shared/header" %>
+
+<div class="px-10 max-w-[640px] mx-auto">
+  <h2 class="font-display text-2xl font-semibold text-gold-light mb-1">Settings</h2>
+  <p class="text-[13px] text-conjure-text-muted mb-8">API keys and default preferences</p>
+
+  <% if flash[:notice] %>
+    <div class="bg-gold-glow border border-gold-dim rounded-md px-4 py-3 mb-6 text-sm text-gold">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @setting, url: settings_path, method: :patch, class: "space-y-6" do |f| %>
+    <%# API Keys %>
+    <div>
+      <h3 class="font-display text-lg text-gold-light mb-4">API Keys</h3>
+
+      <%= render "shared/label", text: "Nano Banana 2 API key" %>
+      <% if @setting.nano_banana_api_key.present? %>
+        <p class="text-xs text-conjure-text-dim mb-1">Current: <span class="text-conjure-text-muted"><%= mask_api_key(@setting.nano_banana_api_key) %></span> — leave blank to keep</p>
+      <% end %>
+      <%= f.text_field :nano_banana_api_key, value: "",
+        placeholder: @setting.nano_banana_api_key.present? ? "Leave blank to keep current key" : "Enter your Nano Banana 2 API key",
+        class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>
+
+      <div class="mt-4">
+        <%= render "shared/label", text: "LLM API key" %>
+        <% if @setting.llm_api_key.present? %>
+          <p class="text-xs text-conjure-text-dim mb-1">Current: <span class="text-conjure-text-muted"><%= mask_api_key(@setting.llm_api_key) %></span> — leave blank to keep</p>
+        <% end %>
+        <%= f.text_field :llm_api_key, value: "",
+          placeholder: @setting.llm_api_key.present? ? "Leave blank to keep current key" : "Enter your LLM API key",
+          class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>
+      </div>
+    </div>
+
+    <%# Defaults %>
+    <div>
+      <h3 class="font-display text-lg text-gold-light mb-4">Defaults</h3>
+
+      <%= render "shared/label", text: "Default variations per slide" %>
+      <%= f.select :default_variations, [3, 5, 8, 12, 20],
+        {}, class: "bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>
+
+      <div class="mt-4">
+        <%= render "shared/label", text: "Default aspect ratio" %>
+        <%= f.select :default_aspect_ratio, ["16:9", "4:3", "1:1", "9:16"],
+          {}, class: "bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>
+      </div>
+    </div>
+
+    <div class="pt-2">
+      <%= f.submit "Save settings",
+        class: "bg-gold text-plum-deep px-5 py-2.5 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    </div>
+  <% end %>
+</div>
