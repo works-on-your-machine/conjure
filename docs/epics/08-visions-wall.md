@@ -102,11 +102,11 @@ Build the Visions section — the core product experience. A wall of all generat
 - Cost estimate display element near the Conjure button
 
 **Acceptance criteria:**
-- [ ] Cost estimate displays below/beside the Conjure button
-- [ ] Estimate updates when scope changes (all slides vs. subset)
-- [ ] Estimate updates when variation count changes
-- [ ] Format: "~$3.20 (8 slides × 5 variations × $0.08)"
-- [ ] Shows $0.00 when no slides are in scope
+- [x] Cost estimate displays below/beside the Conjure button
+- [x] Estimate updates when scope changes (all slides vs. subset)
+- [x] Estimate updates when variation count changes
+- [x] Format: "~$3.20 (8 slides × 5 variations × $0.04)"
+- [x] Shows $0.00 when no slides are in scope
 
 **Dependencies:** Story 8.1
 
@@ -126,11 +126,11 @@ Build the Visions section — the core product experience. A wall of all generat
 - Route for visions#show
 
 **Acceptance criteria:**
-- [ ] Clicking a vision opens a detail panel/modal
-- [ ] Panel shows: conjuring run number and timestamp, grimoire_text, slide_text, assembled prompt, refinement (if any)
-- [ ] Panel shows the full-size image
-- [ ] Closeable — returns to the wall view
-- [ ] Tests pass
+- [x] Clicking a vision opens a detail panel/modal
+- [x] Panel shows: conjuring run number and timestamp, grimoire_text, slide_text, assembled prompt, refinement (if any)
+- [x] Panel shows the full-size image
+- [x] Closeable — returns to the wall view
+- [x] Tests pass
 
 **Dependencies:** Story 8.1
 
@@ -151,11 +151,11 @@ Build the Visions section — the core product experience. A wall of all generat
 - `app/controllers/conjurings_controller.rb` (destroy action)
 
 **Acceptance criteria:**
-- [ ] Individual vision delete removes the vision and its Active Storage image
-- [ ] Bulk conjuring delete removes all visions from that conjuring
-- [ ] Both actions require confirmation
-- [ ] Wall updates after deletion (removed visions disappear)
-- [ ] Tests pass
+- [x] Individual vision delete removes the vision and its Active Storage image
+- [x] Bulk conjuring delete removes all visions from that conjuring
+- [x] Both actions require confirmation
+- [x] Wall updates after deletion (removed visions disappear)
+- [x] Tests pass
 
 **Dependencies:** Stories 8.1, 8.4
 

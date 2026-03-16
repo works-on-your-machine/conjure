@@ -32,7 +32,7 @@ Wire up the generation engine, background jobs, real-time updates, and the visio
 | Epic | Status | Depends On | File |
 |------|--------|------------|------|
 | Generation Engine & Background Jobs | Done | Data Model, Settings | [docs/epics/07-generation-engine.md](epics/07-generation-engine.md) |
-| Visions Wall | In Progress | Generation Engine, Incantations | [docs/epics/08-visions-wall.md](epics/08-visions-wall.md) |
+| Visions Wall | Done | Generation Engine, Incantations | [docs/epics/08-visions-wall.md](epics/08-visions-wall.md) |
 
 ## Phase 4: Assembly & Export
 Complete the workflow with the Final Cut assembly view, refinement, and all export options.

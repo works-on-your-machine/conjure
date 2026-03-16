@@ -1,0 +1,70 @@
+<%# Vision provenance panel — shows exactly what inputs produced this vision %>
+<%= render "shared/header" %>
+
+<div class="px-10 max-w-[720px] mx-auto">
+  <div class="flex items-center gap-4 mb-6">
+    <%= link_to "← Back to visions", project_path(@project, section: "visions"),
+      class: "text-conjure-text-muted text-sm no-underline hover:text-conjure-text transition-colors" %>
+  </div>
+
+  <h2 class="font-display text-2xl font-semibold text-gold-light mb-6">Vision Provenance</h2>
+
+  <%# Full-size image %>
+  <div class="mb-6 rounded-lg overflow-hidden border border-conjure-border">
+    <% if @vision.image.attached? %>
+      <%= image_tag @vision.image, class: "w-full" %>
+    <% else %>
+      <div class="aspect-video bg-surface-light flex items-center justify-center">
+        <span class="text-conjure-text-dim"><%= @vision.status %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Metadata %>
+  <div class="space-y-4">
+    <div>
+      <%= render "shared/label", text: "Conjuring" %>
+      <p class="text-[13px] text-conjure-text">
+        Run #<%= @vision.conjuring_id %> — <%= @vision.conjuring.created_at.strftime("%b %d, %Y at %l:%M %p") %>
+      </p>
+    </div>
+
+    <div>
+      <%= render "shared/label", text: "Grimoire text (at generation time)" %>
+      <div class="bg-surface rounded-md border border-conjure-border p-3 text-[13px] text-conjure-text leading-relaxed whitespace-pre-wrap">
+        <%= @vision.conjuring.grimoire_text %>
+      </div>
+    </div>
+
+    <div>
+      <%= render "shared/label", text: "Slide description (at generation time)" %>
+      <div class="bg-surface rounded-md border border-conjure-border p-3 text-[13px] text-conjure-text leading-relaxed whitespace-pre-wrap">
+        <%= @vision.slide_text %>
+      </div>
+    </div>
+
+    <div>
+      <%= render "shared/label", text: "Assembled prompt (sent to image generator)" %>
+      <div class="bg-surface rounded-md border border-conjure-border p-3 text-[13px] text-conjure-text leading-relaxed whitespace-pre-wrap">
+        <%= @vision.prompt %>
+      </div>
+    </div>
+
+    <% if @vision.refinement.present? %>
+      <div>
+        <%= render "shared/label", text: "Refinement" %>
+        <div class="bg-surface rounded-md border border-conjure-border p-3 text-[13px] text-conjure-text leading-relaxed whitespace-pre-wrap">
+          <%= @vision.refinement %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex gap-2 mt-6 pt-4 border-t border-conjure-border">
+    <%= link_to "← Back to visions", project_path(@project, section: "visions"),
+      class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline" %>
+    <%= button_to "Delete this vision", project_vision_path(@project, @vision), method: :delete,
+      class: "bg-transparent text-danger px-4 py-2 rounded-md text-[13px] border border-danger/30 cursor-pointer",
+      data: { turbo_confirm: "Delete this vision?" } %>
+  </div>
+</div>
