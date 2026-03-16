@@ -5,9 +5,13 @@ class Vision < ApplicationRecord
 
   enum :status, { pending: 0, generating: 1, complete: 2, failed: 3 }
 
-  after_update_commit :broadcast_completion, if: :complete?
+  after_update_commit :broadcast_completion, if: :status_just_completed?
 
   private
+
+  def status_just_completed?
+    complete? && status_previously_changed?
+  end
 
   def broadcast_completion
     project = conjuring.project

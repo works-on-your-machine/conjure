@@ -89,6 +89,7 @@
                   project_vision_path(@project, selected_vision),
                   method: :patch,
                   params: { vision: { selected: false } },
+                  data: { turbo: false },
                   class: "bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border cursor-pointer hover:border-conjure-border-hover" %>
                 <%= button_to "Delete",
                   project_vision_path(@project, selected_vision),
@@ -143,6 +144,7 @@
               <%= button_to project_vision_path(@project, vision),
                 method: :patch,
                 params: { vision: { selected: true } },
+                data: { turbo: false },
                 class: "w-full p-0 bg-transparent border-none cursor-pointer" do %>
                 <%= render partial: "visions/vision", locals: { vision: vision } %>
               <% end %>
