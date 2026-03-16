@@ -72,10 +72,10 @@ Build the Grimoire Library — a grid of grimoire cards where users create, edit
 - Duplicate button on grimoire cards and show page
 
 **Acceptance criteria:**
-- [ ] Clicking "Duplicate" creates a new grimoire with the same description and name + " (copy)"
-- [ ] Redirects to the new grimoire's edit page
-- [ ] The duplicate is fully independent (editing it doesn't affect the original)
-- [ ] Tests pass
+- [x] Clicking "Duplicate" creates a new grimoire with the same description and name + " (copy)"
+- [x] Redirects to the new grimoire's edit page
+- [x] The duplicate is fully independent (editing it doesn't affect the original)
+- [x] Tests pass
 
 **Dependencies:** Story 4.1
 

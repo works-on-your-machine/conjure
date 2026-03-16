@@ -1,5 +1,5 @@
 class GrimoiresController < ApplicationController
-  before_action :set_grimoire, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_grimoire, only: [ :show, :edit, :update, :destroy, :duplicate ]
 
   def index
     @grimoires = Grimoire.all
@@ -30,6 +30,14 @@ class GrimoiresController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def duplicate
+    copy = @grimoire.dup
+    copy.name = "#{@grimoire.name} (copy)"
+    copy.projects_count = 0
+    copy.save!
+    redirect_to edit_grimoire_path(copy)
   end
 
   def destroy

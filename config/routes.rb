@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root "projects#index"
 
   resources :projects, only: [ :index, :show, :new, :create, :destroy ]
-  resources :grimoires
+  resources :grimoires do
+    post :duplicate, on: :member
+  end
   resource :settings, only: [ :show, :update ] do
     delete :clear_unselected, on: :collection
   end

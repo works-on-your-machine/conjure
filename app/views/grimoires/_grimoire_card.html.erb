@@ -4,6 +4,8 @@
   <div class="flex items-center justify-between">
     <span class="text-[11px] text-conjure-text-dim">Used in <%= grimoire.projects_count %> project<%= grimoire.projects_count == 1 ? "" : "s" %></span>
     <div class="flex gap-1.5">
+      <%= button_to "Duplicate", duplicate_grimoire_path(grimoire), method: :post,
+        class: "text-conjure-text-muted text-[11px] px-2 py-1 bg-transparent border-none cursor-pointer hover:text-conjure-text" %>
       <%= link_to "Edit", edit_grimoire_path(grimoire),
         class: "text-conjure-text-muted text-[11px] px-2 py-1 no-underline hover:text-conjure-text" %>
     </div>
