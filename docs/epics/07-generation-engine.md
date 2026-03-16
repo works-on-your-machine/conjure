@@ -77,11 +77,11 @@ Wire up the full generation pipeline: prompt assembly via LLM, image generation 
 - `spec/services/prompt_assembly_service_spec.rb` (with stubbed LLM response)
 
 **Acceptance criteria:**
-- [ ] `PromptAssemblyService.new.assemble(grimoire_text:, slide_text:)` returns a prompt string
-- [ ] Optionally accepts `refinement:` parameter that gets folded into the prompt
-- [ ] Uses the LLM API key from Setting.current
-- [ ] Returns a usable prompt even if the LLM call fails (fallback: concatenation of grimoire_text + slide_text)
-- [ ] Tests pass with stubbed LLM responses
+- [x] `PromptAssemblyService.new.assemble(grimoire_text:, slide_text:)` returns a prompt string
+- [x] Optionally accepts `refinement:` parameter that gets folded into the prompt
+- [x] Uses the LLM API key from Setting.current
+- [x] Returns a usable prompt even if the LLM call fails (fallback: concatenation of grimoire_text + slide_text)
+- [x] Tests pass with stubbed LLM responses
 
 **Dependencies:** None (within this epic)
 
