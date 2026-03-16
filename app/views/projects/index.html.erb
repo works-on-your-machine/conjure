@@ -1,5 +1,32 @@
 <%= render "shared/header" %>
+
 <div class="px-10 max-w-[960px] mx-auto">
-  <%# Project grid will be built in Epic 05 %>
-  <div class="text-conjure-text-muted text-sm">Workshop content coming soon.</div>
+  <% if @projects.any? %>
+    <div class="flex items-center justify-between mb-8">
+      <div></div>
+      <%= link_to "✦ Conjure new project", new_project_path,
+        class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
+      <% @projects.each do |project| %>
+        <%= render partial: "projects/project_card", locals: { project: project } %>
+      <% end %>
+
+      <%# New project ghost card %>
+      <%= link_to new_project_path,
+        class: "rounded-[10px] border border-dashed border-conjure-border p-4 flex flex-col items-center justify-center min-h-[180px] transition-all hover:border-gold-dim no-underline" do %>
+        <span class="text-[28px] text-gold-dim mb-2">✦</span>
+        <span class="text-[13px] text-conjure-text-dim">New project</span>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render layout: "shared/empty_state", locals: {
+      title: "Your workshop is empty",
+      description: "Every presentation begins as a vision. Describe a vibe, conjure some slides, curate your favorites."
+    } do %>
+      <%= link_to "Start from scratch", new_project_path,
+        class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    <% end %>
+  <% end %>
 </div>

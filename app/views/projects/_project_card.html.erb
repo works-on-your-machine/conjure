@@ -1,0 +1,28 @@
+<%= link_to project_path(project),
+  class: "bg-surface rounded-[10px] border border-conjure-border p-4 transition-all hover:border-conjure-border-hover block no-underline" do %>
+
+  <%# Thumbnail mosaic placeholder (will show actual visions later) %>
+  <div class="grid grid-cols-2 gap-[3px] rounded overflow-hidden">
+    <% 4.times do |i| %>
+      <div class="aspect-video bg-surface-light"></div>
+    <% end %>
+  </div>
+
+  <h3 class="font-display text-[17px] font-semibold text-gold-light mt-3 mb-1"><%= project.name %></h3>
+
+  <div class="flex items-center justify-between">
+    <span class="text-[11px] text-muted">◈ <%= project.grimoire.name %></span>
+    <span class="text-[11px] text-conjure-text-dim"><%= time_ago_in_words(project.updated_at) %> ago</span>
+  </div>
+
+  <div class="mt-2 flex items-center gap-2">
+    <div class="flex-1 h-[3px] bg-plum-deep rounded-sm overflow-hidden">
+      <% selected = project.slides.count { |s| s.visions.any?(&:selected?) } rescue 0 %>
+      <% total = project.slides.size %>
+      <% pct = total > 0 ? (selected.to_f / total * 100) : 0 %>
+      <div class="h-full rounded-sm transition-[width] duration-300 <%= selected == total && total > 0 ? 'bg-gold' : 'bg-muted' %>"
+           style="width: <%= pct %>%"></div>
+    </div>
+    <span class="text-[11px] text-conjure-text-dim"><%= project.slides.size %> slides</span>
+  </div>
+<% end %>

@@ -44,11 +44,11 @@ Build the Workshop (home screen) with the project card grid and the new project 
 - `test/controllers/projects_controller_test.rb`
 
 **Acceptance criteria:**
-- [ ] Root path (/) shows the Workshop with all projects as cards
-- [ ] Each card displays: title (serif, gold), grimoire name, slide count, last modified
-- [ ] Clicking a card navigates to the project workspace
-- [ ] "Conjure new project" button is prominent at the top
-- [ ] Tests pass
+- [x] Root path (/) shows the Workshop with all projects as cards
+- [x] Each card displays: title (serif, gold), grimoire name, slide count, last modified
+- [x] Clicking a card navigates to the project workspace
+- [x] "Conjure new project" button is prominent at the top
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 
@@ -69,9 +69,9 @@ Build the Workshop (home screen) with the project card grid and the new project 
 - Empty state content with welcome message and "Start from scratch" CTA
 
 **Acceptance criteria:**
-- [ ] When no projects exist, a welcome message is displayed instead of an empty grid
-- [ ] "Start from scratch" button leads to new project flow
-- [ ] When projects exist, the normal card grid renders
+- [x] When no projects exist, a welcome message is displayed instead of an empty grid
+- [x] "Start from scratch" button leads to new project flow
+- [x] When projects exist, the normal card grid renders
 
 **Dependencies:** Story 5.1
 
