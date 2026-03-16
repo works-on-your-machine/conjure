@@ -40,12 +40,12 @@ Let users export their curated presentation as PDF, PNG folder (for Figma), or a
 - `test/services/pdf_export_service_test.rb`
 
 **Acceptance criteria:**
-- [ ] "Export PDF" downloads a PDF file
-- [ ] PDF contains one page per slide with the selected vision's image
-- [ ] Pages are in slide position order
-- [ ] PDF file name includes the project name (e.g., "my-presentation.pdf")
-- [ ] Export is disabled or warns when not all slides have a selected vision
-- [ ] Tests pass
+- [x] "Export PDF" downloads a PDF file
+- [x] PDF contains one page per slide with the selected vision's image
+- [x] Pages are in slide position order
+- [x] PDF file name includes the project name (e.g., "my-presentation.pdf")
+- [x] Export is disabled or warns when not all slides have a selected vision
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 
@@ -65,10 +65,10 @@ Let users export their curated presentation as PDF, PNG folder (for Figma), or a
 - `test/services/png_export_service_test.rb`
 
 **Acceptance criteria:**
-- [ ] "Export to Figma" downloads a zip file
-- [ ] Zip contains one PNG per slide, named `01-slide-title.png` (position-title format)
-- [ ] Images are the original generated resolution
-- [ ] Tests pass
+- [x] "Export to Figma" downloads a zip file
+- [x] Zip contains one PNG per slide, named `01-slide-title.png` (position-title format)
+- [x] Images are the original generated resolution
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 
@@ -88,10 +88,10 @@ Let users export their curated presentation as PDF, PNG folder (for Figma), or a
 - `test/services/project_export_service_test.rb`
 
 **Acceptance criteria:**
-- [ ] "Export project" downloads a zip file
-- [ ] Zip structure: `project-name/grimoire.txt`, `project-name/slides/*.txt`, `project-name/conjurings/{run-N}/*.png`, `project-name/conjurings/{run-N}/metadata.json`
-- [ ] Metadata includes grimoire_text, slide_text, prompt, refinement, selected status for each vision
-- [ ] Tests pass
+- [x] "Export project" downloads a zip file
+- [x] Zip structure: `project-name/grimoire.txt`, `project-name/slides/*.txt`, `project-name/conjurings/{run-N}/*.png`, `project-name/conjurings/{run-N}/metadata.json`
+- [x] Metadata includes grimoire_text, slide_text, prompt, refinement, selected status for each vision
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 

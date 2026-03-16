@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     end
     resources :conjurings, only: [ :create, :destroy ]
     resources :visions, only: [ :show, :update, :destroy ]
+    get "export/pdf", to: "exports#pdf", as: :export_pdf
+    get "export/png", to: "exports#png", as: :export_png
+    get "export/project", to: "exports#project_zip", as: :export_project
   end
   resources :grimoires do
     post :duplicate, on: :member

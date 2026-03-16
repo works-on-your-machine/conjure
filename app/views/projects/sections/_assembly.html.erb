@@ -10,6 +10,12 @@
     <div class="flex items-center gap-2">
       <%= link_to "← Visions", project_path(@project, section: "visions"),
         class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+      <%= link_to "Export to Figma", project_export_png_path(@project),
+        class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+      <%= link_to "Export project", project_export_project_path(@project),
+        class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+      <%= link_to "Export PDF", project_export_pdf_path(@project),
+        class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)] #{selected_count < total ? 'opacity-40 pointer-events-none' : ''}" %>
     </div>
   </div>
 

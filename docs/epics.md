@@ -40,4 +40,4 @@ Complete the workflow with the Final Cut assembly view, refinement, and all expo
 | Epic | Status | Depends On | File |
 |------|--------|------------|------|
 | Final Cut & Refinement | Done | Visions Wall | [docs/epics/09-final-cut.md](epics/09-final-cut.md) |
-| Export | Ready | Final Cut | [docs/epics/10-export.md](epics/10-export.md) |
+| Export | Done | Final Cut | [docs/epics/10-export.md](epics/10-export.md) |
