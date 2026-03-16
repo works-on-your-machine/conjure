@@ -1,0 +1,37 @@
+<div class="p-8 max-w-[720px]">
+  <h2 class="font-display text-[28px] font-semibold text-gold-light mb-1">Grimoire</h2>
+  <p class="text-[13px] text-conjure-text-muted mb-6">The visual world for this project</p>
+
+  <%= form_with model: @project, method: :patch, class: "space-y-6" do |f| %>
+    <%# Grimoire selector %>
+    <%= render "shared/label", text: "Active grimoire" %>
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <% @grimoires.each do |grimoire| %>
+        <label class="cursor-pointer flex-1 min-w-[140px]">
+          <%= f.radio_button :grimoire_id, grimoire.id, class: "peer sr-only" %>
+          <div class="p-2.5 px-4 rounded-lg transition-all bg-surface border border-conjure-border peer-checked:bg-gold-glow peer-checked:border-gold-dim">
+            <div class="text-[13px] font-medium text-conjure-text peer-checked:text-gold"><%= grimoire.name %></div>
+          </div>
+        </label>
+      <% end %>
+    </div>
+
+    <%# Theme description (read-only display of current grimoire's text) %>
+    <%= render "shared/label", text: "Theme description" %>
+    <div class="w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed whitespace-pre-wrap min-h-[200px]">
+      <%= @project.grimoire.description %>
+    </div>
+
+    <%# Variation count %>
+    <div class="mt-4">
+      <%= render "shared/label", text: "Variations per slide" %>
+      <%= f.select :default_variations, [3, 5, 8, 12, 20],
+        {}, class: "bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>
+    </div>
+
+    <div class="pt-2">
+      <%= f.submit "Save changes",
+        class: "bg-gold text-plum-deep px-5 py-2.5 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    </div>
+  <% end %>
+</div>

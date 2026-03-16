@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "projects#index"
 
-  resources :projects, only: [ :index, :show, :new, :create, :destroy ]
+  resources :projects, only: [ :index, :show, :new, :create, :update, :destroy ]
   resources :grimoires do
     post :duplicate, on: :member
   end

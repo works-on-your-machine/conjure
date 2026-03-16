@@ -5,6 +5,13 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.includes(:grimoire, :slides).find(params[:id])
+    @grimoires = Grimoire.all
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    @project.update!(project_params)
+    redirect_to project_path(@project)
   end
 
   def new
@@ -31,6 +38,6 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :grimoire_id)
+    params.require(:project).permit(:name, :grimoire_id, :default_variations)
   end
 end

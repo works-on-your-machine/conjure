@@ -2,11 +2,16 @@
   <%= render "shared/sidebar" %>
 
   <main class="flex-1 overflow-auto">
-    <%# Section content will be filled by feature epics %>
-    <div class="p-8">
-      <div class="text-conjure-text-muted text-sm">
-        Project workspace — <%= params[:section]&.capitalize || "Grimoire" %> section
-      </div>
-    </div>
+    <% section = params[:section] || "grimoire" %>
+
+    <% if section == "grimoire" %>
+      <%= render "projects/sections/grimoire" %>
+    <% elsif section == "incantations" %>
+      <div class="p-8 text-conjure-text-muted text-sm">Incantations section — coming in Epic 06</div>
+    <% elsif section == "visions" %>
+      <div class="p-8 text-conjure-text-muted text-sm">Visions section — coming in Epic 08</div>
+    <% elsif section == "assembly" %>
+      <div class="p-8 text-conjure-text-muted text-sm">Final Cut section — coming in Epic 09</div>
+    <% end %>
   </main>
 </div>

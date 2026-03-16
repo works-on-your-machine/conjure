@@ -121,13 +121,13 @@ Build the Workshop (home screen) with the project card grid and the new project 
 - Variation count selector (updates `project.default_variations`)
 
 **Acceptance criteria:**
-- [ ] GET /projects/:id renders the workspace with sidebar
-- [ ] Sidebar shows four sections, Grimoire section is the default/first view
-- [ ] Active grimoire name and full description text are displayed and editable
-- [ ] User can switch to a different grimoire from their library
-- [ ] Variation count selector (3, 5, 8, 12, 20) updates the project
-- [ ] "Back to Workshop" link in sidebar navigates to root
-- [ ] Tests pass
+- [x] GET /projects/:id renders the workspace with sidebar
+- [x] Sidebar shows four sections, Grimoire section is the default/first view
+- [x] Active grimoire name and full description text are displayed and editable
+- [x] User can switch to a different grimoire from their library
+- [x] Variation count selector (3, 5, 8, 12, 20) updates the project
+- [x] "Back to Workshop" link in sidebar navigates to root
+- [x] Tests pass
 
 **Dependencies:** Stories 5.1, 5.3
 
