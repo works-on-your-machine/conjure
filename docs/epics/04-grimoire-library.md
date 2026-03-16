@@ -45,14 +45,14 @@ Build the Grimoire Library — a grid of grimoire cards where users create, edit
 - `test/controllers/grimoires_controller_test.rb`
 
 **Acceptance criteria:**
-- [ ] GET /grimoires shows a card grid of all grimoires
-- [ ] Each card shows name (serif, gold), description preview, and usage count
-- [ ] GET /grimoires/new renders a create form with name and description fields
-- [ ] POST /grimoires creates a grimoire and redirects to its show page
-- [ ] GET /grimoires/:id shows the full grimoire with editable text
-- [ ] PATCH /grimoires/:id updates the grimoire
-- [ ] DELETE /grimoires/:id with confirmation deletes the grimoire (prevented if projects reference it, or cascades — decide based on UX preference)
-- [ ] Tests pass
+- [x] GET /grimoires shows a card grid of all grimoires
+- [x] Each card shows name (serif, gold), description preview, and usage count
+- [x] GET /grimoires/new renders a create form with name and description fields
+- [x] POST /grimoires creates a grimoire and redirects to its show page
+- [x] GET /grimoires/:id shows the full grimoire with editable text
+- [x] PATCH /grimoires/:id updates the grimoire
+- [x] DELETE /grimoires/:id with confirmation deletes the grimoire (cascades via dependent destroy)
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 

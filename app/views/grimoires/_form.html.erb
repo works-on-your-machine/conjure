@@ -1,0 +1,28 @@
+<%= form_with model: grimoire, class: "space-y-6" do |f| %>
+  <% if grimoire.errors.any? %>
+    <div class="bg-danger/10 border border-danger/30 rounded-md px-4 py-3 text-sm text-danger">
+      <% grimoire.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= render "shared/label", text: "Name" %>
+    <%= f.text_field :name,
+      placeholder: "e.g. Pirate Broadcast, Noir Detective, Solar Punk...",
+      class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>
+  </div>
+
+  <div>
+    <%= render "shared/label", text: "Visual description" %>
+    <%= f.text_area :description, rows: 8,
+      placeholder: "Describe the world your slides live in.\n\nColors, textures, typography, era, mood...",
+      class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+  </div>
+
+  <div>
+    <%= f.submit grimoire.persisted? ? "Save grimoire" : "Create grimoire",
+      class: "bg-gold text-plum-deep px-5 py-2.5 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+  </div>
+<% end %>

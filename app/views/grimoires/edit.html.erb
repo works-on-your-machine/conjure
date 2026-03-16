@@ -1,0 +1,13 @@
+<%= render "shared/header" %>
+
+<div class="px-10 max-w-[640px] mx-auto">
+  <div class="flex items-center gap-4 mb-6">
+    <%= link_to "← Library", grimoires_path,
+      class: "text-conjure-text-muted text-sm no-underline hover:text-conjure-text transition-colors" %>
+  </div>
+
+  <h2 class="font-display text-2xl font-semibold text-gold-light mb-1">Edit <%= @grimoire.name %></h2>
+  <p class="text-[13px] text-conjure-text-muted mb-6">Update your visual world.</p>
+
+  <%= render "grimoires/form", grimoire: @grimoire %>
+</div>

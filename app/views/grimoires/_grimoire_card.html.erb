@@ -1,0 +1,11 @@
+<%= link_to grimoire_path(grimoire), class: "bg-surface rounded-[10px] border border-conjure-border p-4 transition-all hover:border-conjure-border-hover block no-underline" do %>
+  <h3 class="font-display text-[17px] font-semibold text-gold-light mt-3 mb-1"><%= grimoire.name %></h3>
+  <p class="text-xs text-conjure-text-muted leading-relaxed mb-2.5 line-clamp-3"><%= grimoire.description %></p>
+  <div class="flex items-center justify-between">
+    <span class="text-[11px] text-conjure-text-dim">Used in <%= grimoire.projects_count %> project<%= grimoire.projects_count == 1 ? "" : "s" %></span>
+    <div class="flex gap-1.5">
+      <%= link_to "Edit", edit_grimoire_path(grimoire),
+        class: "text-conjure-text-muted text-[11px] px-2 py-1 no-underline hover:text-conjure-text" %>
+    </div>
+  </div>
+<% end %>

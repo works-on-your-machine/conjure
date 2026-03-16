@@ -22,7 +22,7 @@ Build the screens where users manage settings, grimoires, projects, and slides â
 | Epic | Status | Depends On | File |
 |------|--------|------------|------|
 | Settings & BYOK Configuration | Done | Data Model | [docs/epics/03-settings.md](epics/03-settings.md) |
-| Grimoire Library | Ready | Data Model, Visual Identity | [docs/epics/04-grimoire-library.md](epics/04-grimoire-library.md) |
+| Grimoire Library | In Progress | Data Model, Visual Identity | [docs/epics/04-grimoire-library.md](epics/04-grimoire-library.md) |
 | Workshop & Project Management | Ready | Grimoire Library | [docs/epics/05-workshop-projects.md](epics/05-workshop-projects.md) |
 | Incantations (Slide Editor) | Ready | Workshop & Project Management | [docs/epics/06-incantations.md](epics/06-incantations.md) |
 
