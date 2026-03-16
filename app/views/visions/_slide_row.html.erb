@@ -120,8 +120,8 @@
         </div>
       <% end %>
 
-      <%# Full thumbnail grid %>
-      <div class="flex flex-wrap gap-2">
+      <%# Full thumbnail grid — id is the Turbo Stream broadcast target %>
+      <div id="slide_<%= slide.id %>_visions" data-slide-panel-target="grid" class="flex flex-wrap gap-2">
         <% slide.visions.includes(:conjuring).order(created_at: :desc).each do |vision| %>
           <div class="w-36 relative">
             <div class="absolute top-1 left-1 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
