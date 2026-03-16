@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_185705) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_16_193917) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -95,6 +95,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_185705) do
     t.boolean "selected", default: false
     t.integer "slide_id", null: false
     t.text "slide_text"
+    t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.index ["conjuring_id"], name: "index_visions_on_conjuring_id"
     t.index ["slide_id"], name: "index_visions_on_slide_id"

@@ -31,7 +31,7 @@ Wire up the generation engine, background jobs, real-time updates, and the visio
 
 | Epic | Status | Depends On | File |
 |------|--------|------------|------|
-| Generation Engine & Background Jobs | Ready | Data Model, Settings | [docs/epics/07-generation-engine.md](epics/07-generation-engine.md) |
+| Generation Engine & Background Jobs | In Progress | Data Model, Settings | [docs/epics/07-generation-engine.md](epics/07-generation-engine.md) |
 | Visions Wall | Ready | Generation Engine, Incantations | [docs/epics/08-visions-wall.md](epics/08-visions-wall.md) |
 
 ## Phase 4: Assembly & Export

@@ -59,6 +59,19 @@ RSpec.describe Vision, type: :model do
       vision = create(:vision)
       expect(vision.selected).to be false
     end
+
+    it "defaults status to pending" do
+      vision = create(:vision)
+      expect(vision).to be_pending
+    end
+
+    it "supports status transitions" do
+      vision = create(:vision)
+      vision.generating!
+      expect(vision).to be_generating
+      vision.complete!
+      expect(vision).to be_complete
+    end
   end
 
   describe "project association through conjuring" do

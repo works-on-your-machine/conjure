@@ -54,11 +54,11 @@ Wire up the full generation pipeline: prompt assembly via LLM, image generation 
 - `spec/services/gemini_image_provider_spec.rb` (with stubbed HTTP)
 
 **Acceptance criteria:**
-- [ ] `GeminiImageProvider.new(api_key:).generate(prompt:, aspect_ratio:)` returns `{ image_data: <base64>, mime_type: "image/png" }`
-- [ ] Makes correct POST to Gemini `generateContent` endpoint with `responseModalities: ["TEXT", "IMAGE"]`
-- [ ] Raises specific errors for 429 (rate limit), 4xx (client error), 5xx (server error)
-- [ ] Vision model has status enum: `{ pending: 0, generating: 1, complete: 2, failed: 3 }`
-- [ ] Tests pass with stubbed HTTP responses
+- [x] `GeminiImageProvider.new(api_key:).generate(prompt:, aspect_ratio:)` returns `{ image_data: <base64>, mime_type: "image/png" }`
+- [x] Makes correct POST to Gemini `generateContent` endpoint with `responseModalities: ["IMAGE"]`
+- [x] Raises specific errors for 429 (rate limit), 4xx (client error), 5xx (server error)
+- [x] Vision model has status enum: `{ pending: 0, generating: 1, complete: 2, failed: 3 }`
+- [x] Tests pass with stubbed HTTP responses
 
 **Dependencies:** None (within this epic)
 
