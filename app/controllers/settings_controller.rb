@@ -1,6 +1,8 @@
 class SettingsController < ApplicationController
   def show
     @setting = Setting.current
+    @vision_count = Vision.count
+    @storage_bytes = Vision.total_storage_bytes
   end
 
   def update
@@ -13,6 +15,11 @@ class SettingsController < ApplicationController
 
     @setting.update!(update_params)
     redirect_to settings_path, notice: "Settings updated."
+  end
+
+  def clear_unselected
+    Vision.where(selected: false).destroy_all
+    redirect_to settings_path, notice: "Unselected visions cleared."
   end
 
   private

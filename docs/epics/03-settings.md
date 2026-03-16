@@ -66,11 +66,11 @@ Give users a settings screen to manage their BYOK API keys (Nano Banana 2, LLM) 
 - Cleanup action in settings controller
 
 **Acceptance criteria:**
-- [ ] Settings page shows total vision count and approximate disk usage
-- [ ] "Clear unselected visions" button deletes all visions where `selected: false` and their attached images
-- [ ] Confirmation dialog before destructive cleanup action
-- [ ] Page refreshes after cleanup showing updated counts
-- [ ] Tests pass
+- [x] Settings page shows total vision count and approximate disk usage
+- [x] "Clear unselected visions" button deletes all visions where `selected: false` and their attached images
+- [x] Confirmation dialog before destructive cleanup action
+- [x] Page refreshes after cleanup showing updated counts
+- [x] Tests pass
 
 **Dependencies:** Story 3.1
 
