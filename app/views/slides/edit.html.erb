@@ -1,0 +1,35 @@
+<turbo-frame id="slide_editor">
+  <%= form_with model: [@project, @slide], class: "space-y-4" do |f| %>
+    <%= f.text_field :title,
+      class: "w-full font-display text-[22px] font-semibold bg-transparent border-none p-0 pb-3 text-gold-light outline-none" %>
+
+    <%= render "shared/label", text: "What this slide should show" %>
+    <%= f.text_area :description, rows: 10,
+      placeholder: "Describe what you want this slide to communicate...",
+      class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+
+    <div class="flex gap-2 flex-wrap items-center">
+      <%= f.submit "Save",
+        class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium cursor-pointer border-none" %>
+
+      <div class="flex-1"></div>
+
+      <% unless @slide.position == 1 %>
+        <%= button_to "↑ Move up", move_project_slide_path(@project, @slide, direction: "up"),
+          method: :patch,
+          class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer" %>
+      <% end %>
+
+      <% unless @slide.position == @project.slides.maximum(:position) %>
+        <%= button_to "↓ Move down", move_project_slide_path(@project, @slide, direction: "down"),
+          method: :patch,
+          class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer" %>
+      <% end %>
+
+      <%= button_to "Remove", project_slide_path(@project, @slide),
+        method: :delete,
+        class: "bg-transparent text-danger px-4 py-2 rounded-md text-xs border border-danger/30 cursor-pointer",
+        data: { turbo_confirm: "Remove this slide?" } %>
+    </div>
+  <% end %>
+</turbo-frame>

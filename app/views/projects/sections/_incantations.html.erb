@@ -1,0 +1,40 @@
+<div class="flex h-full">
+  <%# Left pane: slide list %>
+  <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto">
+    <div class="flex items-center justify-between mb-4 px-1">
+      <span class="font-display text-lg font-semibold text-gold-light">Incantations</span>
+      <span class="text-[11px] text-conjure-text-dim"><%= @project.slides.size %> slides</span>
+    </div>
+
+    <% @project.slides.each do |slide| %>
+      <%= link_to edit_project_slide_path(@project, slide),
+        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{params[:id].to_s == slide.id.to_s ? 'bg-gold-glow border-gold-dim' : 'border-conjure-border hover:border-conjure-border-hover'}",
+        data: { turbo_frame: "slide_editor" } do %>
+        <div class="text-[13px] font-medium mb-0.5 <%= params[:id].to_s == slide.id.to_s ? 'text-gold' : 'text-conjure-text' %>"><%= slide.title %></div>
+        <div class="text-[11px] text-conjure-text-dim truncate"><%= slide.description %></div>
+      <% end %>
+    <% end %>
+
+    <%# Add slide form %>
+    <div class="mt-3">
+      <%= form_with url: project_slides_path(@project), class: "flex gap-1.5" do |f| %>
+        <%= f.text_field :title,
+          placeholder: "New slide title...",
+          class: "flex-1 bg-surface text-conjure-text border border-conjure-border rounded-md px-2.5 py-2 font-body text-xs outline-none focus:border-conjure-border-hover" %>
+        <%= f.submit "+",
+          class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer shrink-0" %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Right pane: slide editor %>
+  <div class="flex-1 p-8 overflow-y-auto">
+    <turbo-frame id="slide_editor">
+      <% if @project.slides.any? %>
+        <p class="text-[13px] text-conjure-text-dim">Select a slide to edit.</p>
+      <% else %>
+        <p class="text-[13px] text-conjure-text-dim">Add your first slide using the form on the left.</p>
+      <% end %>
+    </turbo-frame>
+  </div>
+</div>

@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root "projects#index"
 
-  resources :projects, only: [ :index, :show, :new, :create, :update, :destroy ]
+  resources :projects, only: [ :index, :show, :new, :create, :update, :destroy ] do
+    resources :slides, only: [ :create, :edit, :update, :destroy ] do
+      patch :move, on: :member
+    end
+  end
   resources :grimoires do
     post :duplicate, on: :member
   end

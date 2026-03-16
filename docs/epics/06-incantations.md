@@ -42,12 +42,12 @@ Build the Incantations section where users create, edit, and reorder their slide
 - `test/controllers/slides_controller_test.rb`
 
 **Acceptance criteria:**
-- [ ] Incantations section shows split-pane: slide list left, editor right
-- [ ] Slide list shows all slides with title and description preview, ordered by position
-- [ ] Clicking a slide in the list loads its editor in the right pane via Turbo Frame
-- [ ] Editor shows editable title (text input) and description (textarea)
-- [ ] Saving a slide updates it and refreshes the list entry
-- [ ] Tests pass
+- [x] Incantations section shows split-pane: slide list left, editor right
+- [x] Slide list shows all slides with title and description preview, ordered by position
+- [x] Clicking a slide in the list loads its editor in the right pane via Turbo Frame
+- [x] Editor shows editable title (text input) and description (textarea)
+- [x] Saving a slide updates it and refreshes the list entry
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 
@@ -68,13 +68,13 @@ Build the Incantations section where users create, edit, and reorder their slide
 - Position management logic in controller or model
 
 **Acceptance criteria:**
-- [ ] "Add slide" creates a new slide at the end of the list with the given title
-- [ ] New slide appears in the list immediately (Turbo Stream or Frame refresh)
-- [ ] "Remove" deletes the slide after confirmation, updates the list
-- [ ] "Move up" swaps position with the slide above, "Move down" with the slide below
-- [ ] First slide has no "Move up", last slide has no "Move down"
-- [ ] Positions remain contiguous after add/remove/reorder operations
-- [ ] Tests pass
+- [x] "Add slide" creates a new slide at the end of the list with the given title
+- [x] New slide appears in the list immediately (Turbo Stream or Frame refresh)
+- [x] "Remove" deletes the slide after confirmation, updates the list
+- [x] "Move up" swaps position with the slide above, "Move down" with the slide below
+- [x] First slide has no "Move up", last slide has no "Move down"
+- [x] Positions remain contiguous after add/remove/reorder operations
+- [x] Tests pass
 
 **Dependencies:** Story 6.1
 

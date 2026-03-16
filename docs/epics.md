@@ -24,7 +24,7 @@ Build the screens where users manage settings, grimoires, projects, and slides â
 | Settings & BYOK Configuration | Done | Data Model | [docs/epics/03-settings.md](epics/03-settings.md) |
 | Grimoire Library | Done | Data Model, Visual Identity | [docs/epics/04-grimoire-library.md](epics/04-grimoire-library.md) |
 | Workshop & Project Management | Done | Grimoire Library | [docs/epics/05-workshop-projects.md](epics/05-workshop-projects.md) |
-| Incantations (Slide Editor) | Ready | Workshop & Project Management | [docs/epics/06-incantations.md](epics/06-incantations.md) |
+| Incantations (Slide Editor) | Done | Workshop & Project Management | [docs/epics/06-incantations.md](epics/06-incantations.md) |
 
 ## Phase 3: Generation Pipeline
 Wire up the generation engine, background jobs, real-time updates, and the vision wall â€” the core product experience.
