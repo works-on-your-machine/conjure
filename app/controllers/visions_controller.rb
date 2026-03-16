@@ -12,16 +12,36 @@ class VisionsController < ApplicationController
     end
 
     @vision.update!(vision_params)
+
+    # Re-render the slide row Turbo Frame
+    @slide = @vision.slide.reload
     respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "slide_#{@slide.id}_row",
+          partial: "visions/slide_row",
+          locals: { slide: @slide, project: @project }
+        )
+      }
       format.html { redirect_to project_path(@project, section: "visions") }
-      format.json { head :ok }
-      format.turbo_stream { head :ok }
     end
   end
 
   def destroy
+    slide = @vision.slide
     @vision.destroy
-    redirect_to project_path(@project, section: "visions")
+
+    @slide = slide.reload
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "slide_#{@slide.id}_row",
+          partial: "visions/slide_row",
+          locals: { slide: @slide, project: @project }
+        )
+      }
+      format.html { redirect_to project_path(@project, section: "visions") }
+    end
   end
 
   private

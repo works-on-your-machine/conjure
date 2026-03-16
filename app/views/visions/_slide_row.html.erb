@@ -1,0 +1,136 @@
+<%= turbo_frame_tag "slide_#{slide.id}_row" do %>
+  <div class="mb-6">
+    <%# Slide header %>
+    <% selected_vision = slide.visions.find(&:selected?) %>
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-[13px] text-gold font-medium"><%= slide.title %></span>
+      <% if selected_vision %>
+        <span class="text-[11px] text-conjure-text-dim">v<%= selected_vision.position %> chosen</span>
+      <% elsif slide.visions.any? %>
+        <span class="text-[11px] text-conjure-text-dim">select a vision</span>
+      <% end %>
+    </div>
+
+    <%# Expanded selected vision %>
+    <% if selected_vision %>
+      <div class="mb-3 p-3 bg-surface rounded-lg border border-gold/20">
+        <div class="flex gap-4">
+          <%# Larger preview image %>
+          <div class="w-80 shrink-0">
+            <div class="relative aspect-video rounded-md overflow-hidden border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)]">
+              <% if selected_vision.image.attached? %>
+                <%= image_tag selected_vision.image, class: "w-full h-full object-cover" %>
+              <% else %>
+                <div class="w-full h-full bg-surface-light flex items-center justify-center">
+                  <span class="text-xs text-conjure-text-dim"><%= selected_vision.status %></span>
+                </div>
+              <% end %>
+              <div class="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gold flex items-center justify-center text-[11px] text-plum-deep font-semibold">✦</div>
+            </div>
+          </div>
+
+          <%# Actions & info %>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-[11px] text-conjure-text-dim">Run <%= selected_vision.conjuring_id %> · variation <%= selected_vision.position %></span>
+            </div>
+
+            <%# Action buttons %>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <% if selected_vision.image.attached? %>
+                <button class="bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border cursor-pointer hover:border-conjure-border-hover"
+                        data-controller="lightbox"
+                        data-action="click->lightbox#open"
+                        data-lightbox-src-value="<%= url_for(selected_vision.image) %>">
+                  View full screen
+                </button>
+              <% end %>
+              <%= link_to "✦ Refine",
+                project_path(project, section: "refine", slide_id: slide.id),
+                class: "bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+              <%= button_to "Deselect",
+                project_vision_path(project, selected_vision),
+                method: :patch,
+                params: { vision: { selected: false } },
+                class: "bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border cursor-pointer hover:border-conjure-border-hover" %>
+              <%= button_to "Delete",
+                project_vision_path(project, selected_vision),
+                method: :delete,
+                class: "bg-transparent text-danger px-3 py-1.5 rounded text-[12px] border border-danger/30 cursor-pointer",
+                data: { turbo_confirm: "Delete this vision?" } %>
+            </div>
+
+            <%# Expandable provenance %>
+            <details class="text-[12px]">
+              <summary class="text-conjure-text-muted cursor-pointer hover:text-conjure-text select-none">
+                Provenance details
+              </summary>
+              <div class="mt-2 space-y-2">
+                <div>
+                  <span class="text-conjure-text-dim uppercase text-[10px] tracking-wider">Grimoire text</span>
+                  <p class="text-conjure-text-muted mt-0.5 whitespace-pre-wrap leading-relaxed max-h-24 overflow-y-auto"><%= selected_vision.conjuring.grimoire_text %></p>
+                </div>
+                <div>
+                  <span class="text-conjure-text-dim uppercase text-[10px] tracking-wider">Slide description</span>
+                  <p class="text-conjure-text-muted mt-0.5 whitespace-pre-wrap leading-relaxed"><%= selected_vision.slide_text %></p>
+                </div>
+                <div>
+                  <span class="text-conjure-text-dim uppercase text-[10px] tracking-wider">Assembled prompt</span>
+                  <p class="text-conjure-text-muted mt-0.5 whitespace-pre-wrap leading-relaxed max-h-24 overflow-y-auto"><%= selected_vision.prompt %></p>
+                </div>
+                <% if selected_vision.refinement.present? %>
+                  <div>
+                    <span class="text-conjure-text-dim uppercase text-[10px] tracking-wider">Refinement</span>
+                    <p class="text-conjure-text-muted mt-0.5"><%= selected_vision.refinement %></p>
+                  </div>
+                <% end %>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%# Thumbnail grid — non-selected visions %>
+    <div id="slide_<%= slide.id %>_visions" class="flex flex-wrap gap-2">
+      <% slide.visions.includes(:conjuring).order(created_at: :desc).each do |vision| %>
+        <% next if vision.selected? %>
+        <div class="w-36 relative">
+          <%# Conjuring badge %>
+          <div class="absolute top-1 left-1 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
+            Run <%= vision.conjuring_id %>
+          </div>
+
+          <%# Click to select (complete visions only) %>
+          <% if vision.complete? %>
+            <%= button_to project_vision_path(project, vision),
+              method: :patch,
+              params: { vision: { selected: true } },
+              class: "w-full p-0 bg-transparent border-none cursor-pointer" do %>
+              <%= render partial: "visions/vision", locals: { vision: vision } %>
+            <% end %>
+          <% else %>
+            <%= render partial: "visions/vision", locals: { vision: vision } %>
+          <% end %>
+
+          <%# Failed: delete button %>
+          <% if vision.failed? %>
+            <div class="absolute bottom-1 right-1 z-10">
+              <%= button_to project_vision_path(project, vision), method: :delete,
+                class: "bg-danger/80 text-white text-[9px] px-1 py-0.5 rounded cursor-pointer border-none backdrop-blur-sm",
+                data: { turbo_confirm: "Remove?" } do %>
+                ✕
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if slide.visions.empty? %>
+        <div class="w-36 aspect-video rounded-md border border-dashed border-conjure-border flex items-center justify-center">
+          <span class="text-[10px] text-conjure-text-dim">No visions yet</span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
