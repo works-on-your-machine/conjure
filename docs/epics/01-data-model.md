@@ -70,11 +70,11 @@ Create all database tables, Active Record models, and associations so that every
 - Updated `app/models/project.rb` (has_many :slides)
 
 **Acceptance criteria:**
-- [ ] Slide has columns: title (string, not null), description (text), position (integer, not null), project_id (references, not null)
-- [ ] `project.slides.create!(title: "Intro", description: "...", position: 1)` works
-- [ ] `project.slides` returns slides ordered by position
-- [ ] Dependent destroy: deleting a project deletes its slides
-- [ ] Tests pass
+- [x] Slide has columns: title (string, not null), description (text), position (integer, not null), project_id (references, not null)
+- [x] `project.slides.create!(title: "Intro", description: "...", position: 1)` works
+- [x] `project.slides` returns slides ordered by position
+- [x] Dependent destroy: deleting a project deletes its slides
+- [x] Tests pass
 
 **Dependencies:** Story 1.1
 

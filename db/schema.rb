@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_185142) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_16_185306) do
   create_table "grimoires", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -29,5 +29,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_185142) do
     t.index ["grimoire_id"], name: "index_projects_on_grimoire_id"
   end
 
+  create_table "slides", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "position", null: false
+    t.integer "project_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_slides_on_project_id"
+  end
+
   add_foreign_key "projects", "grimoires"
+  add_foreign_key "slides", "projects"
 end
