@@ -1,19 +1,24 @@
 <%= turbo_frame_tag "slide_#{slide.id}_row" do %>
-  <div class="mb-6">
+  <% selected_vision = slide.visions.find(&:selected?) %>
+  <div class="mb-6" data-controller="slide-panel" data-slide-panel-open-value="false">
     <%# Slide header %>
-    <% selected_vision = slide.visions.find(&:selected?) %>
     <div class="flex items-center gap-3 mb-2">
       <span class="text-[13px] text-gold font-medium"><%= slide.title %></span>
       <% if selected_vision %>
         <span class="text-[11px] text-conjure-text-dim">v<%= selected_vision.position %> chosen</span>
+        <button class="text-[11px] text-conjure-text-muted hover:text-conjure-text cursor-pointer bg-transparent border-none"
+                data-action="click->slide-panel#toggle"
+                data-slide-panel-target="toggleBtn">
+          Details
+        </button>
       <% elsif slide.visions.any? %>
         <span class="text-[11px] text-conjure-text-dim">select a vision</span>
       <% end %>
     </div>
 
-    <%# Expanded selected vision %>
+    <%# Expandable detail panel (hidden by default) %>
     <% if selected_vision %>
-      <div class="mb-3 p-3 bg-surface rounded-lg border border-gold/20">
+      <div data-slide-panel-target="panel" class="hidden mb-3 p-3 bg-surface rounded-lg border border-gold/20">
         <div class="flex gap-4">
           <%# Larger preview image %>
           <div class="w-80 shrink-0">
@@ -29,13 +34,12 @@
             </div>
           </div>
 
-          <%# Actions & info %>
+          <%# Actions & provenance %>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-3">
               <span class="text-[11px] text-conjure-text-dim">Run <%= selected_vision.conjuring_id %> · variation <%= selected_vision.position %></span>
             </div>
 
-            <%# Action buttons %>
             <div class="flex flex-wrap gap-2 mb-3">
               <% if selected_vision.image.attached? %>
                 <button class="bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border cursor-pointer hover:border-conjure-border-hover"
@@ -60,7 +64,6 @@
                 data: { turbo_confirm: "Delete this vision?" } %>
             </div>
 
-            <%# Expandable provenance %>
             <details class="text-[12px]">
               <summary class="text-conjure-text-muted cursor-pointer hover:text-conjure-text select-none">
                 Provenance details
@@ -91,23 +94,30 @@
       </div>
     <% end %>
 
-    <%# Thumbnail grid — non-selected visions %>
+    <%# Thumbnail grid — ALL visions, selected one highlighted %>
     <div id="slide_<%= slide.id %>_visions" class="flex flex-wrap gap-2">
       <% slide.visions.includes(:conjuring).order(created_at: :desc).each do |vision| %>
-        <% next if vision.selected? %>
         <div class="w-36 relative">
           <%# Conjuring badge %>
           <div class="absolute top-1 left-1 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
             Run <%= vision.conjuring_id %>
           </div>
 
-          <%# Click to select (complete visions only) %>
           <% if vision.complete? %>
-            <%= button_to project_vision_path(project, vision),
-              method: :patch,
-              params: { vision: { selected: true } },
-              class: "w-full p-0 bg-transparent border-none cursor-pointer" do %>
-              <%= render partial: "visions/vision", locals: { vision: vision } %>
+            <% if vision.selected? %>
+              <%# Selected: clicking opens/closes the detail panel %>
+              <button class="w-full p-0 bg-transparent border-none cursor-pointer"
+                      data-action="click->slide-panel#toggle">
+                <%= render partial: "visions/vision", locals: { vision: vision } %>
+              </button>
+            <% else %>
+              <%# Not selected: clicking selects it %>
+              <%= button_to project_vision_path(project, vision),
+                method: :patch,
+                params: { vision: { selected: true } },
+                class: "w-full p-0 bg-transparent border-none cursor-pointer" do %>
+                <%= render partial: "visions/vision", locals: { vision: vision } %>
+              <% end %>
             <% end %>
           <% else %>
             <%= render partial: "visions/vision", locals: { vision: vision } %>
