@@ -1,6 +1,6 @@
 class VisionsController < ApplicationController
   before_action :set_project
-  before_action :set_vision
+  before_action :set_vision, only: [ :show, :update, :destroy ]
 
   def show
   end
@@ -12,39 +12,32 @@ class VisionsController < ApplicationController
     end
 
     @vision.update!(vision_params)
-
-    # Re-render the slide row Turbo Frame
-    @slide = @vision.slide.reload
-    respond_to do |format|
-      format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "slide_#{@slide.id}_row",
-          partial: "visions/slide_row",
-          locals: { slide: @slide, project: @project }
-        )
-      }
-      format.html { redirect_to project_path(@project, section: "visions") }
-    end
+    replace_slide_row(@vision.slide)
   end
 
   def destroy
     slide = @vision.slide
     @vision.destroy
+    replace_slide_row(slide)
+  end
 
-    @slide = slide.reload
+  private
+
+  def replace_slide_row(slide)
+    slide.reload
+    open_slides = params[:open_slide].present? ? Set.new([ params[:open_slide].to_i ]) : Set.new
+
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
-          "slide_#{@slide.id}_row",
+          "slide_#{slide.id}_row",
           partial: "visions/slide_row",
-          locals: { slide: @slide, project: @project }
+          locals: { slide: slide, project: @project, open_slides: open_slides }
         )
       }
       format.html { redirect_to project_path(@project, section: "visions") }
     end
   end
-
-  private
 
   def set_project
     @project = Project.find(params[:project_id])
