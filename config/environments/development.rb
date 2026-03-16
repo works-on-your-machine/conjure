@@ -43,7 +43,7 @@ Rails.application.configure do
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true
 
-  # Use Solid Queue for background jobs (same as production — this app runs locally).
+  # Use Solid Queue with dedicated database (same as production).
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
