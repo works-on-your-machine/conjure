@@ -108,16 +108,16 @@ After all VisionGenerationJobs complete, a callback or check sets the conjuring 
 - `spec/jobs/vision_generation_job_spec.rb`
 
 **Acceptance criteria:**
-- [ ] `ConjuringJob.perform_later(conjuring)` creates vision records and enqueues VisionGenerationJobs
-- [ ] Conjuring status transitions: pending → generating → complete
-- [ ] VisionGenerationJob generates one image, attaches it, sets vision status to complete
-- [ ] VisionGenerationJob retries on HTTP 429 (rate limit) with exponential backoff, up to 5 attempts
-- [ ] VisionGenerationJob retries on HTTP 5xx (server error) with backoff, up to 3 attempts
-- [ ] VisionGenerationJob does NOT retry on HTTP 4xx (client error) — marks vision as failed immediately
-- [ ] Each vision has: slide_text (frozen copy), prompt (from assembly), attached image, position, status
-- [ ] Conjuring.grimoire_text is frozen at creation time and passed through to prompt assembly
-- [ ] When all visions for a conjuring are complete/failed, conjuring status is set to complete (or failed if all failed)
-- [ ] Tests pass (with stubbed services)
+- [x] `ConjuringJob.perform_later(conjuring)` creates vision records and enqueues VisionGenerationJobs
+- [x] Conjuring status transitions: pending → generating → complete
+- [x] VisionGenerationJob generates one image, attaches it, sets vision status to complete
+- [x] VisionGenerationJob retries on HTTP 429 (rate limit) with exponential backoff, up to 5 attempts
+- [x] VisionGenerationJob retries on HTTP 5xx (server error) with backoff, up to 3 attempts
+- [x] VisionGenerationJob does NOT retry on HTTP 4xx (client error) — marks vision as failed immediately
+- [x] Each vision has: slide_text (frozen copy), prompt (from assembly), attached image, position, status
+- [x] Conjuring.grimoire_text is frozen at creation time and passed through to prompt assembly
+- [x] When all visions for a conjuring are complete/failed, conjuring status is set to complete (or failed if all failed)
+- [x] Tests pass (with stubbed services)
 
 **Dependencies:** Stories 7.1, 7.2
 
