@@ -1,0 +1,67 @@
+<div class="p-6">
+  <%# Header %>
+  <div class="flex items-center justify-between mb-5">
+    <div>
+      <h2 class="font-display text-2xl font-semibold text-gold-light m-0">Visions</h2>
+      <% selected_count = @project.slides.count { |s| s.visions.any?(&:selected?) } %>
+      <p class="text-xs text-conjure-text-dim mt-0.5">
+        Grimoire: <%= @project.grimoire.name %> — <%= selected_count %>/<%= @project.slides.size %> selected
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <% if selected_count > 0 %>
+        <%= link_to "View assembly (#{selected_count}/#{@project.slides.size}) →",
+          project_path(@project, section: "assembly"),
+          class: "bg-gold text-plum-deep px-4 py-2 rounded-md font-body text-[13px] font-medium no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Conjure controls %>
+  <div class="flex items-center gap-3 mb-6 p-4 bg-surface rounded-lg border border-conjure-border">
+    <%= form_with url: project_conjurings_path(@project), method: :post, class: "flex items-center gap-3 w-full" do |f| %>
+      <%= f.select :scope, [["All slides", "all"], ["Slides without visions", "empty"]], {},
+        class: "bg-plum-deep text-conjure-text border border-conjure-border rounded-md px-3 py-2 font-body text-[13px] outline-none" %>
+      <div class="flex-1 text-xs text-conjure-text-dim text-right">
+        ~$<%= "%.2f" % (@project.slides.count * @project.default_variations * 0.04) %>
+        (<%= @project.slides.count %> slides × <%= @project.default_variations %> var × $0.04)
+      </div>
+      <%= f.submit "✦ Conjure", class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-display text-base font-semibold tracking-wide cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    <% end %>
+  </div>
+
+  <%# Turbo Stream subscription for real-time updates %>
+  <%= turbo_stream_from "project_#{@project.id}_visions" %>
+  <%= turbo_stream_from "project_#{@project.id}_conjuring" %>
+
+  <%# Slide rows with visions %>
+  <% @project.slides.each do |slide| %>
+    <div class="mb-5">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-[13px] text-gold font-medium"><%= slide.title %></span>
+        <% slide_selected = slide.visions.any?(&:selected?) %>
+        <span class="text-[11px] text-conjure-text-dim">
+          <%= slide_selected ? "v#{slide.visions.find(&:selected?)&.position} chosen" : "select a vision" %>
+        </span>
+      </div>
+
+      <div id="slide_<%= slide.id %>_visions" class="flex gap-2 overflow-x-auto pb-2">
+        <% slide.visions.includes(:conjuring).order(created_at: :desc).each do |vision| %>
+          <div class="shrink-0 w-48 relative">
+            <%# Conjuring badge %>
+            <div class="absolute top-1.5 left-1.5 z-10 bg-plum-deep/80 text-conjure-text-dim text-[10px] px-1.5 py-0.5 rounded backdrop-blur-sm">
+              Run <%= vision.conjuring_id %>
+            </div>
+            <%= render partial: "visions/vision", locals: { vision: vision } %>
+          </div>
+        <% end %>
+
+        <% if slide.visions.empty? %>
+          <div class="shrink-0 w-48 aspect-video rounded-md border border-dashed border-conjure-border flex items-center justify-center">
+            <span class="text-xs text-conjure-text-dim">No visions yet</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

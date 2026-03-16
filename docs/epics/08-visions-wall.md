@@ -48,14 +48,14 @@ Build the Visions section — the core product experience. A wall of all generat
 - `test/controllers/conjurings_controller_test.rb`
 
 **Acceptance criteria:**
-- [ ] Visions section shows each slide as a labeled row
-- [ ] Each row shows vision thumbnails in a horizontally scrollable container
-- [ ] Visions are grouped by conjuring, most recent first
-- [ ] Each vision shows a conjuring badge (e.g., "Run 1", "Run 2")
-- [ ] Conjure button creates a Conjuring record with frozen grimoire_text and enqueues ConjuringJob
-- [ ] Scope selector lets user choose: all slides, selected slides only, slides without visions
-- [ ] New visions appear in real time via Turbo Stream (from Epic 7)
-- [ ] Tests pass
+- [x] Visions section shows each slide as a labeled row
+- [x] Each row shows vision thumbnails in a horizontally scrollable container
+- [x] Visions are grouped by conjuring, most recent first
+- [x] Each vision shows a conjuring badge (e.g., "Run 1", "Run 2")
+- [x] Conjure button creates a Conjuring record with frozen grimoire_text and enqueues ConjuringJob
+- [x] Scope selector lets user choose: all slides, selected slides only, slides without visions
+- [x] New visions appear in real time via Turbo Stream (from Epic 7)
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 

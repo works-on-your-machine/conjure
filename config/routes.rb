@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :slides, only: [ :create, :edit, :update, :destroy ] do
       patch :move, on: :member
     end
+    resources :conjurings, only: [ :create, :destroy ]
+    resources :visions, only: [ :show, :update, :destroy ]
   end
   resources :grimoires do
     post :duplicate, on: :member
