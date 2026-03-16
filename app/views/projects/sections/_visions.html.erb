@@ -34,30 +34,68 @@
   <%= turbo_stream_from "project_#{@project.id}_visions" %>
   <%= turbo_stream_from "project_#{@project.id}_conjuring" %>
 
-  <%# Slide rows with visions %>
+  <%# Slide rows with collapsible visions %>
   <% @project.slides.each do |slide| %>
-    <div class="mb-5">
+    <% selected_vision = slide.visions.find(&:selected?) %>
+    <% has_visions = slide.visions.any? %>
+    <div class="mb-6" data-controller="slide-row" data-slide-row-collapsed-value="<%= selected_vision.present? %>">
+      <%# Slide header %>
       <div class="flex items-center gap-3 mb-2">
         <span class="text-[13px] text-gold font-medium"><%= slide.title %></span>
-        <% slide_selected = slide.visions.any?(&:selected?) %>
-        <span class="text-[11px] text-conjure-text-dim">
-          <%= slide_selected ? "v#{slide.visions.find(&:selected?)&.position} chosen" : "select a vision" %>
-        </span>
+        <% if selected_vision %>
+          <span class="text-[11px] text-conjure-text-dim">v<%= selected_vision.position %> chosen</span>
+          <button class="text-[11px] text-conjure-text-muted hover:text-conjure-text cursor-pointer bg-transparent border-none"
+                  data-action="click->slide-row#toggle"
+                  data-slide-row-target="toggleBtn">
+            Show all
+          </button>
+        <% elsif has_visions %>
+          <span class="text-[11px] text-conjure-text-dim">select a vision</span>
+        <% end %>
       </div>
 
-      <div id="slide_<%= slide.id %>_visions" class="flex gap-2 overflow-x-auto pb-2">
+      <%# Collapsed state: just the selected vision %>
+      <% if selected_vision %>
+        <div data-slide-row-target="collapsed" class="<%= selected_vision ? '' : 'hidden' %>">
+          <div class="w-64 relative">
+            <%= link_to project_vision_path(@project, selected_vision), class: "block no-underline" do %>
+              <%= render partial: "visions/vision", locals: { vision: selected_vision } %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <%# Expanded state: all visions in a wrapping grid %>
+      <div id="slide_<%= slide.id %>_visions"
+           data-slide-row-target="expanded"
+           class="flex flex-wrap gap-2 <%= selected_vision ? 'hidden' : '' %>">
         <% slide.visions.includes(:conjuring).order(created_at: :desc).each do |vision| %>
-          <div class="shrink-0 w-48 relative">
+          <div class="w-40 relative">
             <%# Conjuring badge %>
             <div class="absolute top-1.5 left-1.5 z-10 bg-plum-deep/80 text-conjure-text-dim text-[10px] px-1.5 py-0.5 rounded backdrop-blur-sm">
               Run <%= vision.conjuring_id %>
             </div>
-            <%= render partial: "visions/vision", locals: { vision: vision } %>
+
+            <%# Provenance link (click image to view details) %>
+            <%= link_to project_vision_path(@project, vision), class: "block no-underline" do %>
+              <%= render partial: "visions/vision", locals: { vision: vision } %>
+            <% end %>
+
+            <%# Failed vision: show delete button %>
+            <% if vision.failed? %>
+              <div class="absolute bottom-1.5 right-1.5 z-10">
+                <%= button_to project_vision_path(@project, vision), method: :delete,
+                  class: "bg-danger/80 text-white text-[10px] px-1.5 py-0.5 rounded cursor-pointer border-none backdrop-blur-sm",
+                  data: { turbo_confirm: "Remove this failed vision?" } do %>
+                  ✕ Remove
+                <% end %>
+              </div>
+            <% end %>
           </div>
         <% end %>
 
         <% if slide.visions.empty? %>
-          <div class="shrink-0 w-48 aspect-video rounded-md border border-dashed border-conjure-border flex items-center justify-center">
+          <div class="w-40 aspect-video rounded-md border border-dashed border-conjure-border flex items-center justify-center">
             <span class="text-xs text-conjure-text-dim">No visions yet</span>
           </div>
         <% end %>

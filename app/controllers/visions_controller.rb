@@ -6,6 +6,11 @@ class VisionsController < ApplicationController
   end
 
   def update
+    # Single selection per slide: deselect others when selecting
+    if vision_params[:selected] == "true" || vision_params[:selected] == true
+      @vision.slide.visions.where.not(id: @vision.id).where(selected: true).update_all(selected: false)
+    end
+
     @vision.update!(vision_params)
     respond_to do |format|
       format.html { redirect_to project_path(@project, section: "visions") }
