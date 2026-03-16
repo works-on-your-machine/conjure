@@ -45,11 +45,11 @@ Create all database tables, Active Record models, and associations so that every
 - `test/models/project_test.rb`
 
 **Acceptance criteria:**
-- [ ] Grimoire has columns: name (string, not null), description (text), projects_count (integer, default 0)
-- [ ] Project has columns: name (string, not null), grimoire_id (references, not null), aspect_ratio (string, default "16:9"), default_variations (integer, default 5)
-- [ ] `Grimoire.create!(name: "Test").projects.create!(name: "Deck")` works
-- [ ] Counter cache increments/decrements correctly
-- [ ] Tests pass
+- [x] Grimoire has columns: name (string, not null), description (text), projects_count (integer, default 0)
+- [x] Project has columns: name (string, not null), grimoire_id (references, not null), aspect_ratio (string, default "16:9"), default_variations (integer, default 5)
+- [x] `Grimoire.create!(name: "Test").projects.create!(name: "Deck")` works
+- [x] Counter cache increments/decrements correctly
+- [x] Tests pass
 
 **Dependencies:** None
 
