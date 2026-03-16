@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_185601) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_16_185705) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -65,6 +65,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_185601) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["grimoire_id"], name: "index_projects_on_grimoire_id"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "default_aspect_ratio", default: "16:9"
+    t.integer "default_variations", default: 5
+    t.string "llm_api_key"
+    t.string "nano_banana_api_key"
+    t.datetime "updated_at", null: false
   end
 
   create_table "slides", force: :cascade do |t|

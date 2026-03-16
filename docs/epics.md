@@ -13,7 +13,7 @@ Get the data model, visual identity, and application shell in place so all featu
 
 | Epic | Status | Depends On | File |
 |------|--------|------------|------|
-| Data Model & Associations | In Progress | Nothing | [docs/epics/01-data-model.md](epics/01-data-model.md) |
+| Data Model & Associations | Done | Nothing | [docs/epics/01-data-model.md](epics/01-data-model.md) |
 | Visual Identity & Application Layout | Ready | Nothing | [docs/epics/02-visual-identity.md](epics/02-visual-identity.md) |
 
 ## Phase 2: Content Management

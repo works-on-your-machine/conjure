@@ -42,4 +42,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Active Record encryption keys for test environment
+  config.active_record.encryption.primary_key = "test-primary-key-for-encryption"
+  config.active_record.encryption.deterministic_key = "test-deterministic-key-encrypt"
+  config.active_record.encryption.key_derivation_salt = "test-key-derivation-salt-value"
 end

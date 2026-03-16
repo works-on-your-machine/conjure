@@ -126,11 +126,11 @@ Create all database tables, Active Record models, and associations so that every
 - `db/seeds.rb` (updated with sample data)
 
 **Acceptance criteria:**
-- [ ] Setting is a singleton-style model (one row, fetched via `Setting.current` or similar class method)
-- [ ] Setting has columns: nano_banana_api_key (string, encrypted), llm_api_key (string, encrypted), default_variations (integer, default 5), default_aspect_ratio (string, default "16:9")
-- [ ] API key columns use Active Record encryption
-- [ ] `bin/rails db:seed` creates a sample grimoire, project with 3-4 slides
-- [ ] Tests pass
+- [x] Setting is a singleton-style model (one row, fetched via `Setting.current` or similar class method)
+- [x] Setting has columns: nano_banana_api_key (string, encrypted), llm_api_key (string, encrypted), default_variations (integer, default 5), default_aspect_ratio (string, default "16:9")
+- [x] API key columns use Active Record encryption
+- [x] `bin/rails db:seed` creates a sample grimoire, project with 3-4 slides
+- [x] Tests pass
 
 **Dependencies:** Stories 1.1, 1.2, 1.3
 
