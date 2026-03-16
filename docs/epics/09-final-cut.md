@@ -39,12 +39,12 @@ Build the Final Cut section where users review their curated deck in presentatio
 - Navigation link to visions wall for unselected slides
 
 **Acceptance criteria:**
-- [ ] Final Cut shows one vision per slide in presentation order
-- [ ] Each entry shows slide number, title, and the selected vision's image
-- [ ] Slides without a selected vision show a dashed placeholder with "Select a vision" link
-- [ ] "Refine" button appears on each slide that has a selected vision
-- [ ] Clear count of selected vs. total slides (e.g., "6/8 slides ready")
-- [ ] Tests pass
+- [x] Final Cut shows one vision per slide in presentation order
+- [x] Each entry shows slide number, title, and the selected vision's image
+- [x] Slides without a selected vision show a dashed placeholder with "Select a vision" link
+- [x] "Refine" button appears on each slide that has a selected vision
+- [x] Clear count of selected vs. total slides (e.g., "6/8 slides ready")
+- [x] Tests pass
 
 **Dependencies:** None (within this epic)
 
@@ -67,14 +67,14 @@ Build the Final Cut section where users review their curated deck in presentatio
 - Updated ConjuringJob to handle single-slide refinement scope
 
 **Acceptance criteria:**
-- [ ] Clicking "Refine" opens a modal showing the current selected vision
-- [ ] Modal has a text input with placeholder examples ("Make the headline text larger", "Add more VHS static texture")
-- [ ] "Re-conjure with changes" creates a new Conjuring scoped to just that slide
-- [ ] The refinement text is stored in `vision.refinement` on the resulting visions
-- [ ] PromptAssemblyService receives the refinement parameter
-- [ ] Original vision is preserved; new refined visions appear in the wall alongside it
-- [ ] Note at bottom: "For compositing, use Export to Figma for pixel-level control"
-- [ ] Tests pass
+- [x] Clicking "Refine" opens a modal showing the current selected vision
+- [x] Modal has a text input with placeholder examples ("Make the headline text larger", "Add more VHS static texture")
+- [x] "Re-conjure with changes" creates a new Conjuring scoped to just that slide
+- [x] The refinement text is stored in `vision.refinement` on the resulting visions
+- [x] PromptAssemblyService receives the refinement parameter
+- [x] Original vision is preserved; new refined visions appear in the wall alongside it
+- [x] Note at bottom: "For compositing, use Export to Figma for pixel-level control"
+- [x] Tests pass
 
 **Dependencies:** Story 9.1
 

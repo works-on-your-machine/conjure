@@ -1,0 +1,101 @@
+<div class="p-8 max-w-[900px] mx-auto">
+  <%# Header %>
+  <% selected_count = @project.slides.count { |s| s.visions.any?(&:selected?) } %>
+  <% total = @project.slides.size %>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="font-display text-2xl font-semibold text-gold-light m-0">Final cut</h2>
+      <p class="text-xs text-conjure-text-dim mt-0.5"><%= selected_count %>/<%= total %> slides selected</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <%= link_to "← Visions", project_path(@project, section: "visions"),
+        class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+    </div>
+  </div>
+
+  <%# Slide rows %>
+  <% @project.slides.each_with_index do |slide, index| %>
+    <% selected_vision = slide.visions.find(&:selected?) %>
+    <div class="flex gap-4 items-start mb-4">
+      <%# Slide number %>
+      <div class="w-8 text-right pt-4 shrink-0">
+        <span class="text-[13px] text-conjure-text-dim"><%= index + 1 %></span>
+      </div>
+
+      <%# Vision image or placeholder %>
+      <div class="flex-1">
+        <% if selected_vision %>
+          <div class="relative">
+            <% if selected_vision.image.attached? %>
+              <div class="aspect-video rounded-md overflow-hidden">
+                <%= image_tag selected_vision.image, class: "w-full h-full object-cover" %>
+              </div>
+            <% else %>
+              <div class="aspect-video rounded-md bg-surface-light flex items-center justify-center">
+                <span class="text-xs text-conjure-text-dim"><%= selected_vision.status %></span>
+              </div>
+            <% end %>
+            <%# Refine button %>
+            <div class="absolute bottom-2 right-2">
+              <%= link_to "✦ Refine",
+                project_path(@project, section: "refine", slide_id: slide.id),
+                class: "px-2.5 py-1 rounded text-[11px] cursor-pointer bg-black/60 text-gold-light border border-conjure-border font-body backdrop-blur-sm no-underline" %>
+            </div>
+          </div>
+        <% else %>
+          <div class="aspect-video rounded-md border border-dashed border-conjure-border flex items-center justify-center">
+            <%= link_to "No vision — #{slide.title}",
+              project_path(@project, section: "visions"),
+              class: "text-xs text-conjure-text-dim no-underline hover:text-conjure-text-muted" %>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Slide info %>
+      <div class="w-[140px] pt-2 shrink-0">
+        <div class="text-xs text-conjure-text-muted font-medium"><%= slide.title %></div>
+        <% if selected_vision %>
+          <div class="text-[11px] text-conjure-text-dim mt-0.5">variation <%= selected_vision.position %></div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Refine modal %>
+  <% if params[:section] == "refine" && params[:slide_id].present? %>
+    <% refine_slide = @project.slides.find_by(id: params[:slide_id]) %>
+    <% refine_vision = refine_slide&.visions&.find(&:selected?) %>
+    <% if refine_slide && refine_vision %>
+      <div class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-6">
+        <div class="bg-plum-deep rounded-xl border border-conjure-border p-6 w-[600px] max-w-full">
+          <h3 class="font-display text-xl text-gold-light mb-4">Refine: <%= refine_slide.title %></h3>
+
+          <% if refine_vision.image.attached? %>
+            <div class="mb-4 aspect-video rounded-md overflow-hidden">
+              <%= image_tag refine_vision.image, class: "w-full h-full object-cover" %>
+            </div>
+          <% end %>
+
+          <%= form_with url: project_conjurings_path(@project), method: :post, class: "space-y-3" do |f| %>
+            <%= f.hidden_field :scope, value: "refine" %>
+            <%= f.hidden_field :slide_id, value: refine_slide.id %>
+
+            <%= render "shared/label", text: "Describe your refinement" %>
+            <%= f.text_area :refinement, rows: 3,
+              placeholder: 'e.g. "Make the headline larger" or "Add more static texture"',
+              class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+
+            <div class="flex gap-2 justify-end">
+              <%= link_to "Cancel", project_path(@project, section: "assembly"),
+                class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline" %>
+              <%= f.submit "✦ Re-conjure with changes",
+                class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+            </div>
+          <% end %>
+
+          <p class="text-[11px] text-conjure-text-dim mt-3">For compositing (adding screenshots, overlaying images), use Export to Figma.</p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

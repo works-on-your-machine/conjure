@@ -10,8 +10,8 @@
       <%= render "projects/sections/incantations" %>
     <% elsif section == "visions" %>
       <%= render "projects/sections/visions" %>
-    <% elsif section == "assembly" %>
-      <div class="p-8 text-conjure-text-muted text-sm">Final Cut section — coming in Epic 09</div>
+    <% elsif section == "assembly" || section == "refine" %>
+      <%= render "projects/sections/assembly" %>
     <% end %>
   </main>
 </div>
