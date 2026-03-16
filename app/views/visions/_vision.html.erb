@@ -1,7 +1,7 @@
 <%# Single vision thumbnail — used in wall grid and as Turbo Stream broadcast target %>
 <div id="vision_<%= vision.id %>"
      class="relative aspect-video rounded-md overflow-hidden transition-all
-            <%= vision.selected? ? 'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]' : 'border border-white/5' %>">
+            <%= vision.selected? ? 'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]' : 'border border-white/5 hover:border-conjure-border-hover' %>">
   <% if vision.image.attached? %>
     <%= image_tag vision.image, class: "w-full h-full object-cover" %>
   <% else %>
@@ -12,18 +12,6 @@
         <span class="text-xs text-gold animate-pulse">generating...</span>
       <% else %>
         <span class="text-xs text-conjure-text-dim"><%= vision.status %></span>
-      <% end %>
-    </div>
-  <% end %>
-
-  <%# Selection toggle button %>
-  <% if vision.complete? %>
-    <div class="absolute bottom-1.5 left-1.5 z-10">
-      <%= button_to project_vision_path(vision.conjuring.project, vision),
-        method: :patch,
-        params: { vision: { selected: !vision.selected? } },
-        class: "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] cursor-pointer border-none backdrop-blur-sm #{vision.selected? ? 'bg-gold text-plum-deep' : 'bg-plum-deep/80 text-conjure-text-dim hover:text-gold'}" do %>
-        <%= vision.selected? ? "✦ Selected" : "Select" %>
       <% end %>
     </div>
   <% end %>
