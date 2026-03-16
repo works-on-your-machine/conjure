@@ -93,12 +93,12 @@ Build the Workshop (home screen) with the project card grid and the new project 
 - Grimoire selection component (cards or dropdown)
 
 **Acceptance criteria:**
-- [ ] User can enter a project name
-- [ ] User can select an existing grimoire (or create new inline)
-- [ ] Submitting creates the project associated with the chosen grimoire
-- [ ] After creation, user is redirected to the project workspace
-- [ ] Validation: project name is required, grimoire selection is required
-- [ ] Tests pass
+- [x] User can enter a project name
+- [x] User can select an existing grimoire (or create new inline)
+- [x] Submitting creates the project associated with the chosen grimoire
+- [x] After creation, user is redirected to the project workspace
+- [x] Validation: project name is required, grimoire selection is required
+- [x] Tests pass
 
 **Dependencies:** Story 5.1
 

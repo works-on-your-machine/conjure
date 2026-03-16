@@ -1,0 +1,55 @@
+<%= render "shared/header" %>
+
+<div class="px-10 max-w-[640px] mx-auto">
+  <%= link_to "← Back to workshop", root_path,
+    class: "text-conjure-text-muted text-sm no-underline hover:text-conjure-text transition-colors" %>
+
+  <h2 class="font-display text-2xl font-semibold text-gold-light mt-6 mb-6">Create a new project</h2>
+
+  <%= form_with model: @project, class: "space-y-8" do |f| %>
+    <% if @project.errors.any? %>
+      <div class="bg-danger/10 border border-danger/30 rounded-md px-4 py-3 text-sm text-danger">
+        <% @project.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Step 1: Name %>
+    <div>
+      <h3 class="font-display text-xl font-semibold text-gold-light mb-4">What's this presentation called?</h3>
+      <%= f.text_field :name,
+        placeholder: "e.g. RubyConf 2026 Keynote",
+        class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md px-4 py-3.5 font-display text-lg outline-none focus:border-conjure-border-hover" %>
+    </div>
+
+    <%# Step 2: Grimoire selection %>
+    <div>
+      <h3 class="font-display text-xl font-semibold text-gold-light mb-2">Choose a visual world</h3>
+      <p class="text-[13px] text-conjure-text-muted mb-4">Pick a grimoire from your library.</p>
+
+      <div class="flex flex-col gap-2.5">
+        <% @grimoires.each do |grimoire| %>
+          <label class="block cursor-pointer">
+            <%= f.radio_button :grimoire_id, grimoire.id,
+              class: "peer sr-only" %>
+            <div class="p-3.5 px-4 rounded-lg transition-all bg-surface border border-conjure-border peer-checked:bg-gold-glow peer-checked:border-gold-dim">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-conjure-text peer-checked:text-gold"><%= grimoire.name %></span>
+              </div>
+              <p class="text-xs text-conjure-text-dim mt-1 line-clamp-2"><%= grimoire.description %></p>
+            </div>
+          </label>
+        <% end %>
+
+        <%= link_to "✦ Create a new grimoire", new_grimoire_path,
+          class: "block p-3.5 px-4 rounded-lg border border-dashed border-conjure-border text-center text-[13px] text-conjure-text-dim no-underline hover:border-gold-dim" %>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-end pt-2">
+      <%= f.submit "Create project →",
+        class: "bg-gold text-plum-deep px-5 py-2.5 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    </div>
+  <% end %>
+</div>
