@@ -22,29 +22,17 @@ Conjure has a strong identity and a clearly designed visual language. The magica
 
 ## Priority Issues
 
-### 1. The Conjure CTA is missing from the sidebar
+### ~~1. The Conjure CTA is missing from the sidebar~~ DONE
 
-**What:** The React prototype shows a persistent "✦ Conjure" button at the bottom of the sidebar — the most important action in the app, always one click away. The implementation only has the cost estimate text (`3 slides × 5 var ≈ $0.60`), no button.
+Added persistent "✦ Conjure" button with variations dropdown and live cost estimate to the sidebar. Controller accepts variations param. Cost rate updated to $0.08/image (~20% buffer over actual $0.067 at 1024px).
 
-**Why it matters:** Users need to navigate to the Visions section, find the conjure controls bar, configure scope, and then click. That's 3 steps for the action the product is named after. The cost estimate in the sidebar is already doing the mental prep ("here's what it'll cost") — it needs the CTA to close the loop.
+### ~~2. Project card thumbnails are permanently dead~~ DONE
 
-**Fix:** Add the "✦ Conjure" button below the cost estimate in `_sidebar.html.erb`. Wire it as a form POST to `project_conjurings_path`.
+Mosaic now shows up to 4 real vision images (selected first, then complete). Falls back to gray boxes only when no visions exist. Eager-loads attachments to avoid N+1.
 
-### 2. Project card thumbnails are permanently dead
+### ~~3. Two gold CTAs competing on the Visions page~~ DONE
 
-**What:** `_project_card.html.erb` renders a 2x2 grid of `bg-surface-light` gray boxes. These are hardcoded placeholders that never show actual vision images. Every project card in the Workshop looks identical from the thumbnail.
-
-**Why it matters:** The card thumbnail is the largest visual element on the home screen. When every card shows the same gray grid, users can't visually distinguish projects at a glance. The project name in 18px serif becomes the only differentiator, which defeats the purpose of a visual tool.
-
-**Fix:** Pull the first 4 selected visions (or any visions) from the project and render their thumbnails in the mosaic. Fall back to the gray grid only when no visions exist. The React prototype's `ProjectMosaic` component does exactly this.
-
-### 3. Two gold CTAs competing on the Visions page
-
-**What:** Both "View assembly (N/M) →" and "✦ Conjure" are styled as gold primary buttons on the Visions view. The Conjure button is actually *larger* (`px-7 py-3 font-display text-base` vs `px-5 py-2.5 text-sm`), but both have the gold glow shadow.
-
-**Why it matters:** When two elements scream "I'm the primary action" equally, neither wins. Users' eyes bounce between them. The Visions page has a clear job: conjure images, then review/select them. "View assembly" is a navigation action (secondary), not the page's purpose.
-
-**Fix:** Demote "View assembly" to the `default` button variant (surface background, border, muted text). Keep "✦ Conjure" as the sole gold CTA on this page.
+Demoted "View assembly" to secondary style (surface bg, border, muted text). "✦ Conjure" is now the sole gold CTA on the Visions page.
 
 ### 4. No responsive behavior at all
 
