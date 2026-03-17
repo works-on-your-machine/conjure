@@ -14,6 +14,27 @@ RSpec.describe "New Project", type: :request do
       get new_project_path
       expect(response.body).to include(grimoire.name)
     end
+
+    it "uses the project form to branch into grimoire creation" do
+      get new_project_path
+
+      document = Nokogiri::HTML.parse(response.body)
+      create_grimoire_button = document.at_css('button[name="return_to_project"][value="1"]')
+
+      expect(create_grimoire_button["formaction"]).to eq(new_grimoire_path)
+      expect(create_grimoire_button["formmethod"]).to eq("get")
+    end
+
+    it "prefills the project name and selected grimoire from return params" do
+      get new_project_path, params: { project: { name: "My Talk" }, grimoire_id: grimoire.id }
+
+      document = Nokogiri::HTML.parse(response.body)
+      name_input = document.at_css('input[name="project[name]"]')
+      selected_grimoire = document.at_css("input[name='project[grimoire_id]'][value='#{grimoire.id}']")
+
+      expect(name_input["value"]).to eq("My Talk")
+      expect(selected_grimoire["checked"]).to eq("checked")
+    end
   end
 
   describe "POST /projects" do

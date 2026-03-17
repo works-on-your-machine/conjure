@@ -34,7 +34,10 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
+    @project = Project.new(
+      name: params.dig(:project, :name),
+      grimoire_id: params[:grimoire_id]
+    )
     @grimoires = Grimoire.all
   end
 

@@ -15,7 +15,7 @@ class GrimoiresController < ApplicationController
   def create
     @grimoire = Grimoire.new(grimoire_params)
     if @grimoire.save
-      redirect_to @grimoire
+      redirect_to(return_to_project? ? new_project_path(project: { name: params.dig(:project, :name) }, grimoire_id: @grimoire.id) : @grimoire)
     else
       render :new, status: :unprocessable_entity
     end
@@ -53,5 +53,9 @@ class GrimoiresController < ApplicationController
 
   def grimoire_params
     params.require(:grimoire).permit(:name, :description)
+  end
+
+  def return_to_project?
+    params[:return_to_project].present?
   end
 end

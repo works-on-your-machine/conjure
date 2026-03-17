@@ -36,6 +36,13 @@ RSpec.describe "Grimoires", type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Create new grimoire")
     end
+
+    it "links back to the project flow when opened from new project" do
+      get new_grimoire_path, params: { return_to_project: "1", project: { name: "My Talk" } }
+
+      expect(response.body).to include(new_project_path(project: { name: "My Talk" }))
+      expect(response.body).to include("Back to project")
+    end
   end
 
   describe "POST /grimoires" do
@@ -47,6 +54,19 @@ RSpec.describe "Grimoires", type: :request do
       grimoire = Grimoire.last
       expect(response).to redirect_to(grimoire_path(grimoire))
       expect(grimoire.name).to eq("Vapor Archive")
+    end
+
+    it "returns to new project with the name preserved and the new grimoire selected" do
+      expect {
+        post grimoires_path, params: {
+          grimoire: { name: "Vapor Archive", description: "Neon gradients on deep purple." },
+          return_to_project: "1",
+          project: { name: "My Talk" }
+        }
+      }.to change(Grimoire, :count).by(1)
+
+      grimoire = Grimoire.last
+      expect(response).to redirect_to(new_project_path(project: { name: "My Talk" }, grimoire_id: grimoire.id))
     end
 
     it "re-renders form on validation error" do

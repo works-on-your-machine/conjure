@@ -1,13 +1,27 @@
 <%= render "shared/header" %>
 
 <div class="px-10 max-w-[640px] mx-auto">
+  <% back_path = if params[:return_to_project].present?
+    new_project_path(project: { name: params.dig(:project, :name) })
+  else
+    grimoires_path
+  end %>
+  <% back_label = params[:return_to_project].present? ? "← Back to project" : "← Library" %>
+
   <div class="flex items-center gap-4 mb-6">
-    <%= link_to "← Library", grimoires_path,
+    <%= link_to back_label, back_path,
       class: "text-conjure-text-muted text-sm no-underline hover:text-conjure-text transition-colors" %>
   </div>
 
   <h2 class="font-display text-2xl font-semibold text-gold-light mb-1">Create new grimoire</h2>
   <p class="text-[13px] text-conjure-text-muted mb-6">Describe a visual world.</p>
 
-  <%= render "grimoires/form", grimoire: @grimoire %>
+  <%= form_with model: @grimoire, class: "space-y-6" do |f| %>
+    <% if params[:return_to_project].present? %>
+      <%= hidden_field_tag :return_to_project, params[:return_to_project] %>
+      <%= hidden_field_tag "project[name]", params.dig(:project, :name) %>
+    <% end %>
+
+    <%= render "grimoires/form", grimoire: @grimoire, f: f %>
+  <% end %>
 </div>

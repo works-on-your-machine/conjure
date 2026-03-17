@@ -55,8 +55,13 @@
           </label>
         <% end %>
 
-        <%= link_to "✦ Create a new grimoire", new_grimoire_path,
-          class: "block p-3.5 px-4 rounded-lg border border-dashed border-conjure-border text-center text-[13px] text-conjure-text-dim no-underline hover:border-gold-dim" %>
+        <%= button_tag "✦ Create a new grimoire",
+          type: "submit",
+          formaction: new_grimoire_path,
+          formmethod: "get",
+          name: "return_to_project",
+          value: "1",
+          class: "block w-full p-3.5 px-4 rounded-lg border border-dashed border-conjure-border text-center text-[13px] text-conjure-text-dim bg-transparent cursor-pointer hover:border-gold-dim" %>
       </div>
     </div>
 
