@@ -35,8 +35,27 @@
   <%= turbo_stream_from "project_#{@project.id}_conjuring" %>
 
   <%# Slide rows — each in a Turbo Frame for inline updates %>
-  <% @project.slides.each do |slide| %>
-    <%= render partial: "visions/slide_row", locals: { slide: slide, project: @project } %>
+  <% if @project.slides.any? %>
+    <% has_any_visions = @project.slides.any? { |s| s.visions.any? } %>
+    <% if has_any_visions %>
+      <% @project.slides.each do |slide| %>
+        <%= render partial: "visions/slide_row", locals: { slide: slide, project: @project } %>
+      <% end %>
+    <% else %>
+      <%= render layout: "shared/empty_state", locals: {
+        title: "No visions yet",
+        description: "Hit ✦ Conjure to generate images for your slides. Each slide gets multiple variations to choose from."
+      } do %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= render layout: "shared/empty_state", locals: {
+      title: "Add slides first",
+      description: "Head to Incantations to write your slide prompts, then come back here to conjure visions."
+    } do %>
+      <%= link_to "Go to Incantations →", project_path(@project, section: "incantations"),
+        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    <% end %>
   <% end %>
 </div>
 

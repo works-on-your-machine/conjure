@@ -12,7 +12,16 @@ RSpec.describe "Visions Wall", type: :request do
       expect(response.body).to include("Visions")
     end
 
-    it "shows each slide as a labeled row" do
+    it "shows empty state when slides have no visions" do
+      get project_path(project, section: "visions")
+      expect(response.body).to include("No visions yet")
+    end
+
+    it "shows each slide as a labeled row when visions exist" do
+      conjuring = create(:conjuring, project: project)
+      create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
+      create(:vision, slide: slide2, conjuring: conjuring, position: 1, status: :complete)
+
       get project_path(project, section: "visions")
       expect(response.body).to include("Title card")
       expect(response.body).to include("The problem")

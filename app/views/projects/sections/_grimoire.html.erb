@@ -5,16 +5,28 @@
   <%= form_with model: @project, method: :patch, class: "space-y-6" do |f| %>
     <%# Grimoire selector %>
     <%= render "shared/label", text: "Active grimoire" %>
-    <div class="flex gap-2 mb-4 flex-wrap">
-      <% @grimoires.each do |grimoire| %>
-        <label class="cursor-pointer flex-1 min-w-[140px]">
-          <%= f.radio_button :grimoire_id, grimoire.id, class: "peer sr-only" %>
-          <div class="p-2.5 px-4 rounded-lg transition-all bg-surface border border-conjure-border peer-checked:bg-gold-glow peer-checked:border-gold-dim">
-            <div class="text-[13px] font-medium text-conjure-text peer-checked:text-gold"><%= grimoire.name %></div>
-          </div>
-        </label>
-      <% end %>
-    </div>
+    <% if @grimoires.any? %>
+      <div class="flex gap-2 mb-4 flex-wrap">
+        <% @grimoires.each do |grimoire| %>
+          <label class="cursor-pointer flex-1 min-w-[140px]">
+            <%= f.radio_button :grimoire_id, grimoire.id, class: "peer sr-only" %>
+            <div class="p-2.5 px-4 rounded-lg transition-all bg-surface border border-conjure-border peer-checked:bg-gold-glow peer-checked:border-gold-dim">
+              <div class="text-[13px] font-medium text-conjure-text peer-checked:text-gold"><%= grimoire.name %></div>
+            </div>
+          </label>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mb-4">
+        <%= render layout: "shared/empty_state", locals: {
+          title: "No grimoires yet",
+          description: "A grimoire defines the visual style for your presentation. Create one to get started."
+        } do %>
+          <%= link_to "✦ Create a grimoire", new_grimoire_path,
+            class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+        <% end %>
+      </div>
+    <% end %>
 
     <%# Theme description (read-only display of current grimoire's text) %>
     <%= render "shared/label", text: "Theme description" %>

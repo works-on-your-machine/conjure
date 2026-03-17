@@ -33,7 +33,11 @@
       <% if @project.slides.any? %>
         <p class="text-[13px] text-conjure-text-dim">Select a slide to edit.</p>
       <% else %>
-        <p class="text-[13px] text-conjure-text-dim">Add your first slide using the form on the left.</p>
+        <%= render layout: "shared/empty_state", locals: {
+          title: "No incantations yet",
+          description: "Each slide is an incantation — a prompt that conjures a vision. Add your first one using the form on the left."
+        } do %>
+        <% end %>
       <% end %>
     </turbo-frame>
   </div>
