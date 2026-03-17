@@ -42,19 +42,14 @@ Desktop/laptop-only tool. Not a priority.
 
 All three workspace sections now use the shared `_empty_state` component with on-brand copy and CTAs: Incantations (no slides), Visions (no slides / no visions), Grimoire (no grimoires).
 
-## Minor Observations
+## ~~Minor Observations~~ ALL DONE
 
-- **Unicode sidebar icons (◈ ◇ ◆ ▣)** are hard to distinguish at 14px. They blur together. SVG icons or a small icon font would be more legible and give you more expressive range.
-
-- **Native `<select>` elements** in Grimoire and Settings look jarring. The white system dropdown arrow against the dark surface breaks the visual language. Consider a custom select component or at minimum `appearance-none` with a styled chevron.
-
-- **The New Project flow lacks the step indicator** shown in the React prototype (1 → 2 → 3 with a progress line). Currently both steps are stacked vertically on one page with no sense of progression. For a two-step form this is fine functionally, but the prototype's version is more polished and makes the "Create project →" button feel earned.
-
-- **No hover state on vision thumbnails beyond a faint border change.** For the primary interactive element of the Visions page, unselected vision thumbnails need more affordance — slight scale, opacity shift, or a "click to select" overlay on hover.
-
-- **The "generating..." pulse animation** is the only loading state. For an app whose core loop involves waiting for AI image generation, this is underserving the moment. A skeleton shimmer, progress percentage, or even a thematic "summoning" animation would transform perceived wait time.
-
-- **Button styles are inlined everywhere** instead of using `_button.html.erb`. The gold CTA class string (`bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]`) appears in 10+ places as raw Tailwind. One divergence and you have an inconsistency nobody catches.
+- ~~Unicode sidebar icons~~ — Replaced with 16x16 inline SVG icons (book, list, image, grid)
+- ~~Native `<select>` styling~~ — Global `appearance-none` with custom SVG chevron
+- ~~New Project step indicator~~ — Added 1-Name / 2-Grimoire step bar with connecting line
+- ~~Vision thumbnail hover~~ — Added scale + gold glow on hover for unselected visions
+- ~~Generating animation~~ — Shimmer gradient animation with "summoning..." text
+- ~~Button class duplication~~ — Extracted `btn_gold`, `btn_default`, `btn_danger` helpers; replaced 14 inline instances
 
 ## Questions to Consider
 
