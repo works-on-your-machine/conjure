@@ -23,8 +23,8 @@
       <%= f.select :scope, [["All slides", "all"], ["Slides without visions", "empty"]], {},
         class: "bg-plum-deep text-conjure-text border border-conjure-border rounded-md px-3 py-2 font-body text-[13px] outline-none" %>
       <div class="flex-1 text-xs text-conjure-text-dim text-right">
-        ~$<%= "%.2f" % (@project.slides.count * @project.default_variations * 0.04) %>
-        (<%= @project.slides.count %> slides × <%= @project.default_variations %> var × $0.04)
+        ~$<%= "%.2f" % (@project.slides.count * @project.default_variations * 0.08) %>
+        (<%= @project.slides.count %> slides × <%= @project.default_variations %> var × $0.08)
       </div>
       <%= f.submit "✦ Conjure", class: "bg-gold text-plum-deep px-7 py-3 rounded-md font-display text-base font-semibold tracking-wide cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
     <% end %>

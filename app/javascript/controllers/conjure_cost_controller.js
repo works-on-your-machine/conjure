@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["variations", "cost"]
-  static values = { slides: Number, rate: { type: Number, default: 0.04 } }
+  static values = { slides: Number, rate: { type: Number, default: 0.08 } }
 
   connect() {
     this.update()
