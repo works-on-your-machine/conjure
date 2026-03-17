@@ -34,21 +34,13 @@ Mosaic now shows up to 4 real vision images (selected first, then complete). Fal
 
 Demoted "View assembly" to secondary style (surface bg, border, muted text). "✦ Conjure" is now the sole gold CTA on the Visions page.
 
-### 4. No responsive behavior at all
+### 4. No responsive behavior at all — SKIPPED
 
-**What:** The sidebar is `w-[200px]`, the incantation pane is `w-[260px]`, content areas are `max-w-[960px]`. No breakpoints, no `@media` queries, no responsive Tailwind classes. On anything below ~768px, the workspace is unusable — the sidebar alone consumes ~50% of the viewport.
+Desktop/laptop-only tool. Not a priority.
 
-**Why it matters:** Even if this is primarily a desktop tool, many users will check projects on tablets or phones. The Workshop/home page is the most likely mobile visit ("let me show someone this project") and it also breaks — 280px card minimums plus 40px padding means single column only below ~640px, with no padding adjustment.
+### ~~5. Empty states are inconsistent across sections~~ DONE
 
-**Fix:** Add responsive breakpoints: collapse sidebar to an icon bar or drawer below `md`, stack the incantation panes vertically, adjust padding. Start with the Workshop and project workspace views.
-
-### 5. Empty states are inconsistent across sections
-
-**What:** Workshop has a beautiful empty state with icon, serif heading, descriptive copy, and CTA. But Incantations shows "Add your first slide using the form on the left" in dim 13px text. Visions shows nothing when there are slides but no visions. The Grimoire section has no empty state if zero grimoires exist (the radio button list is just empty).
-
-**Why it matters:** Empty states are the first thing new users see in each section. Every empty section is a chance to teach the workflow. An empty Visions page should say something like "Conjure visions for your slides" with a CTA, not silently render an empty list.
-
-**Fix:** Apply the `_empty_state.html.erb` pattern to Incantations (no slides), Visions (no visions), and Grimoire (no grimoires). Match the Workshop's quality — icon, title, one sentence, action button.
+All three workspace sections now use the shared `_empty_state` component with on-brand copy and CTAs: Incantations (no slides), Visions (no slides / no visions), Grimoire (no grimoires).
 
 ## Minor Observations
 
