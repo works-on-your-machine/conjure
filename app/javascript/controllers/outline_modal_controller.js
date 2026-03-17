@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["modal"]
+  static targets = ["modal", "form", "generating"]
 
   open() {
     this.modalTarget.classList.remove("hidden")
@@ -13,7 +13,14 @@ export default class extends Controller {
     this.modalTarget.classList.remove("flex")
   }
 
-  // Prevent clicks inside the modal from closing it
+  submit() {
+    // Swap form content for generating state
+    if (this.hasFormTarget && this.hasGeneratingTarget) {
+      this.formTarget.classList.add("hidden")
+      this.generatingTarget.classList.remove("hidden")
+    }
+  }
+
   stopPropagation(event) {
     event.stopPropagation()
   }
