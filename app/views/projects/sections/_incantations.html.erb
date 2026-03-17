@@ -1,6 +1,9 @@
 <div class="flex h-full">
   <%# Left pane: slide list %>
-  <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto">
+  <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto"
+       data-controller="slide-list"
+       data-slide-list-active-class="bg-gold-glow border-gold-dim [&_.slide-title]:text-gold"
+       data-slide-list-inactive-class="border-transparent hover:bg-surface hover:border-conjure-border-hover [&_.slide-title]:text-conjure-text">
     <div class="flex items-center justify-between mb-4 px-1">
       <span class="font-display text-lg font-semibold text-gold-light">Incantations</span>
       <span class="text-[11px] text-conjure-text-dim"><%= @project.slides.size %> slides</span>
@@ -8,9 +11,9 @@
 
     <% @project.slides.each do |slide| %>
       <%= link_to edit_project_slide_path(@project, slide),
-        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{params[:id].to_s == slide.id.to_s ? 'bg-gold-glow border-gold-dim' : 'border-transparent hover:bg-surface hover:border-conjure-border-hover'}",
-        data: { turbo_frame: "slide_editor" } do %>
-        <div class="text-[13px] font-medium mb-0.5 <%= params[:id].to_s == slide.id.to_s ? 'text-gold' : 'text-conjure-text' %>"><%= slide.title %></div>
+        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline border-transparent hover:bg-surface hover:border-conjure-border-hover",
+        data: { turbo_frame: "slide_editor", slide_list_target: "item", action: "click->slide-list#select" } do %>
+        <div class="slide-title text-[13px] font-medium mb-0.5 text-conjure-text"><%= slide.title %></div>
         <div class="text-[11px] text-conjure-text-dim truncate"><%= slide.description %></div>
       <% end %>
     <% end %>
