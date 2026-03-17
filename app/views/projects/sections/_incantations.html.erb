@@ -1,5 +1,5 @@
 <% first_slide = @project.slides.first %>
-<div class="flex h-full">
+<div class="flex h-full" data-controller="outline-modal">
   <%# Left pane: slide list %>
   <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto"
        data-controller="slide-list"
@@ -20,8 +20,8 @@
       <% end %>
     <% end %>
 
-    <%# Add slide form %>
-    <div class="mt-3">
+    <%# Add slide + generate from outline %>
+    <div class="mt-3 space-y-2">
       <%= form_with url: project_slides_path(@project), class: "flex gap-1.5" do |f| %>
         <%= f.text_field :title,
           placeholder: "New slide title...",
@@ -29,6 +29,10 @@
         <%= f.submit "+",
           class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer shrink-0" %>
       <% end %>
+      <button class="w-full text-center text-[12px] text-conjure-text-muted bg-transparent border-none cursor-pointer hover:text-gold transition-colors py-1"
+              data-action="click->outline-modal#open">
+        ✦ Generate from outline
+      </button>
     </div>
   </div>
 
@@ -42,10 +46,37 @@
       <turbo-frame id="slide_editor">
         <%= render layout: "shared/empty_state", locals: {
           title: "No incantations yet",
-          description: "Each slide is an incantation — a prompt that conjures a vision. Add your first one using the form on the left."
+          description: "Each slide is an incantation — a prompt that conjures a vision. Add your first one using the form on the left, or generate slides from an outline."
         } do %>
+          <button class="bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]"
+                  data-action="click->outline-modal#open">
+            ✦ Generate from outline
+          </button>
         <% end %>
       </turbo-frame>
     <% end %>
+  </div>
+
+  <%# Outline modal %>
+  <div data-outline-modal-target="modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-6">
+    <div class="bg-plum-deep rounded-xl border border-conjure-border p-6 w-[600px] max-w-full" data-action="click->outline-modal#stopPropagation">
+      <h3 class="font-display text-xl text-gold-light mb-1">Generate incantations from outline</h3>
+      <p class="text-xs text-conjure-text-muted mb-4">Paste your talk outline, notes, or brain dump. AI will break it into individual slide descriptions.</p>
+
+      <%= form_with url: project_slides_path(@project), method: :post do |f| %>
+        <%= f.text_area :outline, rows: 10,
+          placeholder: "Paste your talk outline here...\n\n- Open with the problem\n- Show the key insight\n- Historical context\n- The mechanism\n- Demo\n- What this means for the audience",
+          class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+
+        <div class="flex gap-2 mt-4 justify-end">
+          <button type="button" data-action="click->outline-modal#close"
+                  class="bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border cursor-pointer">
+            Cancel
+          </button>
+          <%= f.submit "✦ Generate slides",
+            class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

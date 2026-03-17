@@ -3,9 +3,13 @@ class SlidesController < ApplicationController
   before_action :set_slide, only: [ :edit, :update, :destroy, :move ]
 
   def create
-    next_position = @project.slides.maximum(:position).to_i + 1
-    @slide = @project.slides.build(slide_params.merge(position: next_position))
-    @slide.save!
+    if params[:outline].present?
+      generate_from_outline(params[:outline])
+    else
+      title = params.dig(:slide, :title) || params[:title]
+      next_position = @project.slides.maximum(:position).to_i + 1
+      @slide = @project.slides.create!(title: title, description: "", position: next_position)
+    end
     redirect_to project_path(@project, section: "incantations")
   end
 
@@ -46,6 +50,20 @@ class SlidesController < ApplicationController
 
   def slide_params
     params.require(:slide).permit(:title, :description)
+  end
+
+  def generate_from_outline(outline_text)
+    service = OutlineToSlidesService.new(api_key: Setting.current.llm_api_key)
+    slides_data = service.generate(outline_text)
+
+    next_position = @project.slides.maximum(:position).to_i + 1
+    slides_data.each_with_index do |data, i|
+      @project.slides.create!(
+        title: data[:title],
+        description: data[:description],
+        position: next_position + i
+      )
+    end
   end
 
   def swap_positions(a, b)
