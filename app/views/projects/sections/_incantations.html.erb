@@ -1,3 +1,4 @@
+<% first_slide = @project.slides.first %>
 <div class="flex h-full">
   <%# Left pane: slide list %>
   <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto"
@@ -9,11 +10,12 @@
       <span class="text-[11px] text-conjure-text-dim"><%= @project.slides.size %> slides</span>
     </div>
 
-    <% @project.slides.each do |slide| %>
+    <% @project.slides.each_with_index do |slide, index| %>
+      <% is_first = index == 0 %>
       <%= link_to edit_project_slide_path(@project, slide),
-        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline border-transparent hover:bg-surface hover:border-conjure-border-hover",
+        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{is_first ? 'bg-gold-glow border-gold-dim' : 'border-transparent hover:bg-surface hover:border-conjure-border-hover'}",
         data: { turbo_frame: "slide_editor", slide_list_target: "item", action: "click->slide-list#select" } do %>
-        <div class="slide-title text-[13px] font-medium mb-0.5 text-conjure-text"><%= slide.title %></div>
+        <div class="slide-title text-[13px] font-medium mb-0.5 <%= is_first ? 'text-gold' : 'text-conjure-text' %>"><%= slide.title %></div>
         <div class="text-[11px] text-conjure-text-dim truncate"><%= slide.description %></div>
       <% end %>
     <% end %>
@@ -32,16 +34,18 @@
 
   <%# Right pane: slide editor %>
   <div class="flex-1 p-8 overflow-y-auto">
-    <turbo-frame id="slide_editor">
-      <% if @project.slides.any? %>
-        <p class="text-[13px] text-conjure-text-dim">Select a slide to edit.</p>
-      <% else %>
+    <% if first_slide %>
+      <%= turbo_frame_tag "slide_editor", src: edit_project_slide_path(@project, first_slide) do %>
+        <p class="text-[13px] text-conjure-text-dim">Loading...</p>
+      <% end %>
+    <% else %>
+      <turbo-frame id="slide_editor">
         <%= render layout: "shared/empty_state", locals: {
           title: "No incantations yet",
           description: "Each slide is an incantation — a prompt that conjures a vision. Add your first one using the form on the left."
         } do %>
         <% end %>
-      <% end %>
-    </turbo-frame>
+      </turbo-frame>
+    <% end %>
   </div>
 </div>
