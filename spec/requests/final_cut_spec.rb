@@ -46,6 +46,11 @@ RSpec.describe "Final Cut", type: :request do
       get assembly_project_path(project)
       expect(response.body).to include("Visions")
     end
+
+    it "shows the images zip export button" do
+      get assembly_project_path(project)
+      expect(response.body).to include("Export images zip")
+    end
   end
 
   describe "POST /projects/:project_id/conjurings (refinement)" do

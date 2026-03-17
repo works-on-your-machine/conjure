@@ -10,7 +10,9 @@
     <div class="flex items-center gap-2">
       <%= link_to "← Visions", visions_project_path(@project),
         class: "text-conjure-text-muted px-3 py-2 rounded-md text-[13px] no-underline hover:text-conjure-text transition-colors" %>
-      <%= link_to "Export to Figma", project_export_png_path(@project), class: btn_default %>
+      <%= link_to "Export images zip", project_export_png_path(@project),
+        class: btn_default,
+        title: "Import into Figma, Google Slides, Keynote, and similar tools" %>
       <%= link_to "Export project", project_export_project_path(@project), class: btn_default %>
       <%= link_to "Export PDF", project_export_pdf_path(@project),
         class: btn_gold(selected_count < total ? "opacity-40 pointer-events-none" : "") %>
@@ -96,7 +98,7 @@
             </div>
           <% end %>
 
-          <p class="text-[11px] text-conjure-text-dim mt-3">For compositing (adding screenshots, overlaying images), use Export to Figma.</p>
+          <p class="text-[11px] text-conjure-text-dim mt-3">For compositing or deck assembly in Figma, Google Slides, Keynote, and similar tools, use Export images zip.</p>
         </div>
       </div>
     <% end %>
