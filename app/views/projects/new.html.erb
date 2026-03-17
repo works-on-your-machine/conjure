@@ -6,6 +6,19 @@
 
   <h2 class="font-display text-2xl font-semibold text-gold-light mt-6 mb-6">Create a new project</h2>
 
+  <%# Step indicator %>
+  <div class="flex items-center gap-0 mb-8">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-full bg-gold text-plum-deep text-xs font-semibold flex items-center justify-center">1</div>
+      <span class="text-[13px] text-gold font-medium">Name</span>
+    </div>
+    <div class="flex-1 h-px bg-conjure-border mx-3"></div>
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-full bg-surface border border-conjure-border text-conjure-text-dim text-xs font-semibold flex items-center justify-center">2</div>
+      <span class="text-[13px] text-conjure-text-dim">Grimoire</span>
+    </div>
+  </div>
+
   <%= form_with model: @project, class: "space-y-8" do |f| %>
     <% if @project.errors.any? %>
       <div class="bg-danger/10 border border-danger/30 rounded-md px-4 py-3 text-sm text-danger">
@@ -48,8 +61,7 @@
     </div>
 
     <div class="flex items-center justify-end pt-2">
-      <%= f.submit "Create project →",
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <%= f.submit "Create project →", class: btn_gold %>
     </div>
   <% end %>
 </div>

@@ -9,8 +9,7 @@
       class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
 
     <div class="flex gap-2 flex-wrap items-center">
-      <%= f.submit "Save",
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <%= f.submit "Save", class: btn_gold %>
 
       <div class="flex-1"></div>
 
@@ -28,7 +27,7 @@
 
       <%= button_to "Remove", project_slide_path(@project, @slide),
         method: :delete,
-        class: "bg-transparent text-danger px-4 py-2 rounded-md text-xs border border-danger/30 cursor-pointer",
+        class: btn_danger("text-xs"),
         data: { turbo_confirm: "Remove this slide?" } %>
     </div>
   <% end %>

@@ -22,8 +22,7 @@
           title: "No grimoires yet",
           description: "A grimoire defines the visual style for your presentation. Create one to get started."
         } do %>
-          <%= link_to "✦ Create a grimoire", new_grimoire_path,
-            class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+          <%= link_to "✦ Create a grimoire", new_grimoire_path, class: btn_gold %>
         <% end %>
       </div>
     <% end %>
@@ -42,8 +41,7 @@
     </div>
 
     <div class="pt-2">
-      <%= f.submit "Save changes",
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <%= f.submit "Save changes", class: btn_gold %>
     </div>
   <% end %>
 </div>

@@ -10,12 +10,10 @@
     <div class="flex items-center gap-2">
       <%= link_to "← Visions", project_path(@project, section: "visions"),
         class: "text-conjure-text-muted px-3 py-2 rounded-md text-[13px] no-underline hover:text-conjure-text transition-colors" %>
-      <%= link_to "Export to Figma", project_export_png_path(@project),
-        class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
-      <%= link_to "Export project", project_export_project_path(@project),
-        class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+      <%= link_to "Export to Figma", project_export_png_path(@project), class: btn_default %>
+      <%= link_to "Export project", project_export_project_path(@project), class: btn_default %>
       <%= link_to "Export PDF", project_export_pdf_path(@project),
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)] #{selected_count < total ? 'opacity-40 pointer-events-none' : ''}" %>
+        class: btn_gold(selected_count < total ? "opacity-40 pointer-events-none" : "") %>
     </div>
   </div>
 
@@ -92,10 +90,8 @@
               class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
 
             <div class="flex gap-2 justify-end">
-              <%= link_to "Cancel", project_path(@project, section: "assembly"),
-                class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline" %>
-              <%= f.submit "✦ Re-conjure with changes",
-                class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+              <%= link_to "Cancel", project_path(@project, section: "assembly"), class: btn_default %>
+              <%= f.submit "✦ Re-conjure with changes", class: btn_gold %>
             </div>
           <% end %>
 

@@ -50,8 +50,7 @@
     </div>
 
     <div class="pt-2">
-      <%= f.submit "Save settings",
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <%= f.submit "Save settings", class: btn_gold %>
     </div>
   <% end %>
 
@@ -65,7 +64,7 @@
     <% if @vision_count > 0 %>
       <%= button_to "Clear unselected visions", clear_unselected_settings_path,
         method: :delete,
-        class: "bg-transparent text-danger px-4 py-2 rounded-md font-body text-[13px] border border-danger/30 cursor-pointer",
+        class: btn_danger,
         data: { turbo_confirm: "This will delete all unselected visions and their images. Continue?" } %>
     <% end %>
   </div>

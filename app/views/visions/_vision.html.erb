@@ -1,15 +1,21 @@
 <%# Single vision thumbnail — used in wall grid and as Turbo Stream broadcast target %>
 <div id="vision_<%= vision.id %>"
-     class="relative aspect-video rounded-md overflow-hidden transition-all
-            <%= vision.selected? ? 'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]' : 'border border-white/5 hover:border-conjure-border-hover' %>">
+     class="relative aspect-video rounded-md overflow-hidden transition-all duration-150
+            <%= if vision.selected?
+                  'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]'
+                elsif vision.complete? && vision.image.attached?
+                  'border border-white/5 hover:border-gold-dim hover:scale-[1.03] hover:shadow-[0_2px_12px_var(--color-gold-glow)]'
+                else
+                  'border border-white/5'
+                end %>">
   <% if vision.image.attached? %>
     <%= image_tag vision.image, class: "w-full h-full object-cover" %>
   <% else %>
-    <div class="w-full h-full bg-surface-light flex items-center justify-center">
+    <div class="w-full h-full flex items-center justify-center <%= vision.generating? ? 'vision-generating' : 'bg-surface-light' %>">
       <% if vision.failed? %>
         <span class="text-xs text-danger">failed</span>
       <% elsif vision.generating? %>
-        <span class="text-xs text-gold animate-pulse">generating...</span>
+        <span class="text-xs text-gold font-medium">summoning...</span>
       <% else %>
         <span class="text-xs text-conjure-text-dim"><%= vision.status %></span>
       <% end %>

@@ -22,7 +22,6 @@
   </div>
 
   <div>
-    <%= f.submit grimoire.persisted? ? "Save grimoire" : "Create grimoire",
-      class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+    <%= f.submit grimoire.persisted? ? "Save grimoire" : "Create grimoire", class: btn_gold %>
   </div>
 <% end %>

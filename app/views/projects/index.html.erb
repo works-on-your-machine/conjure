@@ -4,8 +4,7 @@
   <% if @projects.any? %>
     <div class="flex items-center justify-between mb-8">
       <div></div>
-      <%= link_to "✦ Conjure new project", new_project_path,
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <%= link_to "✦ Conjure new project", new_project_path, class: btn_gold %>
     </div>
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
@@ -25,8 +24,7 @@
       title: "Your workshop is empty",
       description: "Every presentation begins as a vision. Describe a vibe, conjure some slides, curate your favorites."
     } do %>
-      <%= link_to "Start from scratch", new_project_path,
-        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+      <%= link_to "Start from scratch", new_project_path, class: btn_gold %>
     <% end %>
   <% end %>
 </div>
