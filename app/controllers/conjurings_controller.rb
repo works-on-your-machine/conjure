@@ -4,9 +4,12 @@ class ConjuringsController < ApplicationController
   def create
     scope = params[:scope] || params.dig(:conjuring, :scope) || "all"
 
+    variations = (params[:variations] || params.dig(:conjuring, :variations) || @project.default_variations).to_i
+    @project.update!(default_variations: variations) if variations != @project.default_variations
+
     @conjuring = @project.conjurings.build(
       grimoire_text: @project.grimoire.description,
-      variations_count: @project.default_variations,
+      variations_count: variations,
       status: :pending
     )
     @conjuring.save!

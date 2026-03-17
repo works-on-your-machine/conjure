@@ -12,7 +12,7 @@
       <% if selected_count > 0 %>
         <%= link_to "View assembly (#{selected_count}/#{@project.slides.size}) →",
           project_path(@project, section: "assembly"),
-          class: "bg-gold text-plum-deep px-5 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+          class: "bg-surface text-conjure-text-muted px-5 py-2.5 rounded-md font-body text-sm no-underline border border-conjure-border hover:border-conjure-border-hover transition-all" %>
       <% end %>
     </div>
   </div>
