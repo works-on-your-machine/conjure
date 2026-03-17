@@ -51,12 +51,9 @@ All three workspace sections now use the shared `_empty_state` component with on
 - ~~Generating animation~~ — Shimmer gradient animation with "summoning..." text
 - ~~Button class duplication~~ — Extracted `btn_gold`, `btn_default`, `btn_danger` helpers; replaced 14 inline instances
 
-## Questions to Consider
+## ~~Questions to Consider~~ RESOLVED
 
-- **What if the Conjure button followed you?** A persistent floating CTA or always-visible sidebar button means the user never has to think "where do I go to generate." The app is called *Conjure* — that action should be omnipresent.
-
-- **What would this feel like if the generation wait was *part of the magic*?** Right now "generating..." is a loading state to endure. What if it was a summoning ritual — a slow reveal, arcane symbols dissolving into the image, a brief flash of gold when it materializes? This is your brand moment.
-
-- **Does the Workshop need to be a card grid?** With zero vision thumbnails populating the mosaics, every project card looks nearly identical. Would a list view with richer metadata (last vision generated, completion %, grimoire preview strip) be more useful at this stage?
-
-- **Is the sidebar earning its 200px?** It shows the project name, grimoire, 4 nav links, and a cost estimate. That's a lot of permanent real estate for not much information. Could it be narrower, or collapsible, giving more room to the content areas that matter?
+- ~~Conjure button follows you~~ — Sidebar now has persistent CTA with variations + cost
+- ~~Generation wait as magic~~ — Summoning reveal animation (gold veil dissolve + ✦ flourish), toggleable via "Summoning effects" checkbox in sidebar
+- ~~Workshop card grid useful?~~ — Cards now show real vision thumbnails, visually distinct
+- ~~Sidebar earning its 200px?~~ — Now holds variations, cost, Conjure CTA, and reveal toggle
