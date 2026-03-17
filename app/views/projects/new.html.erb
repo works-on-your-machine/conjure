@@ -44,7 +44,7 @@
       <div class="flex flex-col gap-2.5">
         <% @grimoires.each do |grimoire| %>
           <label class="block cursor-pointer">
-            <%= f.radio_button :grimoire_id, grimoire.id,
+            <%= f.radio_button :source_grimoire_id, grimoire.id,
               class: "peer sr-only" %>
             <div class="p-3.5 px-4 rounded-lg transition-all bg-surface border border-conjure-border peer-checked:bg-gold-glow peer-checked:border-gold-dim">
               <div class="flex items-center justify-between">

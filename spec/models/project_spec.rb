@@ -8,21 +8,29 @@ RSpec.describe Project, type: :model do
       expect(project.errors[:name]).to include("can't be blank")
     end
 
-    it "requires a grimoire" do
-      project = build(:project, grimoire: nil)
+    it "requires a source grimoire" do
+      project = build(:project, source_grimoire: nil)
       expect(project).not_to be_valid
     end
 
-    it "is valid with a name and grimoire" do
+    it "is valid with a name and source grimoire" do
       project = build(:project)
       expect(project).to be_valid
     end
   end
 
   describe "associations" do
-    it "belongs to a grimoire" do
+    it "copies the source grimoire into a project-local grimoire" do
       project = create(:project)
       expect(project.grimoire).to be_a(Grimoire)
+      expect(project.grimoire).not_to eq(project.source_grimoire)
+      expect(project.grimoire.name).to eq(project.source_grimoire.name)
+      expect(project.grimoire.description).to eq(project.source_grimoire.description)
+    end
+
+    it "belongs to a source grimoire" do
+      project = create(:project)
+      expect(project.source_grimoire).to be_a(Grimoire)
     end
   end
 
@@ -35,6 +43,19 @@ RSpec.describe Project, type: :model do
     it "defaults default_variations to 5" do
       project = create(:project)
       expect(project.default_variations).to eq(5)
+    end
+  end
+
+  describe "destroy" do
+    it "removes the project-local grimoire copy and preserves the source grimoire" do
+      project = create(:project)
+      project_grimoire_id = project.grimoire_id
+      source_grimoire_id = project.source_grimoire_id
+
+      project.destroy
+
+      expect(Grimoire.exists?(project_grimoire_id)).to be(false)
+      expect(Grimoire.exists?(source_grimoire_id)).to be(true)
     end
   end
 end

@@ -36,9 +36,9 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new(
       name: params.dig(:project, :name),
-      grimoire_id: params[:grimoire_id]
+      source_grimoire_id: params[:source_grimoire_id] || params[:grimoire_id]
     )
-    @grimoires = Grimoire.all
+    @grimoires = Grimoire.library
   end
 
   def create
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to grimoire_project_path(@project)
     else
-      @grimoires = Grimoire.all
+      @grimoires = Grimoire.library
       render :new, status: :unprocessable_entity
     end
   end
@@ -63,7 +63,10 @@ class ProjectsController < ApplicationController
   end
 
   def create_project_params
-    params.require(:project).permit(:name, :grimoire_id, :default_variations)
+    params.require(:project).permit(:name, :source_grimoire_id, :default_variations).tap do |attributes|
+      legacy_grimoire_id = params.dig(:project, :grimoire_id)
+      attributes[:source_grimoire_id] ||= legacy_grimoire_id if legacy_grimoire_id.present?
+    end
   end
 
   def update_project_params

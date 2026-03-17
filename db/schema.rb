@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_193917) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_120000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -63,8 +63,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_193917) do
     t.integer "default_variations", default: 5
     t.integer "grimoire_id", null: false
     t.string "name", null: false
+    t.integer "source_grimoire_id"
     t.datetime "updated_at", null: false
     t.index ["grimoire_id"], name: "index_projects_on_grimoire_id"
+    t.index ["source_grimoire_id"], name: "index_projects_on_source_grimoire_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -105,6 +107,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_193917) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "conjurings", "projects"
   add_foreign_key "projects", "grimoires"
+  add_foreign_key "projects", "grimoires", column: "source_grimoire_id"
   add_foreign_key "slides", "projects"
   add_foreign_key "visions", "conjurings"
   add_foreign_key "visions", "slides"

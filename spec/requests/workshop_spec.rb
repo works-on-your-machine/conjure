@@ -15,7 +15,7 @@ RSpec.describe "Workshop (Home Screen)", type: :request do
 
       it "shows grimoire name on each card" do
         grimoire = create(:grimoire, name: "Pirate Broadcast")
-        create(:project, grimoire: grimoire)
+        create(:project, source_grimoire: grimoire)
 
         get root_path
         expect(response.body).to include("Pirate Broadcast")

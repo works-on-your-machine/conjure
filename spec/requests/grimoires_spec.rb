@@ -15,8 +15,8 @@ RSpec.describe "Grimoires", type: :request do
 
     it "shows usage count for each grimoire" do
       grimoire = create(:grimoire)
-      create(:project, grimoire: grimoire)
-      create(:project, grimoire: grimoire, name: "Second Deck")
+      create(:project, source_grimoire: grimoire)
+      create(:project, source_grimoire: grimoire, name: "Second Deck")
 
       get grimoires_path
       expect(response.body).to include("2 projects")
@@ -66,7 +66,7 @@ RSpec.describe "Grimoires", type: :request do
       }.to change(Grimoire, :count).by(1)
 
       grimoire = Grimoire.last
-      expect(response).to redirect_to(new_project_path(project: { name: "My Talk" }, grimoire_id: grimoire.id))
+      expect(response).to redirect_to(new_project_path(project: { name: "My Talk" }, source_grimoire_id: grimoire.id))
     end
 
     it "re-renders form on validation error" do

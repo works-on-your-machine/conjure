@@ -17,7 +17,7 @@ RSpec.describe Grimoire, type: :model do
   describe "associations" do
     it "has many projects" do
       grimoire = create(:grimoire)
-      project = create(:project, grimoire: grimoire)
+      project = create(:project, source_grimoire: grimoire)
       expect(grimoire.projects).to include(project)
     end
   end
@@ -27,24 +27,34 @@ RSpec.describe Grimoire, type: :model do
       grimoire = create(:grimoire)
       expect(grimoire.projects_count).to eq(0)
 
-      create(:project, grimoire: grimoire)
+      create(:project, source_grimoire: grimoire)
       grimoire.reload
       expect(grimoire.projects_count).to eq(1)
 
-      create(:project, grimoire: grimoire, name: "Another Deck")
+      create(:project, source_grimoire: grimoire, name: "Another Deck")
       grimoire.reload
       expect(grimoire.projects_count).to eq(2)
     end
 
     it "decrements when a project is destroyed" do
       grimoire = create(:grimoire)
-      project = create(:project, grimoire: grimoire)
+      project = create(:project, source_grimoire: grimoire)
       grimoire.reload
       expect(grimoire.projects_count).to eq(1)
 
       project.destroy
       grimoire.reload
       expect(grimoire.projects_count).to eq(0)
+    end
+  end
+
+  describe ".library" do
+    it "excludes project-local grimoire copies" do
+      library_grimoire = create(:grimoire)
+      create(:project, source_grimoire: library_grimoire)
+
+      expect(Grimoire.library).to include(library_grimoire)
+      expect(Grimoire.library).not_to include(Project.last.grimoire)
     end
   end
 end

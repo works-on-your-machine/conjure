@@ -2,7 +2,7 @@ class GrimoiresController < ApplicationController
   before_action :set_grimoire, only: [ :show, :edit, :update, :destroy, :duplicate ]
 
   def index
-    @grimoires = Grimoire.all
+    @grimoires = Grimoire.library
   end
 
   def show
@@ -15,7 +15,7 @@ class GrimoiresController < ApplicationController
   def create
     @grimoire = Grimoire.new(grimoire_params)
     if @grimoire.save
-      redirect_to(return_to_project? ? new_project_path(project: { name: params.dig(:project, :name) }, grimoire_id: @grimoire.id) : @grimoire)
+      redirect_to(return_to_project? ? new_project_path(project: { name: params.dig(:project, :name) }, source_grimoire_id: @grimoire.id) : @grimoire)
     else
       render :new, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class GrimoiresController < ApplicationController
   private
 
   def set_grimoire
-    @grimoire = Grimoire.find(params[:id])
+    @grimoire = Grimoire.library.find(params[:id])
   end
 
   def grimoire_params

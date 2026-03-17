@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Project Workspace", type: :request do
   let!(:grimoire) { create(:grimoire, name: "Pirate Broadcast") }
   let!(:other_grimoire) { create(:grimoire, name: "Bauhaus Clean") }
-  let!(:project) { create(:project, name: "My Talk", grimoire: grimoire) }
+  let!(:project) { create(:project, name: "My Talk", source_grimoire: grimoire) }
 
   describe "GET /projects/:id/grimoire (Grimoire section)" do
     it "shows the project name and grimoire" do
@@ -32,10 +32,10 @@ RSpec.describe "Project Workspace", type: :request do
   end
 
   describe "PATCH /projects/:id" do
-    it "does not switch the grimoire" do
-      patch project_path(project), params: { project: { grimoire_id: other_grimoire.id } }
+    it "does not switch the source grimoire" do
+      patch project_path(project), params: { project: { source_grimoire_id: other_grimoire.id } }
       expect(response).to redirect_to(grimoire_project_path(project))
-      expect(project.reload.grimoire).to eq(grimoire)
+      expect(project.reload.source_grimoire).to eq(grimoire)
     end
 
     it "updates default variations" do
@@ -48,14 +48,15 @@ RSpec.describe "Project Workspace", type: :request do
       patch project_path(project), params: {
         project: {
           grimoire_attributes: {
-            id: grimoire.id,
+            id: project.grimoire.id,
             description: "Neon scanlines and pirate TV graphics."
           }
         }
       }
 
       expect(response).to redirect_to(grimoire_project_path(project))
-      expect(grimoire.reload.description).to eq("Neon scanlines and pirate TV graphics.")
+      expect(project.reload.grimoire.description).to eq("Neon scanlines and pirate TV graphics.")
+      expect(grimoire.reload.description).not_to eq("Neon scanlines and pirate TV graphics.")
     end
   end
 end
