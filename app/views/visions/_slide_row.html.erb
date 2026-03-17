@@ -7,7 +7,7 @@
   <div class="mb-6" data-controller="slide-panel" data-slide-panel-open-value="<%= is_open %>">
     <%# Slide header %>
     <div class="flex items-center gap-3 mb-2">
-      <span class="text-[13px] text-gold font-medium"><%= slide.title %></span>
+      <span class="text-sm text-gold font-semibold"><%= slide.title %></span>
       <% if selected_vision %>
         <span class="text-[11px] text-conjure-text-dim">v<%= selected_vision.position %> chosen</span>
       <% elsif slide.visions.any? %>

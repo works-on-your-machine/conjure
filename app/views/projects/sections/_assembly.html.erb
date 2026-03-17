@@ -9,13 +9,13 @@
     </div>
     <div class="flex items-center gap-2">
       <%= link_to "← Visions", project_path(@project, section: "visions"),
-        class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+        class: "text-conjure-text-muted px-3 py-2 rounded-md text-[13px] no-underline hover:text-conjure-text transition-colors" %>
       <%= link_to "Export to Figma", project_export_png_path(@project),
         class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
       <%= link_to "Export project", project_export_project_path(@project),
         class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
       <%= link_to "Export PDF", project_export_pdf_path(@project),
-        class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)] #{selected_count < total ? 'opacity-40 pointer-events-none' : ''}" %>
+        class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold no-underline shadow-[0_4px_20px_var(--color-gold-glow-strong)] #{selected_count < total ? 'opacity-40 pointer-events-none' : ''}" %>
     </div>
   </div>
 
@@ -59,7 +59,7 @@
 
       <%# Slide info %>
       <div class="w-[140px] pt-2 shrink-0">
-        <div class="text-xs text-conjure-text-muted font-medium"><%= slide.title %></div>
+        <div class="text-sm text-conjure-text font-medium"><%= slide.title %></div>
         <% if selected_vision %>
           <div class="text-[11px] text-conjure-text-dim mt-0.5">variation <%= selected_vision.position %></div>
         <% end %>
@@ -95,7 +95,7 @@
               <%= link_to "Cancel", project_path(@project, section: "assembly"),
                 class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline" %>
               <%= f.submit "✦ Re-conjure with changes",
-                class: "bg-gold text-plum-deep px-5 py-2 rounded-md font-body text-[13px] font-medium cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
+                class: "bg-gold text-plum-deep px-6 py-2.5 rounded-md font-body text-sm font-semibold cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]" %>
             </div>
           <% end %>
 

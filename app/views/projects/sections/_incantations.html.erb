@@ -8,7 +8,7 @@
 
     <% @project.slides.each do |slide| %>
       <%= link_to edit_project_slide_path(@project, slide),
-        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{params[:id].to_s == slide.id.to_s ? 'bg-gold-glow border-gold-dim' : 'border-conjure-border hover:border-conjure-border-hover'}",
+        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{params[:id].to_s == slide.id.to_s ? 'bg-gold-glow border-gold-dim' : 'border-transparent hover:bg-surface hover:border-conjure-border-hover'}",
         data: { turbo_frame: "slide_editor" } do %>
         <div class="text-[13px] font-medium mb-0.5 <%= params[:id].to_s == slide.id.to_s ? 'text-gold' : 'text-conjure-text' %>"><%= slide.title %></div>
         <div class="text-[11px] text-conjure-text-dim truncate"><%= slide.description %></div>

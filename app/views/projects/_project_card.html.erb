@@ -1,5 +1,5 @@
 <%= link_to project_path(project),
-  class: "bg-surface rounded-[10px] border border-conjure-border p-4 transition-all hover:border-conjure-border-hover block no-underline" do %>
+  class: "bg-surface rounded-[10px] border border-conjure-border p-4 transition-all hover:border-conjure-border-hover hover:shadow-[0_2px_16px_var(--color-gold-glow)] block no-underline" do %>
 
   <%# Thumbnail mosaic placeholder (will show actual visions later) %>
   <div class="grid grid-cols-2 gap-[3px] rounded overflow-hidden">
@@ -8,7 +8,7 @@
     <% end %>
   </div>
 
-  <h3 class="font-display text-[17px] font-semibold text-gold-light mt-3 mb-1"><%= project.name %></h3>
+  <h3 class="font-display text-lg font-semibold text-gold-light mt-3 mb-1"><%= project.name %></h3>
 
   <div class="flex items-center justify-between">
     <span class="text-[11px] text-muted">◈ <%= project.grimoire.name %></span>
