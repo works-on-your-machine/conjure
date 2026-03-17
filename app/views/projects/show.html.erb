@@ -2,8 +2,6 @@
   <%= render "shared/sidebar" %>
 
   <main class="flex-1 overflow-auto">
-    <% section = params[:section] || "grimoire" %>
-
     <% if section == "grimoire" %>
       <%= render "projects/sections/grimoire" %>
     <% elsif section == "incantations" %>
@@ -11,7 +9,7 @@
     <% elsif section == "visions" %>
       <%= render "projects/sections/visions" %>
     <% elsif section == "assembly" || section == "refine" %>
-      <%= render "projects/sections/assembly" %>
+      <%= render "projects/sections/assembly", section: section %>
     <% end %>
   </main>
 </div>

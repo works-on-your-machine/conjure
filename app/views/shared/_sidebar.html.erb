@@ -13,7 +13,7 @@
 
   <nav class="px-3 py-2 flex-1 border-t border-conjure-border">
     <% sidebar_sections.each do |section| %>
-      <%= link_to project_path(@project, section: section[:id]),
+      <%= link_to section_path(@project, section[:id]),
         class: "flex items-center gap-2.5 px-3 py-2.5 rounded-md mb-1 no-underline transition-all #{active_section?(section[:id]) ? 'bg-gold-glow text-gold' : 'text-conjure-text-muted hover:text-conjure-text'}" do %>
         <span class="shrink-0 opacity-80"><%= section[:icon] %></span>
         <span class="text-[13px]"><%= section[:label] %></span>

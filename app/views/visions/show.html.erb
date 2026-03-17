@@ -3,7 +3,7 @@
 
 <div class="px-10 max-w-[720px] mx-auto">
   <div class="flex items-center gap-4 mb-6">
-    <%= link_to "← Back to visions", project_path(@project, section: "visions"),
+    <%= link_to "← Back to visions", visions_project_path(@project),
       class: "text-conjure-text-muted text-sm no-underline hover:text-conjure-text transition-colors" %>
   </div>
 
@@ -61,7 +61,7 @@
   </div>
 
   <div class="flex gap-2 mt-6 pt-4 border-t border-conjure-border">
-    <%= link_to "← Back to visions", project_path(@project, section: "visions"),
+    <%= link_to "← Back to visions", visions_project_path(@project),
       class: "bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border no-underline" %>
     <%= button_to "Delete this vision", project_vision_path(@project, @vision), method: :delete,
       class: "bg-transparent text-danger px-4 py-2 rounded-md text-[13px] border border-danger/30 cursor-pointer",

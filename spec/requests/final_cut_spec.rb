@@ -9,7 +9,7 @@ RSpec.describe "Final Cut", type: :request do
 
   describe "GET /projects/:id?section=assembly" do
     it "renders the Final Cut section" do
-      get project_path(project, section: "assembly")
+      get assembly_project_path(project)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Final cut")
     end
@@ -18,32 +18,32 @@ RSpec.describe "Final Cut", type: :request do
       create(:vision, slide: slide1, conjuring: conjuring, selected: true, position: 1, status: :complete)
       create(:vision, slide: slide2, conjuring: conjuring, selected: true, position: 1, status: :complete)
 
-      get project_path(project, section: "assembly")
+      get assembly_project_path(project)
       expect(response.body).to include("Title card")
       expect(response.body).to include("The problem")
     end
 
     it "shows dashed placeholder for slides without a selected vision" do
-      get project_path(project, section: "assembly")
+      get assembly_project_path(project)
       expect(response.body).to include("No vision")
     end
 
     it "shows selection count" do
       create(:vision, slide: slide1, conjuring: conjuring, selected: true, position: 1, status: :complete)
 
-      get project_path(project, section: "assembly")
+      get assembly_project_path(project)
       expect(response.body).to include("1/3")
     end
 
     it "shows Refine button on slides with selected visions" do
       create(:vision, slide: slide1, conjuring: conjuring, selected: true, position: 1, status: :complete)
 
-      get project_path(project, section: "assembly")
+      get assembly_project_path(project)
       expect(response.body).to include("Refine")
     end
 
     it "shows back to visions link" do
-      get project_path(project, section: "assembly")
+      get assembly_project_path(project)
       expect(response.body).to include("Visions")
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe "Final Cut", type: :request do
 
       conjuring = Conjuring.last
       expect(conjuring.variations_count).to eq(project.default_variations)
-      expect(response).to redirect_to(project_path(project, section: "visions"))
+      expect(response).to redirect_to(visions_project_path(project))
     end
   end
 end

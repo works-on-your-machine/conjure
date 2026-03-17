@@ -8,7 +8,7 @@ RSpec.describe "Slides (Incantations)", type: :request do
       create(:slide, project: project, title: "Title card", position: 1)
       create(:slide, project: project, title: "The problem", position: 2)
 
-      get project_path(project, section: "incantations")
+      get incantations_project_path(project)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Incantations")
       expect(response.body).to include("Title card")
@@ -19,7 +19,7 @@ RSpec.describe "Slides (Incantations)", type: :request do
       create(:slide, project: project, position: 1)
       create(:slide, project: project, title: "Second", position: 2)
 
-      get project_path(project, section: "incantations")
+      get incantations_project_path(project)
       expect(response.body).to include("2 slides")
     end
   end

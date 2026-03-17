@@ -8,7 +8,7 @@
       <p class="text-xs text-conjure-text-dim mt-0.5"><%= selected_count %>/<%= total %> slides selected</p>
     </div>
     <div class="flex items-center gap-2">
-      <%= link_to "← Visions", project_path(@project, section: "visions"),
+      <%= link_to "← Visions", visions_project_path(@project),
         class: "text-conjure-text-muted px-3 py-2 rounded-md text-[13px] no-underline hover:text-conjure-text transition-colors" %>
       <%= link_to "Export to Figma", project_export_png_path(@project), class: btn_default %>
       <%= link_to "Export project", project_export_project_path(@project), class: btn_default %>
@@ -42,14 +42,14 @@
             <%# Refine button %>
             <div class="absolute bottom-2 right-2">
               <%= link_to "✦ Refine",
-                project_path(@project, section: "refine", slide_id: slide.id),
+                refine_project_path(@project, slide_id: slide.id),
                 class: "px-2.5 py-1 rounded text-[11px] cursor-pointer bg-black/60 text-gold-light border border-conjure-border font-body backdrop-blur-sm no-underline" %>
             </div>
           </div>
         <% else %>
           <div class="aspect-video rounded-md border border-dashed border-conjure-border flex items-center justify-center">
             <%= link_to "No vision — #{slide.title}",
-              project_path(@project, section: "visions"),
+              visions_project_path(@project),
               class: "text-xs text-conjure-text-dim no-underline hover:text-conjure-text-muted" %>
           </div>
         <% end %>
@@ -66,7 +66,7 @@
   <% end %>
 
   <%# Refine modal %>
-  <% if params[:section] == "refine" && params[:slide_id].present? %>
+  <% if section == "refine" && params[:slide_id].present? %>
     <% refine_slide = @project.slides.find_by(id: params[:slide_id]) %>
     <% refine_vision = refine_slide&.visions&.find(&:selected?) %>
     <% if refine_slide && refine_vision %>
@@ -90,7 +90,7 @@
               class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
 
             <div class="flex gap-2 justify-end">
-              <%= link_to "Cancel", project_path(@project, section: "assembly"), class: btn_default %>
+              <%= link_to "Cancel", assembly_project_path(@project), class: btn_default %>
               <%= f.submit "✦ Re-conjure with changes", class: btn_gold %>
             </div>
           <% end %>

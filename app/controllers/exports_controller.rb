@@ -8,7 +8,7 @@ class ExportsController < ApplicationController
     if pdf_data
       send_data pdf_data, filename: service.filename, type: "application/pdf", disposition: "attachment"
     else
-      redirect_to project_path(@project, section: "assembly"), alert: "No selected visions to export."
+      redirect_to assembly_project_path(@project), alert: "No selected visions to export."
     end
   end
 
@@ -19,7 +19,7 @@ class ExportsController < ApplicationController
     if zip_data
       send_data zip_data, filename: service.filename, type: "application/zip", disposition: "attachment"
     else
-      redirect_to project_path(@project, section: "assembly"), alert: "No selected visions to export."
+      redirect_to assembly_project_path(@project), alert: "No selected visions to export."
     end
   end
 

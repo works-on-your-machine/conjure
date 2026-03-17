@@ -10,7 +10,7 @@ RSpec.describe "Vision Selection", type: :request do
       vision = create(:vision, slide: slide, conjuring: conjuring, selected: false)
 
       patch project_vision_path(project, vision), params: { vision: { selected: true } }
-      expect(response).to redirect_to(project_path(project, section: "visions"))
+      expect(response).to redirect_to(visions_project_path(project))
       expect(vision.reload.selected).to be true
     end
 

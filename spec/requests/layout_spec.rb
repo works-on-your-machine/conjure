@@ -27,9 +27,9 @@ end
 RSpec.describe "Project Layout", type: :request do
   let!(:project) { create(:project) }
 
-  describe "GET /projects/:id" do
+  describe "GET /projects/:id/grimoire" do
     it "renders the four-section sidebar" do
-      get project_path(project)
+      get grimoire_project_path(project)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Grimoire")
       expect(response.body).to include("Incantations")
@@ -38,17 +38,17 @@ RSpec.describe "Project Layout", type: :request do
     end
 
     it "shows the back to workshop link" do
-      get project_path(project)
+      get grimoire_project_path(project)
       expect(response.body).to include("Workshop")
     end
 
     it "shows the project name" do
-      get project_path(project)
+      get grimoire_project_path(project)
       expect(response.body).to include(project.name)
     end
 
     it "shows the grimoire name" do
-      get project_path(project)
+      get grimoire_project_path(project)
       expect(response.body).to include(project.grimoire.name)
     end
   end

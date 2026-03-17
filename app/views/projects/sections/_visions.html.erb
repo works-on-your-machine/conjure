@@ -11,7 +11,7 @@
     <div class="flex items-center gap-3">
       <% if selected_count > 0 %>
         <%= link_to "View assembly (#{selected_count}/#{@project.slides.size}) →",
-          project_path(@project, section: "assembly"),
+          assembly_project_path(@project),
           class: "bg-surface text-conjure-text-muted px-5 py-2.5 rounded-md font-body text-sm no-underline border border-conjure-border hover:border-conjure-border-hover transition-all" %>
       <% end %>
     </div>
@@ -40,7 +40,7 @@
       title: "Add slides first",
       description: "Head to Incantations to write your slide prompts, then come back here to conjure visions."
     } do %>
-      <%= link_to "Go to Incantations →", project_path(@project, section: "incantations"), class: btn_gold %>
+      <%= link_to "Go to Incantations →", incantations_project_path(@project), class: btn_gold %>
     <% end %>
   <% end %>
 </div>

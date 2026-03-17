@@ -10,7 +10,7 @@ class SlidesController < ApplicationController
       next_position = @project.slides.maximum(:position).to_i + 1
       @slide = @project.slides.create!(title: title, description: "", position: next_position)
     end
-    redirect_to project_path(@project, section: "incantations")
+    redirect_to incantations_project_path(@project)
   end
 
   def edit
@@ -18,12 +18,12 @@ class SlidesController < ApplicationController
 
   def update
     @slide.update!(slide_params)
-    redirect_to project_path(@project, section: "incantations")
+    redirect_to incantations_project_path(@project)
   end
 
   def destroy
     @slide.destroy
-    redirect_to project_path(@project, section: "incantations")
+    redirect_to incantations_project_path(@project)
   end
 
   def move
@@ -35,7 +35,7 @@ class SlidesController < ApplicationController
       swap_with = @project.slides.find_by(position: @slide.position + 1)
       swap_positions(@slide, swap_with) if swap_with
     end
-    redirect_to project_path(@project, section: "incantations")
+    redirect_to incantations_project_path(@project)
   end
 
   private

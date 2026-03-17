@@ -30,7 +30,16 @@ module ApplicationHelper
   public
 
   def active_section?(section_id)
-    params[:section] == section_id || (params[:section].blank? && section_id == "grimoire")
+    action_name == section_id || (action_name == "show" && section_id == "grimoire")
+  end
+
+  def section_path(project, section_id)
+    case section_id
+    when "grimoire" then grimoire_project_path(project)
+    when "incantations" then incantations_project_path(project)
+    when "visions" then visions_project_path(project)
+    when "assembly" then assembly_project_path(project)
+    end
   end
 
   # Reusable button class strings — use on link_to, f.submit, button_to, etc.

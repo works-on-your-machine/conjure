@@ -26,13 +26,13 @@ class ConjuringsController < ApplicationController
       ConjuringJob.perform_later(@conjuring)
     end
 
-    redirect_to project_path(@project, section: "visions")
+    redirect_to visions_project_path(@project)
   end
 
   def destroy
     conjuring = @project.conjurings.find(params[:id])
     conjuring.destroy
-    redirect_to project_path(@project, section: "visions")
+    redirect_to visions_project_path(@project)
   end
 
   private

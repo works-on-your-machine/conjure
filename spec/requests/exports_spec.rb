@@ -21,7 +21,7 @@ RSpec.describe "Exports", type: :request do
 
     it "redirects when no selected visions" do
       get project_export_pdf_path(project)
-      expect(response).to redirect_to(project_path(project, section: "assembly"))
+      expect(response).to redirect_to(assembly_project_path(project))
     end
   end
 

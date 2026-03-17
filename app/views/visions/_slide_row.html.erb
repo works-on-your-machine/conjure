@@ -78,7 +78,7 @@
                   </button>
                 <% end %>
                 <%= link_to "✦ Refine",
-                  project_path(project, section: "refine", slide_id: slide.id),
+                  refine_project_path(project, slide_id: slide.id),
                   class: "bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
                 <%= button_to "Deselect",
                   project_vision_path(project, selected_vision),

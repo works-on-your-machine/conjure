@@ -28,7 +28,7 @@ RSpec.describe "Vision Features", type: :request do
         delete project_vision_path(project, vision)
       }.to change(Vision, :count).by(-1)
 
-      expect(response).to redirect_to(project_path(project, section: "visions"))
+      expect(response).to redirect_to(visions_project_path(project))
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe "Vision Features", type: :request do
         delete project_conjuring_path(project, conjuring)
       }.to change(Vision, :count).by(-3)
 
-      expect(response).to redirect_to(project_path(project, section: "visions"))
+      expect(response).to redirect_to(visions_project_path(project))
     end
   end
 end

@@ -35,7 +35,7 @@ class VisionsController < ApplicationController
           locals: { slide: slide, project: @project, open_slides: open_slides }
         )
       }
-      format.html { redirect_to project_path(@project, section: "visions") }
+      format.html { redirect_to visions_project_path(@project) }
     end
   end
 

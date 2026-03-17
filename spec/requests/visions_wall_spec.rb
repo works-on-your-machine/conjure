@@ -7,13 +7,13 @@ RSpec.describe "Visions Wall", type: :request do
 
   describe "GET /projects/:id?section=visions" do
     it "renders the visions section" do
-      get project_path(project, section: "visions")
+      get visions_project_path(project)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Visions")
     end
 
     it "shows empty state when slides have no visions" do
-      get project_path(project, section: "visions")
+      get visions_project_path(project)
       expect(response.body).to include("No visions yet")
     end
 
@@ -22,7 +22,7 @@ RSpec.describe "Visions Wall", type: :request do
       create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
       create(:vision, slide: slide2, conjuring: conjuring, position: 1, status: :complete)
 
-      get project_path(project, section: "visions")
+      get visions_project_path(project)
       expect(response.body).to include("Title card")
       expect(response.body).to include("The problem")
     end
@@ -32,7 +32,7 @@ RSpec.describe "Visions Wall", type: :request do
       create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
       create(:vision, slide: slide1, conjuring: conjuring, position: 2, status: :complete)
 
-      get project_path(project, section: "visions")
+      get visions_project_path(project)
       expect(response.body).to include("vision_")
     end
 
@@ -40,7 +40,7 @@ RSpec.describe "Visions Wall", type: :request do
       conjuring = create(:conjuring, project: project)
       create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
 
-      get project_path(project, section: "visions")
+      get visions_project_path(project)
       expect(response.body).to include("Run 1")
     end
 
@@ -48,7 +48,7 @@ RSpec.describe "Visions Wall", type: :request do
       conjuring = create(:conjuring, project: project)
       create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete, selected: true)
 
-      get project_path(project, section: "visions")
+      get visions_project_path(project)
       expect(response.body).to include("1/2 selected")
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe "Visions Wall", type: :request do
       expect(conjuring.grimoire_text).to eq(project.grimoire.description)
       expect(conjuring.variations_count).to eq(project.default_variations)
       expect(conjuring).to be_pending
-      expect(response).to redirect_to(project_path(project, section: "visions"))
+      expect(response).to redirect_to(visions_project_path(project))
     end
 
     it "enqueues a ConjuringJob" do

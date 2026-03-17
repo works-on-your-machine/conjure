@@ -25,7 +25,7 @@ RSpec.describe "New Project", type: :request do
       project = Project.last
       expect(project.name).to eq("My Talk")
       expect(project.grimoire).to eq(grimoire)
-      expect(response).to redirect_to(project_path(project))
+      expect(response).to redirect_to(grimoire_project_path(project))
     end
 
     it "fails without a name" do
