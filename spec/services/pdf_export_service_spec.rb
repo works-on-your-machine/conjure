@@ -21,6 +21,20 @@ RSpec.describe PdfExportService do
       expect(pdf_data[0..3]).to eq("%PDF")
     end
 
+    it "sizes each page to the selected image dimensions" do
+      image_data = File.binread(Rails.root.join("spec/fixtures/files/test_image.png"))
+      image = Prawn.image_handler.find(image_data).new(image_data)
+      v1 = create(:vision, slide: slide1, conjuring: conjuring, selected: true, status: :complete)
+      v2 = create(:vision, slide: slide2, conjuring: conjuring, selected: true, status: :complete)
+
+      v1.image.attach(io: StringIO.new(image_data), filename: "test.png", content_type: "image/png")
+      v2.image.attach(io: StringIO.new(image_data), filename: "test2.png", content_type: "image/png")
+
+      pdf_data = described_class.new(project).generate
+
+      expect(pdf_data.scan("MediaBox [0 0 #{image.width} #{image.height}]").size).to eq(2)
+    end
+
     it "returns nil when no selected visions exist" do
       service = described_class.new(project)
       expect(service.generate).to be_nil
