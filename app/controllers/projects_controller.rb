@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.includes(:grimoire, :slides).order(updated_at: :desc)
+    @projects = Project.includes(:grimoire, slides: { visions: { image_attachment: :blob } }).order(updated_at: :desc)
   end
 
   def show

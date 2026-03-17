@@ -1,10 +1,25 @@
 <%= link_to project_path(project),
   class: "bg-surface rounded-[10px] border border-conjure-border p-4 transition-all hover:border-conjure-border-hover hover:shadow-[0_2px_16px_var(--color-gold-glow)] block no-underline" do %>
 
-  <%# Thumbnail mosaic placeholder (will show actual visions later) %>
+  <%# Thumbnail mosaic — selected visions first, then any complete visions %>
+  <% mosaic_visions = project.slides
+      .flat_map { |s| s.visions.select(&:selected?) }
+      .select { |v| v.image.attached? }
+      .first(4) %>
+  <% if mosaic_visions.size < 4 %>
+    <% mosaic_visions += project.slides
+        .flat_map { |s| s.visions.select { |v| v.complete? && v.image.attached? && !v.selected? } }
+        .first(4 - mosaic_visions.size) %>
+  <% end %>
   <div class="grid grid-cols-2 gap-[3px] rounded overflow-hidden">
     <% 4.times do |i| %>
-      <div class="aspect-video bg-surface-light"></div>
+      <% if mosaic_visions[i] %>
+        <div class="aspect-video overflow-hidden">
+          <%= image_tag mosaic_visions[i].image, class: "w-full h-full object-cover" %>
+        </div>
+      <% else %>
+        <div class="aspect-video bg-surface-light"></div>
+      <% end %>
     <% end %>
   </div>
 
