@@ -27,13 +27,22 @@ class VisionsController < ApplicationController
     slide.reload
     open_slides = params[:open_slide].present? ? Set.new([ params[:open_slide].to_i ]) : Set.new
 
+    @project.reload
+
     respond_to do |format|
       format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "slide_#{slide.id}_row",
-          partial: "visions/slide_row",
-          locals: { slide: slide, project: @project, open_slides: open_slides }
-        )
+        render turbo_stream: [
+          turbo_stream.replace(
+            "slide_#{slide.id}_row",
+            partial: "visions/slide_row",
+            locals: { slide: slide, project: @project, open_slides: open_slides }
+          ),
+          turbo_stream.replace(
+            "visions-header",
+            partial: "visions/header",
+            locals: { project: @project }
+          )
+        ]
       }
       format.html { redirect_to visions_project_path(@project) }
     end

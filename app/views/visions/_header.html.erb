@@ -1,0 +1,16 @@
+<div id="visions-header" class="flex items-center justify-between mb-5">
+  <div>
+    <h2 class="font-display text-2xl font-semibold text-gold-light m-0">Visions</h2>
+    <% selected_count = project.slides.count { |s| s.visions.any?(&:selected?) } %>
+    <p class="text-xs text-conjure-text-dim mt-0.5">
+      Grimoire: <%= project.grimoire.name %> — <%= selected_count %>/<%= project.slides.size %> selected
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <% if selected_count > 0 %>
+      <%= link_to "View assembly (#{selected_count}/#{project.slides.size}) →",
+        assembly_project_path(project),
+        class: "bg-surface text-conjure-text-muted px-5 py-2.5 rounded-md font-body text-sm no-underline border border-conjure-border hover:border-conjure-border-hover transition-all" %>
+    <% end %>
+  </div>
+</div>
