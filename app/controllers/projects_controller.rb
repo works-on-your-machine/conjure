@@ -1,28 +1,8 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [ :grimoire, :incantations, :visions, :assembly, :refine, :update, :destroy ]
+  before_action :set_project, only: [ :update, :destroy ]
 
   def index
     @projects = Project.includes(:grimoire, slides: { visions: { image_attachment: :blob } }).order(updated_at: :desc)
-  end
-
-  def grimoire
-    render :show, locals: { section: "grimoire" }
-  end
-
-  def incantations
-    render :show, locals: { section: "incantations" }
-  end
-
-  def visions
-    render :show, locals: { section: "visions" }
-  end
-
-  def assembly
-    render :show, locals: { section: "assembly" }
-  end
-
-  def refine
-    render :show, locals: { section: "refine" }
   end
 
   def update

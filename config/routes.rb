@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   resources :projects, only: [ :index, :new, :create, :update, :destroy ] do
     member do
-      get :grimoire
-      get :incantations
-      get :visions
-      get :assembly
-      get :refine
+      get :grimoire, to: "projects/workspace#grimoire"
+      get :incantations, to: "projects/workspace#incantations"
+      get :visions, to: "projects/workspace#visions"
+      get :assembly, to: "projects/workspace#assembly"
+      get :refine, to: "projects/workspace#refine"
     end
     resources :slides, only: [ :create, :edit, :update, :destroy ] do
       patch :move, on: :member
