@@ -91,7 +91,8 @@
 
             <div class="flex gap-2 justify-end">
               <%= link_to "Cancel", assembly_project_path(@project), class: btn_default %>
-              <%= f.submit "✦ Re-conjure with changes", class: btn_gold %>
+              <%= f.submit "✦ Re-conjure with changes", class: btn_gold,
+                data: { turbo_submits_with: "✦ Summoning..." } %>
             </div>
           <% end %>
 

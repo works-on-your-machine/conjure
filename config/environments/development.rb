@@ -31,6 +31,10 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Default URL options for Active Storage (needed for Turbo Stream broadcasts from background jobs)
+  Rails.application.routes.default_url_options[:host] = "localhost"
+  Rails.application.routes.default_url_options[:port] = ENV.fetch("PORT", 1618)
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

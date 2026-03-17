@@ -42,7 +42,8 @@
 
       <%= f.submit "✦ Conjure",
         class: "w-full bg-gold text-plum-deep py-2.5 rounded-md font-display text-base font-semibold tracking-wide cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]",
-        disabled: @project.slides.empty? %>
+        disabled: @project.slides.empty?,
+        data: { turbo_submits_with: "✦ Summoning..." } %>
     <% end %>
 
     <div class="mt-2" data-controller="reveal-toggle">
