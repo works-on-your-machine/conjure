@@ -32,6 +32,13 @@ class ConjuringJob < ApplicationJob
           status: :pending
         )
 
+        Turbo::StreamsChannel.broadcast_append_to(
+          "project_#{conjuring.project_id}_visions",
+          target: "slide_#{slide.id}_visions",
+          partial: "visions/vision_tile",
+          locals: { vision: vision, project: conjuring.project, revealed: true }
+        )
+
         VisionGenerationJob.perform_later(vision)
       end
     end

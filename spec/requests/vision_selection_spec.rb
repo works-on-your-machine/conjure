@@ -41,6 +41,19 @@ RSpec.describe "Vision Selection", type: :request do
       expect(vision.reload.selected).to be true
       expect(other_vision.reload.selected).to be true
     end
+
+    it "keeps the slide open and marks the clicked vision selected for turbo responses" do
+      vision = create(:vision, slide: slide, conjuring: conjuring, selected: false, position: 2)
+
+      patch project_vision_path(project, vision),
+        params: { vision: { selected: true }, open_slide: slide.id },
+        as: :turbo_stream
+
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
+      expect(response.body).to include(%(data-slide-panel-open-value="true"))
+      expect(response.body).to include("v2 chosen")
+    end
   end
 
   describe "DELETE /projects/:project_id/visions/:id (failed vision)" do

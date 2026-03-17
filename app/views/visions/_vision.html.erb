@@ -14,10 +14,10 @@
   <% if vision.image.attached? %>
     <%= image_tag vision.image, class: "w-full h-full object-cover" %>
   <% else %>
-    <div class="w-full h-full flex items-center justify-center <%= vision.generating? ? 'vision-generating' : 'bg-surface-light' %>">
+    <div class="w-full h-full flex items-center justify-center <%= (vision.pending? || vision.generating?) ? 'vision-generating' : 'bg-surface-light' %>">
       <% if vision.failed? %>
         <span class="text-xs text-danger">failed</span>
-      <% elsif vision.generating? %>
+      <% elsif vision.pending? || vision.generating? %>
         <span class="text-xs text-gold font-medium">summoning...</span>
       <% else %>
         <span class="text-xs text-conjure-text-dim"><%= vision.status %></span>

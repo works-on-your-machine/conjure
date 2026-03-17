@@ -8,17 +8,8 @@
 
   <%# Slide rows — each in a Turbo Frame for inline updates %>
   <% if @project.slides.any? %>
-    <% has_any_visions = @project.slides.any? { |s| s.visions.any? } %>
-    <% if has_any_visions %>
-      <% @project.slides.each do |slide| %>
-        <%= render partial: "visions/slide_row", locals: { slide: slide, project: @project } %>
-      <% end %>
-    <% else %>
-      <%= render layout: "shared/empty_state", locals: {
-        title: "No visions yet",
-        description: "Hit ✦ Conjure to generate images for your slides. Each slide gets multiple variations to choose from."
-      } do %>
-      <% end %>
+    <% @project.slides.each do |slide| %>
+      <%= render partial: "visions/slide_row", locals: { slide: slide, project: @project } %>
     <% end %>
   <% else %>
     <%= render layout: "shared/empty_state", locals: {

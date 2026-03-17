@@ -15,11 +15,11 @@ class Vision < ApplicationRecord
 
   def broadcast_completion
     project = conjuring.project
-    Turbo::StreamsChannel.broadcast_append_to(
+    Turbo::StreamsChannel.broadcast_replace_to(
       "project_#{project.id}_visions",
-      target: "slide_#{slide_id}_visions",
-      partial: "visions/vision",
-      locals: { vision: self, revealed: false }
+      target: "vision_tile_#{id}",
+      partial: "visions/vision_tile",
+      locals: { vision: self, project: project, revealed: false }
     )
   end
 

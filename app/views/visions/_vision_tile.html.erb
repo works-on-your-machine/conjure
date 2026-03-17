@@ -1,0 +1,29 @@
+<%# Wraps a single vision with its grid-sized container, "Run X" badge, select button, and delete button.
+     Used in the slide_row grid and in Turbo Stream broadcasts (append + replace). %>
+<div id="vision_tile_<%= vision.id %>" class="relative w-full">
+  <div class="absolute top-1 left-1 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
+    Run <%= vision.conjuring_id %>
+  </div>
+
+  <% if vision.complete? %>
+    <%= button_to project_vision_path(project, vision),
+      method: :patch,
+      params: { vision: { selected: !vision.selected? }, open_slide: vision.slide_id },
+      class: "w-full p-0 bg-transparent border-none cursor-pointer" do %>
+      <%= render partial: "visions/vision", locals: { vision: vision, revealed: local_assigns.fetch(:revealed, true) } %>
+    <% end %>
+  <% else %>
+    <%= render partial: "visions/vision", locals: { vision: vision, revealed: local_assigns.fetch(:revealed, true) } %>
+  <% end %>
+
+  <% if vision.failed? %>
+    <div class="absolute bottom-1 right-1 z-10">
+      <%= button_to project_vision_path(project, vision), method: :delete,
+        params: { open_slide: vision.slide_id },
+        class: "bg-danger/80 text-white text-[9px] px-1 py-0.5 rounded cursor-pointer border-none backdrop-blur-sm",
+        data: { turbo_confirm: "Remove?" } do %>
+        ✕
+      <% end %>
+    </div>
+  <% end %>
+</div>

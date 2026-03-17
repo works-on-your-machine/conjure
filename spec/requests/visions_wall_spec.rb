@@ -27,6 +27,14 @@ RSpec.describe "Visions Wall", type: :request do
       expect(response.body).to include("The problem")
     end
 
+    it "renders slide panel identifiers so row state can persist on the visions page" do
+      get visions_project_path(project)
+
+      expect(response.body).to include(%(data-slide-panel-project-id-value="#{project.id}"))
+      expect(response.body).to include(%(data-slide-panel-slide-id-value="#{slide1.id}"))
+      expect(response.body).to include(%(data-slide-panel-slide-id-value="#{slide2.id}"))
+    end
+
     it "shows vision thumbnails for each slide" do
       conjuring = create(:conjuring, project: project)
       create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
@@ -34,6 +42,17 @@ RSpec.describe "Visions Wall", type: :request do
 
       get visions_project_path(project)
       expect(response.body).to include("vision_")
+    end
+
+    it "shows thumbnail rows instead of the browse placeholder when nothing is selected" do
+      conjuring = create(:conjuring, project: project)
+      vision_one = create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
+      vision_two = create(:vision, slide: slide1, conjuring: conjuring, position: 2, status: :complete)
+
+      get visions_project_path(project)
+      expect(response.body).to include("vision_#{vision_one.id}")
+      expect(response.body).to include("vision_#{vision_two.id}")
+      expect(response.body).not_to include("click to browse")
     end
 
     it "shows conjuring badge on visions" do
