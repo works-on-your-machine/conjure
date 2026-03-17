@@ -1,5 +1,8 @@
 <%# Single vision thumbnail — used in wall grid and as Turbo Stream broadcast target %>
+<% revealed = local_assigns.fetch(:revealed, true) %>
 <div id="vision_<%= vision.id %>"
+     data-controller="vision-reveal"
+     data-vision-reveal-revealed-value="<%= revealed %>"
      class="relative aspect-video rounded-md overflow-hidden transition-all duration-150
             <%= if vision.selected?
                   'border-2 border-gold shadow-[0_0_24px_var(--color-gold-glow-strong)] scale-[1.02]'

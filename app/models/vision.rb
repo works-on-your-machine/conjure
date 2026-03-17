@@ -19,7 +19,7 @@ class Vision < ApplicationRecord
       "project_#{project.id}_visions",
       target: "slide_#{slide_id}_visions",
       partial: "visions/vision",
-      locals: { vision: self }
+      locals: { vision: self, revealed: false }
     )
   end
 

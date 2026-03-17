@@ -44,5 +44,13 @@
         class: "w-full bg-gold text-plum-deep py-2.5 rounded-md font-display text-base font-semibold tracking-wide cursor-pointer border-none shadow-[0_4px_20px_var(--color-gold-glow-strong)]",
         disabled: @project.slides.empty? %>
     <% end %>
+
+    <div class="mt-2" data-controller="reveal-toggle">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" data-reveal-toggle-target="checkbox" data-action="change->reveal-toggle#toggle"
+          class="w-3.5 h-3.5 rounded accent-gold cursor-pointer" />
+        <span class="text-[11px] text-conjure-text-dim">Summoning effects</span>
+      </label>
+    </div>
   </div>
 </aside>
