@@ -6,7 +6,6 @@ class ProjectsController < ApplicationController
   end
 
   def grimoire
-    @grimoires = Grimoire.all
     render :show, locals: { section: "grimoire" }
   end
 
@@ -27,8 +26,11 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project.update!(project_params)
-    redirect_to grimoire_project_path(@project)
+    if @project.update(update_project_params)
+      redirect_to grimoire_project_path(@project)
+    else
+      render :show, locals: { section: "grimoire" }, status: :unprocessable_entity
+    end
   end
 
   def new
@@ -37,7 +39,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(create_project_params)
     if @project.save
       redirect_to grimoire_project_path(@project)
     else
@@ -55,10 +57,13 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.includes(:grimoire, :slides).find(params[:id])
-    @grimoires = Grimoire.all if action_name == "grimoire"
   end
 
-  def project_params
+  def create_project_params
     params.require(:project).permit(:name, :grimoire_id, :default_variations)
+  end
+
+  def update_project_params
+    params.require(:project).permit(:default_variations, grimoire_attributes: [ :id, :description ])
   end
 end

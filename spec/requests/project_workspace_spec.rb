@@ -16,12 +16,13 @@ RSpec.describe "Project Workspace", type: :request do
     it "displays the grimoire description as editable text" do
       get grimoire_project_path(project)
       expect(response.body).to include(grimoire.description)
+      expect(response.body).to include("project[grimoire_attributes][description]")
     end
 
-    it "shows all grimoires for switching" do
+    it "only shows the project's grimoire" do
       get grimoire_project_path(project)
       expect(response.body).to include("Pirate Broadcast")
-      expect(response.body).to include("Bauhaus Clean")
+      expect(response.body).not_to include("Bauhaus Clean")
     end
 
     it "shows variation count selector" do
@@ -31,16 +32,30 @@ RSpec.describe "Project Workspace", type: :request do
   end
 
   describe "PATCH /projects/:id" do
-    it "switches the grimoire" do
+    it "does not switch the grimoire" do
       patch project_path(project), params: { project: { grimoire_id: other_grimoire.id } }
       expect(response).to redirect_to(grimoire_project_path(project))
-      expect(project.reload.grimoire).to eq(other_grimoire)
+      expect(project.reload.grimoire).to eq(grimoire)
     end
 
     it "updates default variations" do
       patch project_path(project), params: { project: { default_variations: 12 } }
       expect(response).to redirect_to(grimoire_project_path(project))
       expect(project.reload.default_variations).to eq(12)
+    end
+
+    it "updates the grimoire text" do
+      patch project_path(project), params: {
+        project: {
+          grimoire_attributes: {
+            id: grimoire.id,
+            description: "Neon scanlines and pirate TV graphics."
+          }
+        }
+      }
+
+      expect(response).to redirect_to(grimoire_project_path(project))
+      expect(grimoire.reload.description).to eq("Neon scanlines and pirate TV graphics.")
     end
   end
 end

@@ -3,37 +3,20 @@
   <p class="text-[13px] text-conjure-text-muted mb-6">The visual world for this project</p>
 
   <%= form_with model: @project, method: :patch, class: "space-y-6" do |f| %>
-    <%# Grimoire selector %>
     <%= render "shared/label", text: "Active grimoire" %>
-    <% if @grimoires.any? %>
-      <div class="flex gap-2 mb-4 flex-wrap">
-        <% @grimoires.each do |grimoire| %>
-          <label class="cursor-pointer flex-1 min-w-[140px]">
-            <%= f.radio_button :grimoire_id, grimoire.id, class: "peer sr-only" %>
-            <div class="p-2.5 px-4 rounded-lg transition-all bg-surface border border-conjure-border peer-checked:bg-gold-glow peer-checked:border-gold-dim">
-              <div class="text-[13px] font-medium text-conjure-text peer-checked:text-gold"><%= grimoire.name %></div>
-            </div>
-          </label>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="mb-4">
-        <%= render layout: "shared/empty_state", locals: {
-          title: "No grimoires yet",
-          description: "A grimoire defines the visual style for your presentation. Create one to get started."
-        } do %>
-          <%= link_to "✦ Create a grimoire", new_grimoire_path, class: btn_gold %>
-        <% end %>
-      </div>
-    <% end %>
-
-    <%# Theme description (read-only display of current grimoire's text) %>
-    <%= render "shared/label", text: "Theme description" %>
-    <div class="w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed whitespace-pre-wrap min-h-[200px]">
-      <%= @project.grimoire.description %>
+    <div class="rounded-lg border border-conjure-border bg-surface px-4 py-3">
+      <div class="text-[13px] font-medium text-conjure-text"><%= @project.grimoire.name %></div>
+      <p class="mt-1 text-xs text-conjure-text-dim">This project edits the grimoire it was created with.</p>
     </div>
 
-    <%# Variation count %>
+    <%= render "shared/label", text: "Theme description" %>
+    <%= f.fields_for :grimoire do |grimoire_fields| %>
+      <%= grimoire_fields.hidden_field :id %>
+      <%= grimoire_fields.text_area :description, rows: 10,
+        placeholder: "Describe the world your slides live in.",
+        class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+    <% end %>
+
     <div class="mt-4">
       <%= render "shared/label", text: "Variations per slide" %>
       <%= f.select :default_variations, [3, 5, 8, 12, 20],
