@@ -33,6 +33,9 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Ignore machine-local Claude Code settings.
+.claude/settings.local.json
+
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
