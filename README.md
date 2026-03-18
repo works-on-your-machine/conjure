@@ -29,7 +29,7 @@ Notes:
 
 - `bin/setup` installs gems, generates `config/active_record_encryption.key`, prepares the database, and clears logs/tmp files.
 - Plain `bin/setup` will start the dev stack for you at the end. `--skip-server` is useful if you want the explicit two-step flow above.
-- `bin/dev` starts the Rails server, the Tailwind watcher, and the background job worker.
+- **Always use `bin/dev`**, not `rails s`. It starts three processes via foreman: the Rails server, the Tailwind watcher, and the Solid Queue job worker. Running `rails s` alone means background jobs (image generation) won't process and Turbo Stream updates won't arrive — generated images will appear broken until you refresh.
 - If `foreman` is missing, `bin/dev` installs it automatically.
 
 ## First-Run Configuration
