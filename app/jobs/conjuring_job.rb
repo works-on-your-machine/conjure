@@ -18,7 +18,8 @@ class ConjuringJob < ApplicationJob
       prompt = prompt_service.assemble(
         grimoire_text: conjuring.grimoire_text,
         slide_text: slide.description,
-        refinement: refinement
+        refinement: refinement,
+        slide_prompt: conjuring.project.slide_prompt
       )
 
       conjuring.variations_count.times do |i|

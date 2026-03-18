@@ -1,8 +1,12 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [ :update, :destroy ]
+  before_action :set_project, only: [ :show, :update, :destroy ]
 
   def index
     @projects = Project.includes(:grimoire, slides: { visions: { image_attachment: :blob } }).order(updated_at: :desc)
+  end
+
+  def show
+    redirect_to grimoire_project_path(@project)
   end
 
   def update
@@ -50,6 +54,6 @@ class ProjectsController < ApplicationController
   end
 
   def update_project_params
-    params.require(:project).permit(:default_variations, grimoire_attributes: [ :id, :description ])
+    params.require(:project).permit(:default_variations, :slide_prompt, grimoire_attributes: [ :id, :description ])
   end
 end

@@ -18,6 +18,14 @@
     <% end %>
 
     <div class="mt-4">
+      <%= render "shared/label", text: "Slide design prompt" %>
+      <p class="text-xs text-conjure-text-dim mb-2">Guides how slide images are composed. Leave blank to use the default principles.</p>
+      <%= f.text_area :slide_prompt, rows: 6,
+        placeholder: PromptAssemblyService::DEFAULT_SLIDE_PROMPT.strip,
+        class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+    </div>
+
+    <div class="mt-4">
       <%= render "shared/label", text: "Variations per slide" %>
       <%= f.select :default_variations, [3, 5, 8, 12, 20],
         {}, class: "bg-surface text-conjure-text border border-conjure-border rounded-md px-3 py-2.5 font-body text-[13px] outline-none focus:border-conjure-border-hover" %>

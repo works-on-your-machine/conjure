@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PromptAssemblyService do
   let(:api_key) { "test-llm-key" }
   let(:service) { described_class.new(api_key: api_key) }
-  let(:gemini_endpoint) { "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" }
+  let(:gemini_endpoint) { "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent" }
 
   let(:grimoire_text) { "VHS static. CRT monitors with scan lines. Punk zine meets late-night public access TV." }
   let(:slide_text) { "Talk title with dramatic presentation. The name of the talk in large type." }
@@ -88,6 +88,31 @@ RSpec.describe PromptAssemblyService do
       )
 
       expect(result).to include("More grain texture")
+    end
+
+    it "includes default slide design principles in the request" do
+      stub = stub_request(:post, gemini_endpoint)
+        .with(
+          query: { key: api_key },
+          body: /SLIDE DESIGN PRINCIPLES.*communicates one idea/m
+        )
+        .to_return(status: 200, body: llm_success_response, headers: { "Content-Type" => "application/json" })
+
+      service.assemble(grimoire_text: grimoire_text, slide_text: slide_text)
+      expect(stub).to have_been_requested
+    end
+
+    it "uses a custom slide_prompt when provided" do
+      custom_prompt = "Use brutalist design with sharp edges"
+      stub = stub_request(:post, gemini_endpoint)
+        .with(
+          query: { key: api_key },
+          body: /SLIDE DESIGN PRINCIPLES.*brutalist design/m
+        )
+        .to_return(status: 200, body: llm_success_response, headers: { "Content-Type" => "application/json" })
+
+      service.assemble(grimoire_text: grimoire_text, slide_text: slide_text, slide_prompt: custom_prompt)
+      expect(stub).to have_been_requested
     end
   end
 end

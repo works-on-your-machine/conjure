@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "projects#index"
 
-  resources :projects, only: [ :index, :new, :create, :update, :destroy ] do
+  resources :projects, only: [ :index, :show, :new, :create, :update, :destroy ] do
     member do
       get :grimoire, to: "projects/workspace#grimoire"
       get :incantations, to: "projects/workspace#incantations"
