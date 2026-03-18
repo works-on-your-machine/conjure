@@ -1,6 +1,6 @@
 class OutlineToSlidesService
   GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
-  DEFAULT_MODEL = "gemini-2.5-flash"
+  DEFAULT_MODEL = "gemini-3-flash-preview"
 
   SYSTEM_PROMPT = <<~PROMPT
     You are an expert at breaking down presentation outlines into individual slide descriptions.

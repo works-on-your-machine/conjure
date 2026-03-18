@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe OutlineToSlidesService do
   let(:api_key) { "test-llm-key" }
   let(:service) { described_class.new(api_key: api_key) }
-  let(:gemini_endpoint) { "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" }
+  let(:gemini_endpoint) { "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent" }
 
   let(:llm_response) do
     {

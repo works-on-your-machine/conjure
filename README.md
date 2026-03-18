@@ -46,7 +46,7 @@ Use these fields:
 Important details:
 
 - The image-generation path uses Gemini image generation (`gemini-3.1-flash-image-preview`).
-- The text-generation path currently also calls Gemini (`gemini-2.5-flash`).
+- The text-generation path currently also calls Gemini (`gemini-3-flash-preview`).
 - If your Gemini key has access to both image and text models, you can use the same key in both fields.
 - If you leave the LLM key blank, the app still works, but it falls back to simpler behavior:
   - outline generation degrades to splitting lines into slides
