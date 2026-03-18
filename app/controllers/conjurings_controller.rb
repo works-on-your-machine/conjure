@@ -14,11 +14,14 @@ class ConjuringsController < ApplicationController
     )
     @conjuring.save!
 
+    slide_id = params[:slide_id] || params.dig(:conjuring, :slide_id)
+
     case scope
     when "refine"
-      slide_id = params[:slide_id] || params.dig(:conjuring, :slide_id)
       refinement = params[:refinement] || params.dig(:conjuring, :refinement)
       ConjuringJob.perform_later(@conjuring, slide_ids: [ slide_id.to_i ], refinement: refinement)
+    when "single"
+      ConjuringJob.perform_later(@conjuring, slide_ids: [ slide_id.to_i ])
     when "empty"
       empty_slide_ids = @project.slides.left_joins(:visions).where(visions: { id: nil }).pluck(:id)
       ConjuringJob.perform_later(@conjuring, slide_ids: empty_slide_ids)
@@ -26,7 +29,12 @@ class ConjuringsController < ApplicationController
       ConjuringJob.perform_later(@conjuring)
     end
 
-    redirect_to visions_project_path(@project)
+    redirect_back = params[:redirect_to] || params.dig(:conjuring, :redirect_to)
+    if redirect_back == "incantations"
+      redirect_to incantations_project_path(@project)
+    else
+      redirect_to visions_project_path(@project)
+    end
   end
 
   def destroy

@@ -22,6 +22,16 @@ RSpec.describe "Slides (Incantations)", type: :request do
       get incantations_project_path(project)
       expect(response.body).to include("2 slides")
     end
+
+    it "shows vision count badge for slides with visions" do
+      slide = create(:slide, project: project, position: 1)
+      conjuring = create(:conjuring, project: project)
+      create(:vision, slide: slide, conjuring: conjuring)
+
+      get incantations_project_path(project)
+      # The badge should show "1" for the vision count
+      expect(response.body).to match(/<span[^>]*>1<\/span>/)
+    end
   end
 
   describe "GET /projects/:project_id/slides/:id/edit" do
@@ -32,6 +42,23 @@ RSpec.describe "Slides (Incantations)", type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("My Slide")
       expect(response.body).to include("Slide content")
+    end
+
+    it "shows the conjure vision button" do
+      slide = create(:slide, project: project)
+
+      get edit_project_slide_path(project, slide)
+      expect(response.body).to include("Conjure vision")
+    end
+
+    it "shows generated visions" do
+      slide = create(:slide, project: project)
+      conjuring = create(:conjuring, project: project)
+      vision = create(:vision, slide: slide, conjuring: conjuring, status: :complete)
+      vision.image.attach(io: StringIO.new("fake"), filename: "test.png", content_type: "image/png")
+
+      get edit_project_slide_path(project, slide)
+      expect(response.body).to include("Generated visions (1)")
     end
   end
 

@@ -31,6 +31,13 @@ RSpec.describe "Project Workspace", type: :request do
     end
   end
 
+  describe "GET /projects/:id (show)" do
+    it "redirects to the grimoire workspace" do
+      get project_path(project)
+      expect(response).to redirect_to(grimoire_project_path(project))
+    end
+  end
+
   describe "PATCH /projects/:id" do
     it "does not switch the source grimoire" do
       patch project_path(project), params: { project: { source_grimoire_id: other_grimoire.id } }

@@ -28,6 +28,6 @@ class Projects::WorkspaceController < ApplicationController
   end
 
   def set_project
-    @project = Project.includes(:grimoire, :slides).find(params[:id])
+    @project = Project.includes(:grimoire, slides: :visions).find(params[:id])
   end
 end

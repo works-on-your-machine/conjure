@@ -45,7 +45,7 @@ class SlidesController < ApplicationController
   end
 
   def set_slide
-    @slide = @project.slides.find(params[:id])
+    @slide = @project.slides.includes(visions: { image_attachment: :blob }).find(params[:id])
   end
 
   def slide_params
