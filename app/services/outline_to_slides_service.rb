@@ -3,22 +3,22 @@ class OutlineToSlidesService
   DEFAULT_MODEL = "gemini-3-flash-preview"
 
   SYSTEM_PROMPT = <<~PROMPT
-    You are an expert at breaking down presentation outlines into individual slide descriptions.
+    You are an expert at breaking down presentation outlines into individual slides.
 
     Given a brain dump, outline, bullet points, or rough notes, break it into individual slides.
-    Each slide needs a short title and a description of what the slide should visually communicate.
+    Each slide needs a short title and a description.
 
-    The description should focus on the VISUAL content — what should the slide image look like,
-    what should it convey, what mood or energy it should have. Not speaker notes.
+    CRITICAL: Preserve the user's original text as faithfully as possible. Do NOT summarize,
+    condense, or rewrite their descriptions. If the user wrote three paragraphs describing a slide,
+    all three paragraphs should appear in the description. Your job is to identify slide boundaries
+    and extract the content — not to editorialize or shorten it. The descriptions will be used
+    downstream as image generation prompts, so detail and specificity matter.
+
+    When the input is rough (bullet points, fragments, shorthand), expand minimally to make each
+    slide description coherent. When the input is already detailed, pass it through nearly verbatim.
 
     Respond with ONLY valid JSON — an array of objects with "title" and "description" keys.
     No markdown, no code fences, no explanation. Just the JSON array.
-
-    Example output:
-    [
-      {"title": "The problem", "description": "Show the core tension. Breaking news style. What everyone assumes vs what's actually happening."},
-      {"title": "The solution", "description": "The reveal moment. Clean, confident, optimistic. The new way forward."}
-    ]
   PROMPT
 
   def initialize(api_key:, model: DEFAULT_MODEL)
