@@ -54,6 +54,16 @@ RSpec.describe "Vision Selection", type: :request do
       expect(response.body).to include(%(data-slide-panel-open-value="true"))
       expect(response.body).to include("v2 chosen")
     end
+
+    it "redirects to assembly page when return_to is assembly" do
+      vision = create(:vision, slide: slide, conjuring: conjuring, selected: false)
+
+      patch project_vision_path(project, vision),
+        params: { vision: { selected: true }, return_to: "assembly" }
+
+      expect(response).to redirect_to(assembly_project_path(project))
+      expect(vision.reload.selected).to be true
+    end
   end
 
   describe "DELETE /projects/:project_id/visions/:id (failed vision)" do

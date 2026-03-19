@@ -55,6 +55,22 @@ RSpec.describe "Visions Wall", type: :request do
       expect(response.body).not_to include("click to browse")
     end
 
+    it "renders vision tiles with gallery lightbox data attributes" do
+      conjuring = create(:conjuring, project: project)
+      vision = create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)
+
+      get visions_project_path(project)
+      expect(response.body).to include(%(data-vision-id="#{vision.id}"))
+      expect(response.body).to include(%(data-vision-slide-id="#{slide1.id}"))
+      expect(response.body).to include("gallery-lightbox#openToVision")
+    end
+
+    it "renders the gallery lightbox overlay" do
+      get visions_project_path(project)
+      expect(response.body).to include('data-controller="gallery-lightbox"')
+      expect(response.body).to include('data-gallery-lightbox-target="overlay"')
+    end
+
     it "shows conjuring badge on visions" do
       conjuring = create(:conjuring, project: project)
       create(:vision, slide: slide1, conjuring: conjuring, position: 1, status: :complete)

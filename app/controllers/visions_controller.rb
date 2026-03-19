@@ -12,7 +12,12 @@ class VisionsController < ApplicationController
     end
 
     @vision.update!(vision_params)
-    replace_slide_row(@vision.slide)
+
+    if params[:return_to] == "assembly"
+      redirect_to assembly_project_path(@project)
+    else
+      replace_slide_row(@vision.slide)
+    end
   end
 
   def destroy

@@ -1,23 +1,44 @@
-<%# Wraps a single vision with its grid-sized container, "Run X" badge, select button, and delete button.
+<%# Wraps a single vision with its grid-sized container. Click selects, expand icon opens gallery.
      Used in the slide_row grid and in Turbo Stream broadcasts (append + replace). %>
-<div id="vision_tile_<%= vision.id %>" class="relative w-full">
-  <div class="absolute top-1 left-1 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
-    Run <%= vision.conjuring_id %>
-  </div>
+<div id="vision_tile_<%= vision.id %>" class="relative w-full group overflow-hidden rounded-md"
+     data-vision-id="<%= vision.id %>"
+     data-vision-src="<%= vision.complete? && vision.image.attached? ? url_for(vision.image) : '' %>"
+     data-vision-slide-id="<%= vision.slide_id %>"
+     data-vision-slide-title="<%= vision.slide.title %>"
+     data-vision-position="<%= vision.position %>"
+     data-vision-conjuring-id="<%= vision.conjuring_id %>"
+     data-vision-selected="<%= vision.selected? %>"
+     data-vision-select-url="<%= project_vision_path(project, vision) %>">
 
   <% if vision.complete? %>
     <%= button_to project_vision_path(project, vision),
       method: :patch,
       params: { vision: { selected: !vision.selected? }, open_slide: vision.slide_id },
-      class: "w-full p-0 bg-transparent border-none cursor-pointer" do %>
+      class: "w-full p-0 m-0 bg-transparent border-none cursor-pointer block" do %>
       <%= render partial: "visions/vision", locals: { vision: vision, revealed: local_assigns.fetch(:revealed, true) } %>
     <% end %>
+
+    <%# Expand icon — opens gallery lightbox %>
+    <button type="button"
+            class="absolute top-1 right-1 z-10 w-6 h-6 rounded bg-plum-deep/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer border-none p-0"
+            data-action="click->gallery-lightbox#openToVision"
+            data-gallery-lightbox-vision-id-param="<%= vision.id %>"
+            data-gallery-lightbox-slide-id-param="<%= vision.slide_id %>">
+      <svg class="w-3.5 h-3.5 text-conjure-text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 2h4v4M6 14H2v-4M14 2L9.5 6.5M2 14l4.5-4.5"/>
+      </svg>
+    </button>
   <% else %>
     <%= render partial: "visions/vision", locals: { vision: vision, revealed: local_assigns.fetch(:revealed, true) } %>
   <% end %>
 
+  <%# Run badge — bottom right %>
+  <div class="absolute bottom-2 right-2 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
+    Run <%= vision.conjuring_id %>
+  </div>
+
   <% if vision.failed? %>
-    <div class="absolute bottom-1 right-1 z-10">
+    <div class="absolute bottom-1 left-1 z-10">
       <%= button_to project_vision_path(project, vision), method: :delete,
         params: { open_slide: vision.slide_id },
         class: "bg-danger/80 text-white text-[9px] px-1 py-0.5 rounded cursor-pointer border-none backdrop-blur-sm",

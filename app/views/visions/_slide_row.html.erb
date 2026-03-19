@@ -65,7 +65,7 @@
                     <span class="text-xs text-conjure-text-dim"><%= selected_vision.status %></span>
                   </div>
                 <% end %>
-                <div class="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gold flex items-center justify-center text-[11px] text-plum-deep font-semibold">✦</div>
+                <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-full bg-gold flex items-center justify-center text-[11px] text-plum-deep font-semibold">✦</div>
               </div>
             </div>
 
@@ -77,9 +77,9 @@
               <div class="flex flex-wrap gap-2 mb-3">
                 <% if selected_vision.image.attached? %>
                   <button class="bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border cursor-pointer hover:border-conjure-border-hover"
-                          data-controller="lightbox"
-                          data-action="click->lightbox#open"
-                          data-lightbox-src-value="<%= url_for(selected_vision.image) %>">
+                          data-action="click->gallery-lightbox#openToVision"
+                          data-gallery-lightbox-vision-id-param="<%= selected_vision.id %>"
+                          data-gallery-lightbox-slide-id-param="<%= slide.id %>">
                     View full screen
                   </button>
                 <% end %>
