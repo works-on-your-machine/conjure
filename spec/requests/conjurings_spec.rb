@@ -25,7 +25,7 @@ RSpec.describe "Conjurings", type: :request do
 
       conjuring = Conjuring.last
       expect(conjuring.variations_count).to eq(1)
-      expect(ConjuringJob).to have_received(:perform_later).with(conjuring, slide_ids: [slide.id])
+      expect(ConjuringJob).to have_received(:perform_later).with(conjuring, slide_ids: [ slide.id ])
     end
 
     it "redirects to incantations when redirect_to param is set" do
