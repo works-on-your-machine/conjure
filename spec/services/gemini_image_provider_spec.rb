@@ -42,7 +42,7 @@ RSpec.describe GeminiImageProvider do
           query: { key: api_key },
           body: hash_including(
             "contents" => [
-              { "parts" => [{ "text" => "A dramatic title card" }] }
+              { "parts" => [ { "text" => "A dramatic title card" } ] }
             ],
             "generationConfig" => hash_including(
               "responseModalities" => [ "IMAGE" ]

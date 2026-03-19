@@ -48,7 +48,7 @@ slides_data = [
   { title: "Title card", description: "Talk title with dramatic presentation. The name of the talk in large type with supporting visual energy." },
   { title: "The problem", description: "Show a breaking news broadcast frame. Display the core tension — what everyone thinks vs what's actually happening." },
   { title: "The hidden truth", description: "The reframe. The thing nobody is seeing. Visual should feel like a revelation — something being uncovered." },
-  { title: "Historical context", description: "Take us back in time. Show the origin of the idea. Green terminal aesthetic, time travel feeling." },
+  { title: "Historical context", description: "Take us back in time. Show the origin of the idea. Green terminal aesthetic, time travel feeling." }
 ]
 
 slides_data.each_with_index do |data, index|
