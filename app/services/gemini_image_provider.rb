@@ -18,8 +18,15 @@ class GeminiImageProvider
   end
 
   # Returns { image_data: "<base64>", mime_type: "image/png" }
-  def generate(prompt:, aspect_ratio: "16:9")
-    response = @conn.post("models/#{@model}:generateContent", request_body(prompt, aspect_ratio)) do |req|
+  # Pass image_data + image_mime_type to do image editing (refine) instead of generation
+  def generate(prompt:, aspect_ratio: "16:9", image_data: nil, image_mime_type: nil)
+    body = if image_data.present?
+      request_body_with_image(prompt, aspect_ratio, image_data, image_mime_type)
+    else
+      request_body(prompt, aspect_ratio)
+    end
+
+    response = @conn.post("models/#{@model}:generateContent", body) do |req|
       req.params["key"] = @api_key
     end
 
@@ -33,6 +40,25 @@ class GeminiImageProvider
     {
       contents: [
         { parts: [ { text: prompt } ] }
+      ],
+      generationConfig: {
+        responseModalities: [ "IMAGE" ],
+        imageConfig: {
+          aspectRatio: aspect_ratio
+        }
+      }
+    }
+  end
+
+  def request_body_with_image(prompt, aspect_ratio, image_data, image_mime_type)
+    {
+      contents: [
+        {
+          parts: [
+            { text: prompt },
+            { inlineData: { mimeType: image_mime_type || "image/png", data: image_data } }
+          ]
+        }
       ],
       generationConfig: {
         responseModalities: [ "IMAGE" ],
