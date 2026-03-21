@@ -83,9 +83,17 @@
                     View full screen
                   </button>
                 <% end %>
-                <%= link_to "✦ Refine",
-                  refine_project_path(project, slide_id: slide.id),
-                  class: "bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border no-underline hover:border-conjure-border-hover" %>
+                <% if selected_vision.image.attached? %>
+                  <button class="bg-surface text-conjure-text-muted px-3 py-1.5 rounded text-[12px] border border-conjure-border cursor-pointer hover:border-conjure-border-hover"
+                          data-action="click->refine-modal#open"
+                          data-refine-modal-slide-id-param="<%= slide.id %>"
+                          data-refine-modal-slide-title-param="<%= slide.title %>"
+                          data-refine-modal-image-url-param="<%= url_for(selected_vision.image) %>"
+                          data-refine-modal-source-vision-id-param="<%= selected_vision.id %>"
+                          data-refine-modal-redirect-to-param="visions">
+                    ✦ Refine
+                  </button>
+                <% end %>
                 <%= button_to "Deselect",
                   project_vision_path(project, selected_vision),
                   method: :patch,

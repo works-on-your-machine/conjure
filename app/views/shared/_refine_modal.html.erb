@@ -1,0 +1,37 @@
+<%# Refine modal — driven by refine-modal Stimulus controller.
+    Buttons set action params: slideId, slideTitle, imageUrl, sourceVisionId, redirectTo %>
+<div data-refine-modal-target="overlay"
+     class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-6"
+     data-action="click->refine-modal#closeOnBackground">
+  <div class="bg-plum-deep rounded-xl border border-conjure-border p-6 w-[600px] max-w-full">
+    <h3 class="font-display text-xl text-gold-light mb-4" data-refine-modal-target="title">Refine</h3>
+
+    <div class="mb-4 aspect-video rounded-md overflow-hidden bg-surface-light">
+      <img data-refine-modal-target="image" src="" class="w-full h-full object-cover" />
+    </div>
+
+    <%= form_with url: project_conjurings_path(project), method: :post, class: "space-y-3" do |f| %>
+      <input type="hidden" name="scope" value="refine" />
+      <input type="hidden" name="slide_id" value="" data-refine-modal-target="slideIdField" />
+      <input type="hidden" name="source_vision_id" value="" data-refine-modal-target="sourceVisionIdField" />
+      <input type="hidden" name="redirect_to" value="" data-refine-modal-target="redirectField" />
+
+      <%= render "shared/label", text: "Describe your refinement" %>
+      <%= f.text_area :refinement, rows: 3,
+        placeholder: 'e.g. "Make the headline larger" or "Add more static texture"',
+        class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover",
+        data: { refine_modal_target: "refinementField" } %>
+
+      <div class="flex gap-2 justify-end">
+        <button type="button" data-action="click->refine-modal#close"
+                class="bg-surface text-conjure-text-muted px-4 py-2 rounded-md text-[13px] border border-conjure-border cursor-pointer">
+          Cancel
+        </button>
+        <%= f.submit "✦ Re-conjure with changes", class: btn_gold,
+          data: { turbo_submits_with: "✦ Summoning..." } %>
+      </div>
+    <% end %>
+
+    <p class="text-[11px] text-conjure-text-dim mt-3">For compositing or deck assembly in Figma, Google Slides, Keynote, and similar tools, use Export images zip.</p>
+  </div>
+</div>

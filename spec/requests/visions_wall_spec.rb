@@ -67,7 +67,7 @@ RSpec.describe "Visions Wall", type: :request do
 
     it "renders the gallery lightbox overlay" do
       get visions_project_path(project)
-      expect(response.body).to include('data-controller="gallery-lightbox"')
+      expect(response.body).to include('data-controller="gallery-lightbox refine-modal"')
       expect(response.body).to include('data-gallery-lightbox-target="overlay"')
     end
 

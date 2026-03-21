@@ -1,4 +1,4 @@
-<div class="p-6" data-controller="gallery-lightbox">
+<div class="p-6" data-controller="gallery-lightbox refine-modal">
   <%# Header — also replaced via Turbo Stream when selection changes %>
   <%= render partial: "visions/header", locals: { project: @project } %>
 
@@ -55,4 +55,7 @@
       ›
     </button>
   </div>
+
+  <%# Refine modal (Stimulus-driven) %>
+  <%= render "shared/refine_modal", project: @project %>
 </div>
