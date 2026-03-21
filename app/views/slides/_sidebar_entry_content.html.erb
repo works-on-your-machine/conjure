@@ -1,0 +1,10 @@
+<div id="sidebar_slide_<%= slide.id %>">
+  <div class="flex items-center justify-between mb-0.5">
+    <div class="slide-title text-[13px] font-medium truncate"><%= slide.title %></div>
+    <% visions_size = slide.visions.size %>
+    <% if visions_size > 0 %>
+      <span class="shrink-0 text-[10px] text-conjure-text-dim bg-surface-light rounded-full px-1.5 py-0.5 ml-1"><%= visions_size %></span>
+    <% end %>
+  </div>
+  <div class="text-[11px] text-conjure-text-dim truncate"><%= slide.description %></div>
+</div>

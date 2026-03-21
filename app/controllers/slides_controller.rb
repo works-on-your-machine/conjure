@@ -18,7 +18,19 @@ class SlidesController < ApplicationController
 
   def update
     @slide.update!(slide_params)
-    redirect_to incantations_project_path(@project)
+
+    respond_to do |format|
+      format.turbo_stream {
+        streams = []
+        streams << turbo_stream.replace(
+          "sidebar_slide_#{@slide.id}",
+          html: render_to_string(partial: "slides/sidebar_entry_content", locals: { slide: @slide })
+        )
+        streams << turbo_stream.update("save_status", html: "Saved ✓")
+        render turbo_stream: streams
+      }
+      format.html { redirect_to incantations_project_path(@project) }
+    end
   end
 
   def destroy

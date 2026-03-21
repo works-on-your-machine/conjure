@@ -1,15 +1,20 @@
 <turbo-frame id="slide_editor">
-  <%= form_with model: [@project, @slide], class: "space-y-4" do |f| %>
+  <%= form_with model: [@project, @slide], class: "space-y-4",
+      data: { controller: "autosave", turbo_stream: true,
+              action: "turbo:submit-end->autosave#showSaved" } do |f| %>
     <%= f.text_field :title,
-      class: "w-full font-display text-[22px] font-semibold bg-transparent border-none p-0 pb-3 text-gold-light outline-none" %>
+      class: "w-full font-display text-[22px] font-semibold bg-transparent border-none p-0 pb-3 text-gold-light outline-none",
+      data: { action: "input->autosave#save", autosave_target: "field" } %>
 
     <%= render "shared/label", text: "What this slide should show" %>
     <%= f.text_area :description, rows: 10,
       placeholder: "Describe what you want this slide to communicate...",
-      class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover" %>
+      class: "w-full bg-surface text-conjure-text border border-conjure-border rounded-md p-3 font-body text-[13px] leading-relaxed resize-y outline-none focus:border-conjure-border-hover",
+      data: { action: "input->autosave#save", autosave_target: "field" } %>
 
     <div class="flex gap-2 flex-wrap items-center">
       <%= f.submit "Save", class: btn_gold %>
+      <span id="save_status" class="text-xs text-conjure-text-dim" data-autosave-target="status"></span>
 
       <%= button_to "✦ Conjure vision", project_conjurings_path(@project),
         method: :post,
