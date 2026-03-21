@@ -67,8 +67,8 @@ RSpec.describe "Final Cut", type: :request do
       }.to change(Conjuring, :count).by(1)
 
       conjuring = Conjuring.last
-      expect(conjuring.variations_count).to eq(project.default_variations)
-      expect(response).to redirect_to(visions_project_path(project))
+      expect(conjuring.variations_count).to eq(1)
+      expect(response).to redirect_to(assembly_project_path(project))
     end
   end
 end

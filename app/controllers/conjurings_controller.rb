@@ -4,8 +4,16 @@ class ConjuringsController < ApplicationController
   def create
     scope = params[:scope] || params.dig(:conjuring, :scope) || "all"
 
-    variations = (params[:variations] || params.dig(:conjuring, :variations) || @project.default_variations).to_i
-    @project.update!(default_variations: variations) if variations != @project.default_variations
+    slide_id = params[:slide_id] || params.dig(:conjuring, :slide_id)
+    refinement = params[:refinement] || params.dig(:conjuring, :refinement)
+
+    # Refine always generates exactly 1 variation
+    if scope == "refine"
+      variations = 1
+    else
+      variations = (params[:variations] || params.dig(:conjuring, :variations) || @project.default_variations).to_i
+      @project.update!(default_variations: variations) if variations != @project.default_variations
+    end
 
     @conjuring = @project.conjurings.build(
       grimoire_text: @project.grimoire.description,
@@ -14,12 +22,10 @@ class ConjuringsController < ApplicationController
     )
     @conjuring.save!
 
-    slide_id = params[:slide_id] || params.dig(:conjuring, :slide_id)
-
     case scope
     when "refine"
-      refinement = params[:refinement] || params.dig(:conjuring, :refinement)
-      ConjuringJob.perform_later(@conjuring, slide_ids: [ slide_id.to_i ], refinement: refinement)
+      source_vision_id = params[:source_vision_id] || params.dig(:conjuring, :source_vision_id)
+      ConjuringJob.perform_later(@conjuring, slide_ids: [ slide_id.to_i ], refinement: refinement, source_vision_id: source_vision_id&.to_i)
     when "single"
       ConjuringJob.perform_later(@conjuring, slide_ids: [ slide_id.to_i ])
     when "empty"
@@ -30,8 +36,13 @@ class ConjuringsController < ApplicationController
     end
 
     redirect_back = params[:redirect_to] || params.dig(:conjuring, :redirect_to)
-    if redirect_back == "incantations"
+    # Refine defaults to assembly page unless explicitly overridden
+    redirect_back ||= "assembly" if scope == "refine"
+    case redirect_back
+    when "incantations"
       redirect_to incantations_project_path(@project)
+    when "assembly"
+      redirect_to assembly_project_path(@project)
     else
       redirect_to visions_project_path(@project)
     end

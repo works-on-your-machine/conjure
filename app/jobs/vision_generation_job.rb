@@ -7,17 +7,28 @@ class VisionGenerationJob < ApplicationJob
   # Retry on server errors with backoff (3 attempts)
   retry_on GeminiImageProvider::ServerError, wait: :polynomially_longer, attempts: 3
 
-  def perform(vision)
+  def perform(vision, source_vision_id: nil)
     vision.generating!
 
     provider = GeminiImageProvider.new(
       api_key: Setting.current.nano_banana_api_key
     )
 
-    result = provider.generate(
+    # For refine: load the source image and pass it as reference
+    generate_opts = {
       prompt: vision.prompt,
       aspect_ratio: vision.conjuring.project.aspect_ratio
-    )
+    }
+
+    if source_vision_id.present?
+      source_vision = Vision.find_by(id: source_vision_id)
+      if source_vision&.image&.attached?
+        generate_opts[:image_data] = Base64.strict_encode64(source_vision.image.download)
+        generate_opts[:image_mime_type] = source_vision.image.content_type
+      end
+    end
+
+    result = provider.generate(**generate_opts)
 
     vision.image.attach(
       io: StringIO.new(Base64.decode64(result[:image_data])),
@@ -26,6 +37,14 @@ class VisionGenerationJob < ApplicationJob
     )
 
     vision.complete!
+
+    # Auto-select refined visions (refine always produces 1 variation)
+    if vision.refinement.present?
+      vision.slide.visions.where.not(id: vision.id).where(selected: true).update_all(selected: false)
+      vision.update!(selected: true)
+      broadcast_assembly_update(vision)
+    end
+
     check_conjuring_completion(vision.conjuring)
   rescue GeminiImageProvider::ClientError => e
     vision.failed!
@@ -34,6 +53,19 @@ class VisionGenerationJob < ApplicationJob
   end
 
   private
+
+  def broadcast_assembly_update(vision)
+    slide = vision.slide
+    project = vision.conjuring.project
+    index = project.slides.order(:position).pluck(:id).index(slide.id) || 0
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "project_#{project.id}_assembly",
+      target: "assembly_slide_#{slide.id}",
+      partial: "assembly/slide_row",
+      locals: { slide: slide.reload, project: project, index: index }
+    )
+  end
 
   def check_conjuring_completion(conjuring)
     return unless conjuring.generating?
