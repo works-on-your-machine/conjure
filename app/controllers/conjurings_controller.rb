@@ -43,6 +43,9 @@ class ConjuringsController < ApplicationController
       redirect_to incantations_project_path(@project)
     when "assembly"
       redirect_to assembly_project_path(@project)
+    when "stay"
+      # Stay on current page — turbo stream broadcasts handle the UI update
+      render turbo_stream: turbo_stream.remove("refine_modal_noop")
     else
       redirect_to visions_project_path(@project)
     end

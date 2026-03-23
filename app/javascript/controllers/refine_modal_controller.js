@@ -11,10 +11,15 @@ export default class extends Controller {
     this.sourceVisionIdFieldTarget.value = sourceVisionId
     this.titleTarget.textContent = `Refine: ${slideTitle}`
     this.imageTarget.src = imageUrl
-    this.redirectFieldTarget.value = redirectTo || "visions"
+    this.redirectFieldTarget.value = redirectTo || "stay"
     this.refinementFieldTarget.value = ""
     this.overlayTarget.classList.remove("hidden")
     this.overlayTarget.classList.add("flex")
+  }
+
+  // Close modal after form submission — turbo stream broadcasts handle the vision update
+  submitted() {
+    this.close()
   }
 
   close(event) {

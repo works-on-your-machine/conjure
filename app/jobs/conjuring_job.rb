@@ -47,6 +47,18 @@ class ConjuringJob < ApplicationJob
 
         VisionGenerationJob.perform_later(vision, source_vision_id: source_vision_id)
       end
+
+      # Broadcast "Refining..." placeholder to assembly page immediately
+      if refinement.present?
+        project = conjuring.project
+        index = project.slides.order(:position).pluck(:id).index(slide.id) || 0
+        Turbo::StreamsChannel.broadcast_replace_to(
+          "project_#{project.id}_assembly",
+          target: "assembly_slide_#{slide.id}",
+          partial: "assembly/slide_row",
+          locals: { slide: slide.reload, project: project, index: index }
+        )
+      end
     end
   rescue => e
     conjuring.failed!

@@ -10,7 +10,8 @@
       <img data-refine-modal-target="image" src="" class="w-full h-full object-cover" />
     </div>
 
-    <%= form_with url: project_conjurings_path(project), method: :post, class: "space-y-3" do |f| %>
+    <%= form_with url: project_conjurings_path(project), method: :post, class: "space-y-3",
+        data: { turbo_stream: true, action: "turbo:submit-end->refine-modal#submitted" } do |f| %>
       <input type="hidden" name="scope" value="refine" />
       <input type="hidden" name="slide_id" value="" data-refine-modal-target="slideIdField" />
       <input type="hidden" name="source_vision_id" value="" data-refine-modal-target="sourceVisionIdField" />
