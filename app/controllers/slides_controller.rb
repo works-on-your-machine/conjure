@@ -65,6 +65,8 @@ class SlidesController < ApplicationController
   end
 
   def generate_from_outline(outline_text)
+    @project.update!(outline: outline_text)
+
     service = OutlineToSlidesService.new(api_key: Setting.current.llm_api_key)
     slides_data = service.generate(outline_text)
 

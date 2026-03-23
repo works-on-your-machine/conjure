@@ -33,6 +33,13 @@
         ✦ Generate from outline
       </button>
     </div>
+
+    <% if @project.outline.present? %>
+      <details class="mt-4 pt-3 border-t border-conjure-border">
+        <summary class="text-[11px] text-conjure-text-muted cursor-pointer hover:text-conjure-text select-none px-1">Original outline</summary>
+        <pre class="mt-2 px-1 text-[11px] text-conjure-text-dim whitespace-pre-wrap font-body leading-relaxed max-h-48 overflow-y-auto"><%= @project.outline %></pre>
+      </details>
+    <% end %>
   </div>
 
   <%# Right pane: slide editor %>
