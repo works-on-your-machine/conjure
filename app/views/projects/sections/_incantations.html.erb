@@ -1,4 +1,5 @@
-<% first_slide = @project.slides.first %>
+<% active_slide = params[:slide].present? ? @project.slides.find_by(id: params[:slide]) : nil %>
+<% active_slide ||= @project.slides.first %>
 <div class="flex h-full" data-controller="outline-modal">
   <%# Left pane: slide list %>
   <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto"
@@ -10,10 +11,10 @@
       <span class="text-[11px] text-conjure-text-dim"><%= @project.slides.size %> slides</span>
     </div>
 
-    <% @project.slides.each_with_index do |slide, index| %>
-      <% is_first = index == 0 %>
+    <% @project.slides.each do |slide| %>
+      <% is_active = slide == active_slide %>
       <%= link_to edit_project_slide_path(@project, slide),
-        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{is_first ? 'bg-gold-glow border-gold-dim' : 'border-transparent hover:bg-surface hover:border-conjure-border-hover'}",
+        class: "block p-3 px-3.5 rounded-lg mb-1 transition-all border no-underline #{is_active ? 'bg-gold-glow border-gold-dim' : 'border-transparent hover:bg-surface hover:border-conjure-border-hover'}",
         data: { turbo_frame: "slide_editor", slide_list_target: "item", action: "click->slide-list#select" } do %>
         <%= render partial: "slides/sidebar_entry_content", locals: { slide: slide } %>
       <% end %>
@@ -44,8 +45,8 @@
 
   <%# Right pane: slide editor %>
   <div class="flex-1 p-8 overflow-y-auto">
-    <% if first_slide %>
-      <%= turbo_frame_tag "slide_editor", src: edit_project_slide_path(@project, first_slide) do %>
+    <% if active_slide %>
+      <%= turbo_frame_tag "slide_editor", src: edit_project_slide_path(@project, active_slide) do %>
         <p class="text-[13px] text-conjure-text-dim">Loading...</p>
       <% end %>
     <% else %>

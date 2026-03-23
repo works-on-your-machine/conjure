@@ -16,5 +16,16 @@ export default class extends Controller {
         item.classList.add(...this.inactiveClasses)
       }
     })
+
+    // Update URL with selected slide so refresh preserves position
+    const href = clickedItem.getAttribute("href")
+    if (href) {
+      const slideId = href.match(/slides\/(\d+)/)?.[1]
+      if (slideId) {
+        const url = new URL(window.location)
+        url.searchParams.set("slide", slideId)
+        history.replaceState({}, "", url)
+      }
+    }
   }
 }
