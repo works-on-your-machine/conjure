@@ -43,8 +43,16 @@ class ConjuringsController < ApplicationController
     when "assembly"
       redirect_to assembly_project_path(@project)
     when "stay"
-      # Stay on current page — Turbo morph refresh handles all UI updates
-      head :no_content
+      # Stay on current page — targeted broadcasts handle visions/assembly updates.
+      # For incantations, reload the slide editor to show pending visions.
+      if slide_id.present? && scope != "refine"
+        @slide = @project.slides.includes(visions: { image_attachment: :blob }).find(slide_id)
+        render turbo_stream: turbo_stream.replace("slide_editor",
+          partial: "slides/edit",
+          locals: { project: @project, slide: @slide })
+      else
+        head :no_content
+      end
     else
       redirect_to visions_project_path(@project)
     end

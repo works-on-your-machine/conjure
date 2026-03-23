@@ -21,12 +21,22 @@ class Vision < ApplicationRecord
 
   def broadcast_tile_replacement
     project = conjuring.project
+    slide_record = slide.reload
+
     # Replace vision tile on visions page (no-op if not on that page)
     Turbo::StreamsChannel.broadcast_replace_to(
       project,
       target: "vision_tile_#{id}",
       partial: "visions/vision_tile",
       locals: { vision: self, project: project, revealed: false }
+    )
+
+    # Replace slide editor on incantations page (no-op if not on that page)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      project,
+      target: "slide_editor",
+      partial: "slides/edit",
+      locals: { slide: slide_record, project: project }
     )
   end
 end
