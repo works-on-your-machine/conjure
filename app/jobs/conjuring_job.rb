@@ -4,10 +4,12 @@ class ConjuringJob < ApplicationJob
   def perform(conjuring, slide_ids: nil, refinement: nil, source_vision_id: nil)
     conjuring.generating!
 
+    project = conjuring.project
+
     slides = if slide_ids.present?
-      conjuring.project.slides.where(id: slide_ids)
+      project.slides.where(id: slide_ids)
     else
-      conjuring.project.slides
+      project.slides
     end
 
     slides.each do |slide|
@@ -23,12 +25,12 @@ class ConjuringJob < ApplicationJob
           grimoire_text: conjuring.grimoire_text,
           slide_text: slide.description,
           refinement: refinement,
-          slide_prompt: conjuring.project.slide_prompt
+          slide_prompt: project.slide_prompt
         )
       end
 
       conjuring.variations_count.times do |i|
-        Vision.create!(
+        vision = Vision.create!(
           slide: slide,
           conjuring: conjuring,
           position: i + 1,
@@ -37,7 +39,19 @@ class ConjuringJob < ApplicationJob
           refinement: refinement,
           status: :pending
         )
-        # broadcasts_refreshes_to on Vision handles the page morph
+
+        # Append pending tile to visions page grid (no-op on other pages)
+        Turbo::StreamsChannel.broadcast_append_to(
+          project,
+          target: "slide_#{slide.id}_visions",
+          partial: "visions/vision_tile",
+          locals: { vision: vision, project: project, revealed: true }
+        )
+      end
+
+      # Show "Refining..." placeholder on assembly page (no-op on other pages)
+      if refinement.present?
+        broadcast_assembly_slide(project, slide)
       end
 
       slide.visions.pending.each do |vision|
@@ -47,5 +61,17 @@ class ConjuringJob < ApplicationJob
   rescue => e
     conjuring.failed!
     Rails.logger.error("ConjuringJob failed: #{e.message}")
+  end
+
+  private
+
+  def broadcast_assembly_slide(project, slide)
+    index = project.slides.order(:position).pluck(:id).index(slide.id) || 0
+    Turbo::StreamsChannel.broadcast_replace_to(
+      project,
+      target: "assembly_slide_#{slide.id}",
+      partial: "assembly/slide_row",
+      locals: { slide: slide.reload, project: project, index: index }
+    )
   end
 end

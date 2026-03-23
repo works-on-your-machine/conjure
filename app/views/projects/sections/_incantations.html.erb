@@ -46,8 +46,8 @@
     <% end %>
   </div>
 
-  <%# Right pane: slide editor (permanent to survive morph) %>
-  <div id="slide_editor_pane" class="flex-1 p-8 overflow-y-auto" data-turbo-permanent>
+  <%# Right pane: slide editor %>
+  <div class="flex-1 p-8 overflow-y-auto">
     <% if active_slide %>
       <%= turbo_frame_tag "slide_editor", src: edit_project_slide_path(@project, active_slide) do %>
         <p class="text-[13px] text-conjure-text-dim">Loading...</p>

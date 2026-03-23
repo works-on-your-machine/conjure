@@ -37,11 +37,13 @@ class VisionGenerationJob < ApplicationJob
     )
 
     vision.complete!
+    # Vision model broadcasts tile replacement to visions page
 
-    # Auto-select refined visions (refine always produces 1 variation)
+    # Auto-select refined visions and update assembly page
     if vision.refinement.present?
       vision.slide.visions.where.not(id: vision.id).where(selected: true).update_all(selected: false)
       vision.update!(selected: true)
+      broadcast_assembly_slide(vision)
     end
 
     check_conjuring_completion(vision.conjuring)
@@ -52,6 +54,19 @@ class VisionGenerationJob < ApplicationJob
   end
 
   private
+
+  def broadcast_assembly_slide(vision)
+    slide = vision.slide
+    project = vision.conjuring.project
+    index = project.slides.order(:position).pluck(:id).index(slide.id) || 0
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      project,
+      target: "assembly_slide_#{slide.id}",
+      partial: "assembly/slide_row",
+      locals: { slide: slide.reload, project: project, index: index }
+    )
+  end
 
   def check_conjuring_completion(conjuring)
     return unless conjuring.generating?

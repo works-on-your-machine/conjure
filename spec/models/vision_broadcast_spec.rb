@@ -6,20 +6,17 @@ RSpec.describe "Vision broadcasts", type: :model do
   let(:conjuring) { create(:conjuring, project: project, status: :generating) }
 
   describe "after vision completes" do
-    it "enqueues a refresh broadcast to the project stream" do
+    it "broadcasts a tile replacement to the project stream" do
       vision = create(:vision, slide: slide, conjuring: conjuring, status: :pending)
 
-      expect {
-        vision.complete!
-      }.to have_enqueued_job(Turbo::Streams::BroadcastStreamJob)
-    end
-  end
+      expect(Turbo::StreamsChannel).to receive(:broadcast_replace_to).with(
+        project,
+        target: "vision_tile_#{vision.id}",
+        partial: "visions/vision_tile",
+        locals: hash_including(vision: vision, project: project)
+      )
 
-  describe "after conjuring status changes" do
-    it "enqueues a refresh broadcast to the project stream" do
-      expect {
-        conjuring.complete!
-      }.to have_enqueued_job(Turbo::Streams::BroadcastStreamJob)
+      vision.complete!
     end
   end
 end
