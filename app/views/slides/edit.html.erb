@@ -15,36 +15,39 @@
     <div class="flex gap-2 flex-wrap items-center">
       <%= f.submit "Save", class: btn_gold %>
       <span id="save_status" class="text-xs text-conjure-text-dim" data-autosave-target="status"></span>
-
-      <%= button_to "✦ Conjure vision", project_conjurings_path(@project),
-        method: :post,
-        params: { scope: "single", slide_id: @slide.id, variations: 1, redirect_to: "incantations" },
-        class: "bg-surface text-gold px-4 py-2 rounded-md text-xs border border-gold-dim cursor-pointer hover:bg-gold-glow transition-colors",
-        data: { turbo_submits_with: "✦ Summoning..." } %>
-
-      <div class="flex-1"></div>
-
-      <% unless @slide.position == 1 %>
-        <%= button_to "↑ Move up", move_project_slide_path(@project, @slide, direction: "up"),
-          method: :patch,
-          class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer" %>
-      <% end %>
-
-      <% unless @slide.position == @project.slides.maximum(:position) %>
-        <%= button_to "↓ Move down", move_project_slide_path(@project, @slide, direction: "down"),
-          method: :patch,
-          class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer" %>
-      <% end %>
-
-      <% vision_count = @slide.visions.size %>
-      <%= button_to "Remove", project_slide_path(@project, @slide),
-        method: :delete,
-        class: btn_danger("text-xs"),
-        data: { turbo_confirm: vision_count > 0 ?
-          "This slide has #{vision_count} generated #{'vision'.pluralize(vision_count)} that will also be deleted. Continue?" :
-          "Remove this slide?" } %>
     </div>
   <% end %>
+
+  <%# Action buttons — outside the edit form to avoid nested form issues %>
+  <div class="flex gap-2 flex-wrap items-center mt-3">
+    <%= button_to "✦ Conjure vision", project_conjurings_path(@project),
+      method: :post,
+      params: { scope: "single", slide_id: @slide.id, variations: 1, redirect_to: "incantations" },
+      class: "bg-surface text-gold px-4 py-2 rounded-md text-xs border border-gold-dim cursor-pointer hover:bg-gold-glow transition-colors",
+      data: { turbo_submits_with: "✦ Summoning..." } %>
+
+    <div class="flex-1"></div>
+
+    <% unless @slide.position == 1 %>
+      <%= button_to "↑ Move up", move_project_slide_path(@project, @slide, direction: "up"),
+        method: :patch,
+        class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer" %>
+    <% end %>
+
+    <% unless @slide.position == @project.slides.maximum(:position) %>
+      <%= button_to "↓ Move down", move_project_slide_path(@project, @slide, direction: "down"),
+        method: :patch,
+        class: "bg-surface text-conjure-text-muted px-3 py-2 rounded-md text-xs border border-conjure-border cursor-pointer" %>
+    <% end %>
+
+    <% vision_count = @slide.visions.size %>
+    <%= button_to "Remove", project_slide_path(@project, @slide),
+      method: :delete,
+      class: btn_danger("text-xs"),
+      data: { turbo_confirm: vision_count > 0 ?
+        "This slide has #{vision_count} generated #{'vision'.pluralize(vision_count)} that will also be deleted. Continue?" :
+        "Remove this slide?" } %>
+  </div>
 
   <% complete_visions = @slide.visions.select { |v| v.complete? && v.image.attached? } %>
   <% if complete_visions.any? %>
