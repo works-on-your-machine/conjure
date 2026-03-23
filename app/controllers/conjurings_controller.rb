@@ -45,7 +45,15 @@ class ConjuringsController < ApplicationController
       redirect_to assembly_project_path(@project)
     when "stay"
       # Stay on current page — turbo stream broadcasts handle the UI update
-      render turbo_stream: turbo_stream.remove("refine_modal_noop")
+      streams = []
+      if scope != "refine" && (params[:slide_id] || params.dig(:conjuring, :slide_id))
+        streams << turbo_stream.update("slide_conjuring_status", html:
+          '<div class="mt-3"><div class="flex items-center gap-2 text-xs text-gold">' \
+          '<div class="w-3 h-3 border border-gold-glow border-t-gold rounded-full animate-spin"></div>' \
+          "#{variations} #{'vision'.pluralize(variations)} summoning..." \
+          "</div></div>")
+      end
+      render turbo_stream: streams
     else
       redirect_to visions_project_path(@project)
     end
