@@ -1,6 +1,6 @@
 <div class="p-8 max-w-[900px] mx-auto" data-controller="refine-modal">
-  <%# Turbo Stream subscriptions for real-time updates %>
-  <%= turbo_stream_from "project_#{@project.id}_assembly" %>
+  <%# Turbo Stream subscription — page morphs automatically when visions/conjurings change %>
+  <%= turbo_stream_from @project %>
 
   <%# Header %>
   <% selected_count = @project.slides.count { |s| s.visions.any?(&:selected?) } %>

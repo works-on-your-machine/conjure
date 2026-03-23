@@ -68,14 +68,12 @@
   <% end %>
 
   <% pending_visions = @slide.visions.select { |v| v.pending? || v.generating? } %>
-  <div id="slide_conjuring_status">
-    <% if pending_visions.any? %>
-      <div class="<%= complete_visions.empty? ? 'mt-6 border-t border-conjure-border pt-5' : 'mt-3' %>">
-        <div class="flex items-center gap-2 text-xs text-gold">
-          <div class="w-3 h-3 border border-gold-glow border-t-gold rounded-full animate-spin"></div>
-          <%= pending_visions.size %> <%= 'vision'.pluralize(pending_visions.size) %> summoning...
-        </div>
+  <% if pending_visions.any? %>
+    <div class="<%= complete_visions.empty? ? 'mt-6 border-t border-conjure-border pt-5' : 'mt-3' %>">
+      <div class="flex items-center gap-2 text-xs text-gold">
+        <div class="w-3 h-3 border border-gold-glow border-t-gold rounded-full animate-spin"></div>
+        <%= pending_visions.size %> <%= 'vision'.pluralize(pending_visions.size) %> summoning...
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </turbo-frame>

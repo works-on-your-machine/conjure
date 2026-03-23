@@ -6,20 +6,20 @@ RSpec.describe "Vision broadcasts", type: :model do
   let(:conjuring) { create(:conjuring, project: project, status: :generating) }
 
   describe "after vision completes" do
-    it "broadcasts a turbo stream append to the project channel" do
+    it "enqueues a refresh broadcast to the project stream" do
       vision = create(:vision, slide: slide, conjuring: conjuring, status: :pending)
 
       expect {
         vision.complete!
-      }.to have_broadcasted_to("project_#{project.id}_visions").from_channel(Turbo::StreamsChannel)
+      }.to have_enqueued_job(Turbo::Streams::BroadcastStreamJob)
     end
   end
 
   describe "after conjuring status changes" do
-    it "broadcasts a turbo stream to the project channel" do
+    it "enqueues a refresh broadcast to the project stream" do
       expect {
         conjuring.complete!
-      }.to have_broadcasted_to("project_#{project.id}_conjuring").from_channel(Turbo::StreamsChannel)
+      }.to have_enqueued_job(Turbo::Streams::BroadcastStreamJob)
     end
   end
 end

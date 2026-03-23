@@ -28,7 +28,7 @@ class ConjuringJob < ApplicationJob
       end
 
       conjuring.variations_count.times do |i|
-        vision = Vision.create!(
+        Vision.create!(
           slide: slide,
           conjuring: conjuring,
           position: i + 1,
@@ -37,27 +37,11 @@ class ConjuringJob < ApplicationJob
           refinement: refinement,
           status: :pending
         )
-
-        Turbo::StreamsChannel.broadcast_append_to(
-          "project_#{conjuring.project_id}_visions",
-          target: "slide_#{slide.id}_visions",
-          partial: "visions/vision_tile",
-          locals: { vision: vision, project: conjuring.project, revealed: true }
-        )
-
-        VisionGenerationJob.perform_later(vision, source_vision_id: source_vision_id)
+        # broadcasts_refreshes_to on Vision handles the page morph
       end
 
-      # Broadcast "Refining..." placeholder to assembly page immediately
-      if refinement.present?
-        project = conjuring.project
-        index = project.slides.order(:position).pluck(:id).index(slide.id) || 0
-        Turbo::StreamsChannel.broadcast_replace_to(
-          "project_#{project.id}_assembly",
-          target: "assembly_slide_#{slide.id}",
-          partial: "assembly/slide_row",
-          locals: { slide: slide.reload, project: project, index: index }
-        )
+      slide.visions.pending.each do |vision|
+        VisionGenerationJob.perform_later(vision, source_vision_id: source_vision_id)
       end
     end
   rescue => e

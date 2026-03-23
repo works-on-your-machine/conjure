@@ -1,4 +1,4 @@
-<turbo-frame id="assembly_slide_<%= slide.id %>">
+<div id="assembly_slide_<%= slide.id %>">
   <% selected_vision = slide.visions.find(&:selected?) %>
   <% complete_visions = slide.visions.select { |v| v.complete? && v.image.attached? } %>
   <% pending_visions = slide.visions.select { |v| v.pending? || v.generating? } %>
@@ -85,4 +85,4 @@
       <% end %>
     </div>
   </div>
-</turbo-frame>
+</div>

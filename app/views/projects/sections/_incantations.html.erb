@@ -1,6 +1,9 @@
 <% active_slide = params[:slide].present? ? @project.slides.find_by(id: params[:slide]) : nil %>
 <% active_slide ||= @project.slides.first %>
 <div class="flex h-full" data-controller="outline-modal">
+  <%# Turbo Stream subscription — page morphs automatically when visions/conjurings change %>
+  <%= turbo_stream_from @project %>
+
   <%# Left pane: slide list %>
   <div class="w-[260px] border-r border-conjure-border p-5 px-3 overflow-y-auto"
        data-controller="slide-list"
@@ -43,8 +46,8 @@
     <% end %>
   </div>
 
-  <%# Right pane: slide editor %>
-  <div class="flex-1 p-8 overflow-y-auto">
+  <%# Right pane: slide editor (permanent to survive morph) %>
+  <div id="slide_editor_pane" class="flex-1 p-8 overflow-y-auto" data-turbo-permanent>
     <% if active_slide %>
       <%= turbo_frame_tag "slide_editor", src: edit_project_slide_path(@project, active_slide) do %>
         <p class="text-[13px] text-conjure-text-dim">Loading...</p>

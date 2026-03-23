@@ -36,7 +36,6 @@ class ConjuringsController < ApplicationController
     end
 
     redirect_back = params[:redirect_to] || params.dig(:conjuring, :redirect_to)
-    # Refine defaults to assembly page unless explicitly overridden
     redirect_back ||= "assembly" if scope == "refine"
     case redirect_back
     when "incantations"
@@ -44,14 +43,8 @@ class ConjuringsController < ApplicationController
     when "assembly"
       redirect_to assembly_project_path(@project)
     when "stay"
-      # Stay on current page — turbo stream broadcasts handle the UI update
-      streams = []
-      if scope != "refine" && (params[:slide_id] || params.dig(:conjuring, :slide_id))
-        streams << turbo_stream.update("slide_conjuring_status",
-          partial: "conjurings/summoning_status",
-          locals: { count: variations })
-      end
-      render turbo_stream: streams
+      # Stay on current page — Turbo morph refresh handles all UI updates
+      head :no_content
     else
       redirect_to visions_project_path(@project)
     end

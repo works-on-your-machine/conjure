@@ -7,7 +7,7 @@ class Conjuring < ApplicationRecord
   validates :grimoire_text, presence: true
   validates :variations_count, presence: true
 
-  after_update_commit :broadcast_status_change
+  after_update_commit :broadcast_project_refresh
 
   # Per-project run number (1-based position among project's conjurings)
   def run_number
@@ -16,11 +16,7 @@ class Conjuring < ApplicationRecord
 
   private
 
-  def broadcast_status_change
-    Turbo::StreamsChannel.broadcast_replace_to(
-      "project_#{project_id}_conjuring",
-      target: "conjuring_#{id}_status",
-      html: "<span id=\"conjuring_#{id}_status\" class=\"text-xs\">#{status}</span>"
-    )
+  def broadcast_project_refresh
+    Turbo::StreamsChannel.broadcast_refresh_later_to(project)
   end
 end
