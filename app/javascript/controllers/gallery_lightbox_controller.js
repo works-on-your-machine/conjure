@@ -131,7 +131,7 @@ export default class extends Controller {
         slideId: tile.dataset.visionSlideId,
         slideTitle: tile.dataset.visionSlideTitle,
         position: tile.dataset.visionPosition,
-        conjuringId: tile.dataset.visionConjuringId,
+        runNumber: tile.dataset.visionRunNumber,
         selected: tile.dataset.visionSelected === "true",
         selectUrl: tile.dataset.visionSelectUrl
       })
@@ -150,7 +150,7 @@ export default class extends Controller {
     if (!vision) return
 
     this.imageTarget.src = vision.src
-    this.captionTarget.textContent = `${vision.slideTitle} — variation ${vision.position}, Run ${vision.conjuringId}`
+    this.captionTarget.textContent = `${vision.slideTitle} — variation ${vision.position}, Run ${vision.runNumber}`
     this.counterTarget.textContent = `${this.currentIndex + 1} of ${this.visions.length}`
     this.renderSelectButton()
   }

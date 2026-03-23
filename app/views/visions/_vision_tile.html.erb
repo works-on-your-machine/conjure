@@ -6,7 +6,7 @@
      data-vision-slide-id="<%= vision.slide_id %>"
      data-vision-slide-title="<%= vision.slide.title %>"
      data-vision-position="<%= vision.position %>"
-     data-vision-conjuring-id="<%= vision.conjuring_id %>"
+     data-vision-run-number="<%= vision.conjuring.run_number %>"
      data-vision-selected="<%= vision.selected? %>"
      data-vision-select-url="<%= project_vision_path(project, vision) %>">
 
@@ -34,7 +34,7 @@
 
   <%# Run badge — bottom right %>
   <div class="absolute bottom-2 right-2 z-10 bg-plum-deep/80 text-conjure-text-dim text-[9px] px-1 py-0.5 rounded backdrop-blur-sm">
-    Run <%= vision.conjuring_id %>
+    Run <%= vision.conjuring.run_number %>
   </div>
 
   <% if vision.failed? %>

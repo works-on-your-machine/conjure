@@ -25,7 +25,7 @@
     <div>
       <%= render "shared/label", text: "Conjuring" %>
       <p class="text-[13px] text-conjure-text">
-        Run #<%= @vision.conjuring_id %> — <%= @vision.conjuring.created_at.strftime("%b %d, %Y at %l:%M %p") %>
+        Run #<%= @vision.conjuring.run_number %> — <%= @vision.conjuring.created_at.strftime("%b %d, %Y at %l:%M %p") %>
       </p>
     </div>
 

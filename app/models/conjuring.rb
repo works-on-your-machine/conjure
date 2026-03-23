@@ -9,6 +9,11 @@ class Conjuring < ApplicationRecord
 
   after_update_commit :broadcast_status_change
 
+  # Per-project run number (1-based position among project's conjurings)
+  def run_number
+    project.conjurings.where("id <= ?", id).count
+  end
+
   private
 
   def broadcast_status_change
