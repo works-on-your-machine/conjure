@@ -41,7 +41,7 @@ end
 
 # Sample project with slides
 project = Project.find_or_create_by!(name: "Talking Shit About AI Agents") do |p|
-  p.grimoire = pirate
+  p.source_grimoire = pirate
 end
 
 slides_data = [
